@@ -1,0 +1,17 @@
+.bomLinesListElement {
+  background-color: orange;
+  display: grid;
+  grid-template-columns: 3fr 9fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  padding: 0.2em 0.4em 0.2em 0.4em;
+}
+.bomLinesListElement:hover {
+  background: red;
+}
+
+.bomLinesField {
+  border: none;
+  border-color: black;
+}
+.bomLinesField:focus {
+  outline: none;
+}
