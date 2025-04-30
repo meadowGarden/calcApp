@@ -3,24 +3,24 @@ package app.calc.dto.response;
 import org.springframework.http.HttpStatus;
 
 public class BackResponse<T> {
-    private T entity;
+    private T object;
     private HttpStatus status;
 
-    public BackResponse(T entity, HttpStatus status) {
-        this.entity = entity;
+    public BackResponse(T object, HttpStatus status) {
+        this.object = object;
         this.status = status;
     }
 
-    public T getEntity() {
-        return entity;
+    public T getObject() {
+        return object;
     }
 
     public HttpStatus getStatus() {
         return status;
     }
 
-    public void setEntity(T entity) {
-        this.entity = entity;
+    public void setObject(T entity) {
+        this.object = entity;
     }
 
     public void setStatus(HttpStatus status) {

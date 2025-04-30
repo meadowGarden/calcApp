@@ -5,9 +5,12 @@ import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
 import app.calc.entity.MaterialEntity;
 import app.calc.service.MaterialService;
+import app.calc.utils.UnitOfMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/materials")
@@ -25,7 +28,7 @@ public class MaterialController {
         final BackResponse<MaterialEntity> response = materialService.addMaterial(request);
         return ResponseEntity
                 .status(response.getStatus())
-                .body(response.getEntity());
+                .body(response.getObject());
     }
 
     @GetMapping
@@ -41,7 +44,7 @@ public class MaterialController {
         final BackResponse<MaterialEntity> response = materialService.getMaterialByID(id);
         return ResponseEntity
                 .status(response.getStatus())
-                .body(response.getEntity());
+                .body(response.getObject());
     }
 
     @PutMapping(path = "/{id}")
@@ -49,7 +52,7 @@ public class MaterialController {
         final BackResponse<MaterialEntity> response = materialService.updateMaterialByID(id, dto);
         return ResponseEntity
                 .status(response.getStatus())
-                .body(response.getEntity());
+                .body(response.getObject());
     }
 
     @DeleteMapping(path = "/{id}")
@@ -57,6 +60,14 @@ public class MaterialController {
         final BackResponse<MaterialEntity> response = materialService.deleteMaterialByID(id);
         return ResponseEntity
                 .status(response.getStatus())
-                .body(response.getEntity());
+                .body(response.getObject());
+    }
+
+    @GetMapping(path = "/uom")
+    public ResponseEntity<?> getUOM() {
+        final BackResponse<List<UnitOfMeasurement>> response = materialService.getUOM();
+        return ResponseEntity
+                .status(response.getStatus())
+                .body(response.getObject());
     }
 }

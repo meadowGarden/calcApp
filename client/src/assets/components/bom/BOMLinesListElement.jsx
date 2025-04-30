@@ -40,13 +40,12 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
       .then(() => onDelete(id))
       .catch((error) => console.log(error));
   };
-  console.log("selected", selectedMaterial);
 
   const adjustedUOM = adjustUOMClient(selectedMaterial.uom);
   const lineCosts = calculateLineCosts(quantity, selectedMaterial.price);
 
   const materialsToDisplay = materials.map((material) => (
-    <option key={material.name}>{material.name}</option>
+    <option key={material.id}>{material.name}</option>
   ));
 
   return (

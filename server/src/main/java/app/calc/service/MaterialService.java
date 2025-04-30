@@ -6,10 +6,13 @@ import app.calc.dto.response.BackResponse;
 import app.calc.entity.MaterialEntity;
 import app.calc.repository.MaterialRepository;
 import app.calc.utils.EntityMapper;
+import app.calc.utils.UnitOfMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,5 +68,10 @@ public class MaterialService {
 
         materialRepository.deleteById(id);
         return new BackResponse<>(null, HttpStatus.NO_CONTENT);
+    }
+
+    public BackResponse<List<UnitOfMeasurement>> getUOM() {
+        final List<UnitOfMeasurement> list = new ArrayList<>(Arrays.asList(UnitOfMeasurement.values()));
+        return new BackResponse<>(list, HttpStatus.OK);
     }
 }

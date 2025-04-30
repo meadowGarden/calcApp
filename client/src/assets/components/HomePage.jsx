@@ -1,8 +1,9 @@
 import { Link } from "react-router";
+import PageContainer from "./site/PageContainer";
 
 function HomePage() {
   return (
-    <div>
+    <PageContainer>
       <div>
         <Link to="/materials">materials</Link>
       </div>
@@ -10,7 +11,7 @@ function HomePage() {
       <div>
         <Link to="/bom">bom</Link>
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

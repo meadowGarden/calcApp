@@ -26,7 +26,7 @@ public class BOMLineController {
         final BackResponse<BOMData<BOMLineEntity>> response = bomLineService.createBOMLine(dto);
         return ResponseEntity
                 .status(response.getStatus())
-                .body(response.getEntity());
+                .body(response.getObject());
     }
 
     @GetMapping
@@ -42,7 +42,7 @@ public class BOMLineController {
         final BackResponse<BOMData<BOMLineEntity>> response = bomLineService.getBOMLineByID(id);
         return ResponseEntity
                 .status(response.getStatus())
-                .body(response.getEntity());
+                .body(response.getObject());
     }
 
     @PutMapping(path = "/{id}")
@@ -50,7 +50,7 @@ public class BOMLineController {
         final BackResponse<BOMLineEntity> response = bomLineService.updateBOMLine(id, request);
         return ResponseEntity
                 .status(response.getStatus())
-                .body(response.getEntity());
+                .body(response.getObject());
     }
 
     @DeleteMapping(path = "{id}")
@@ -58,6 +58,6 @@ public class BOMLineController {
         final BackResponse<BOMLineEntity> response = bomLineService.deleteBOMLineByID(id);
         return ResponseEntity
                 .status(response.getStatus())
-                .body(response.getEntity());
+                .body(response.getObject());
     }
 }
