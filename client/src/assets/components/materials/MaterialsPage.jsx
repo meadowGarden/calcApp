@@ -22,9 +22,7 @@ const MaterialsPage = () => {
       .catch((error) => console.log(error));
   };
 
-  useEffect(() => {
-    fetchMaterials();
-  }, []);
+  useEffect(() => fetchMaterials(), []);
 
   const handleAddMaterial = () => {
     setShowAddModal(true);

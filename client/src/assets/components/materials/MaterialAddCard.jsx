@@ -76,7 +76,7 @@ const MaterialAddCard = ({ fetchMaterials }) => {
       </section>
 
       <section>
-        <select {...register("uom")} placeholder="uom">
+        <select {...register("uom")}>
           {uomToDisplay}
         </select>
       </section>
@@ -92,7 +92,7 @@ const MaterialAddCard = ({ fetchMaterials }) => {
       <StandardButton
         handleClick={handleSubmit(onSubmit)}
         type="submit"
-        label={"add"}
+        label="add"
       />
     </form>
   );

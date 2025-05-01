@@ -4,38 +4,62 @@ import BOMListElement from "./BOMListElement";
 import PageContainer from "../site/PageContainer";
 import DataModal from "../site/DataModal";
 import BOMDataCard from "./BOMDataCard";
+import StandardButton from "../buttons/StandardButton";
+import BOMCreateCard from "./BOMCreateCard";
 
 const BOMPage = () => {
   const [bom, setBOM] = useState([]);
   const [currentBOM, setCurrentBOM] = useState({});
-  const [showModal, setShowModal] = useState(false);
+  const [showAddBOMModal, setShowAddBOMModal] = useState(false);
+  const [showBOMDataModal, setShowBOMDataModal] = useState(false);
   const [materials, setMaterials] = useState([]);
+  const [uomList, setUOMList] = useState([]);
 
-  useEffect(() => {
+  const fetchBOM = () => {
+    console.log("fetch bom");
     axios
       .get("http://localhost:8080/api/bom")
       .then((response) => {
         setBOM(response.data);
       })
       .catch((error) => console.log(error));
-  }, []);
+  };
+  useEffect(() => fetchBOM(), []);
 
-  useEffect(() => {
+  const fetchMaterials = () => {
+    console.log("fetch materials");
     axios
       .get("http://localhost:8080/api/materials")
       .then((response) => {
         setMaterials(response.data);
       })
       .catch((error) => console.log(error));
+  };
+  useEffect(() => fetchMaterials(), []);
+
+  useEffect(() => {
+    console.log("fetch uom");
+    axios
+      .get("http://localhost:8080/api/materials/uom")
+      .then((res) => setUOMList(res.data))
+      .catch((error) => console.log(error));
   }, []);
+
+  const handleCreateBOM = () => {
+    setShowAddBOMModal(true);
+  };
+
+  const handleAddBOMModalClose = () => {
+    setShowAddBOMModal(false);
+  };
 
   const handleElementClick = (bomData) => {
     setCurrentBOM(bomData);
-    setShowModal(true);
+    setShowBOMDataModal(true);
   };
 
-  const handleModalClose = () => {
-    setShowModal(false);
+  const handleBOMDataModalClose = () => {
+    setShowBOMDataModal(false);
   };
 
   const bomToDisplay = bom.map((element) => (
@@ -48,7 +72,15 @@ const BOMPage = () => {
 
   return (
     <PageContainer>
-      <DataModal show={showModal} handleClose={handleModalClose}>
+      <StandardButton handleClick={handleCreateBOM} label="add" />
+      <DataModal show={showAddBOMModal} handleClose={handleAddBOMModalClose}>
+        <BOMCreateCard
+          uomList={uomList}
+          materialList={materials}
+          fetchBOM={fetchBOM}
+        />
+      </DataModal>
+      <DataModal show={showBOMDataModal} handleClose={handleBOMDataModalClose}>
         <BOMDataCard data={currentBOM} materials={materials} />
       </DataModal>
       {bomToDisplay}

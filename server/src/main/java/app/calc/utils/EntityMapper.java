@@ -9,6 +9,7 @@ import app.calc.entity.MaterialEntity;
 import app.calc.repository.BOMLineRepository;
 import jakarta.persistence.EntityNotFoundException;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,10 +31,14 @@ public class EntityMapper {
     }
 
     public static BOMEntity bomDTO_bom(BOMRequest dto, BOMLineRepository bomLineRepository) {
-        Set<BOMLineEntity> attachedBomLines = dto.getBomLines().stream()
-                .map(line -> bomLineRepository.findById(line.getId())
-                        .orElseThrow(() -> new EntityNotFoundException("BOM Line not found with ID: " + line.getId())))
-                .collect(Collectors.toSet());
+        Set<BOMLineEntity> attachedBomLines = new HashSet<>();
+
+        if (dto.getBomLines() != null && dto.getBomLines().size() != 0) {
+            attachedBomLines = dto.getBomLines().stream()
+                    .map(line -> bomLineRepository.findById(line.getId())
+                            .orElseThrow(() -> new EntityNotFoundException("BOM Line not found with ID: " + line.getId())))
+                    .collect(Collectors.toSet());
+        }
 
         return new BOMEntity(
                 dto.getName(),
