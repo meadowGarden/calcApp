@@ -23,15 +23,13 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
     </option>
   ));
 
-  const createBOM = async (data) => {
+  const createBOM = (data) => {
     const bom = {
       name: data.name,
       description: data.description,
       uom: data.uom,
       bomLines: bomLines,
     };
-
-    console.log(bom);
 
     axios
       .post("http://localhost:8080/api/bom", bom)

@@ -4,8 +4,9 @@ import BOMListElement from "./BOMListElement";
 import PageContainer from "../site/PageContainer";
 import DataModal from "../site/DataModal";
 import BOMDataCard from "./BOMDataCard";
-import StandardButton from "../buttons/StandardButton";
 import BOMCreateCard from "./BOMCreateCard";
+import AddButton from "../buttons/AddButton";
+import "./BOMPage.css";
 
 const BOMPage = () => {
   const [bom, setBOM] = useState([]);
@@ -16,7 +17,6 @@ const BOMPage = () => {
   const [uomList, setUOMList] = useState([]);
 
   const fetchBOM = () => {
-    console.log("fetch bom");
     axios
       .get("http://localhost:8080/api/bom")
       .then((response) => {
@@ -27,7 +27,6 @@ const BOMPage = () => {
   useEffect(() => fetchBOM(), []);
 
   const fetchMaterials = () => {
-    console.log("fetch materials");
     axios
       .get("http://localhost:8080/api/materials")
       .then((response) => {
@@ -38,7 +37,6 @@ const BOMPage = () => {
   useEffect(() => fetchMaterials(), []);
 
   useEffect(() => {
-    console.log("fetch uom");
     axios
       .get("http://localhost:8080/api/materials/uom")
       .then((res) => setUOMList(res.data))
@@ -67,25 +65,31 @@ const BOMPage = () => {
       key={element.entity.id}
       data={element}
       handleClick={handleElementClick}
+      fetchBOM={fetchBOM}
     />
   ));
 
   return (
     <PageContainer>
-      <StandardButton handleClick={handleCreateBOM} label="add" />
+      <div className="bomPage">
+        <AddButton onClick={handleCreateBOM} label={"add"} />
+        <div>{bomToDisplay}</div>
 
-      <DataModal show={showAddBOMModal} handleClose={handleAddBOMModalClose}>
-        <BOMCreateCard
-          uomList={uomList}
-          materialList={materials}
-          fetchBOM={fetchBOM}
-        />
-      </DataModal>
+        <DataModal show={showAddBOMModal} handleClose={handleAddBOMModalClose}>
+          <BOMCreateCard
+            uomList={uomList}
+            materialList={materials}
+            fetchBOM={fetchBOM}
+          />
+        </DataModal>
 
-      <DataModal show={showBOMDataModal} handleClose={handleBOMDataModalClose}>
-        <BOMDataCard data={currentBOM} materials={materials} />
-      </DataModal>
-      {bomToDisplay}
+        <DataModal
+          show={showBOMDataModal}
+          handleClose={handleBOMDataModalClose}
+        >
+          <BOMDataCard data={currentBOM} materials={materials} />
+        </DataModal>
+      </div>
     </PageContainer>
   );
 };

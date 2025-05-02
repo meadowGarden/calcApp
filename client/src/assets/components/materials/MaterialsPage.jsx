@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import MaterialListElement from "./MaterialListElement";
-import StandardButton from "../buttons/StandardButton";
 import DataModal from "../site/DataModal.jsx";
 import MaterialUpdateCard from "./MaterialUpdateCard.jsx";
 import MaterialAddCard from "./MaterialAddCard.jsx";
 import PageContainer from "../site/PageContainer.jsx";
+import "./MaterialPage.css";
+import AddButton from "../buttons/AddButton.jsx";
+import "./MaterialPage.css";
 
 const MaterialsPage = () => {
   const [materials, setMaterials] = useState([]);
@@ -61,26 +63,29 @@ const MaterialsPage = () => {
 
   return (
     <PageContainer>
-      <div>{materialsToDisplay}</div>
-      <StandardButton handleClick={handleAddMaterial} label={"add material"} />
-      <DataModal
-        show={showAddModal}
-        handleClose={handleAddModalClose}
-        title={"add new material"}
-      >
-        <MaterialAddCard fetchMaterials={fetchMaterials} />
-      </DataModal>
+      <div className="materialPage">
+        <AddButton onClick={handleAddMaterial} label={"add material"} />
 
-      <DataModal
-        show={showEditModal}
-        handleClose={handleEditModalClose}
-        title={modalTitle}
-      >
-        <MaterialUpdateCard
-          currentMaterial={currentMaterial}
-          fetchMaterials={fetchMaterials}
-        />
-      </DataModal>
+        <div>{materialsToDisplay}</div>
+        <DataModal
+          show={showAddModal}
+          handleClose={handleAddModalClose}
+          title={"add new material"}
+        >
+          <MaterialAddCard fetchMaterials={fetchMaterials} />
+        </DataModal>
+
+        <DataModal
+          show={showEditModal}
+          handleClose={handleEditModalClose}
+          title={modalTitle}
+        >
+          <MaterialUpdateCard
+            currentMaterial={currentMaterial}
+            fetchMaterials={fetchMaterials}
+          />
+        </DataModal>
+      </div>
     </PageContainer>
   );
 };

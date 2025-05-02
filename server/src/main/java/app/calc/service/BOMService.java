@@ -102,6 +102,7 @@ public class BOMService {
         if (bomByID.isEmpty())
             return new BackResponse<>(null, HttpStatus.NOT_FOUND);
 
+        bomRepository.deleteById(id);
         return new BackResponse<>(null, HttpStatus.NO_CONTENT);
     }
 }
