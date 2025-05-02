@@ -1,10 +1,11 @@
 package app.calc.service;
 
 import app.calc.dto.request.BOMRequest;
-import app.calc.dto.response.pricedEntities.BOMData;
 import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
+import app.calc.dto.response.pricedEntities.BOMData;
 import app.calc.entity.BOMEntity;
+import app.calc.entity.BOMLineEntity;
 import app.calc.repository.BOMLineRepository;
 import app.calc.repository.BOMRepository;
 import app.calc.utils.AppFormatter;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,10 +32,26 @@ public class BOMService {
     }
 
     public BackResponse<BOMData<BOMEntity>> createBOM(BOMRequest dto) {
+        evaluateLines(dto);
+
         final BOMEntity bomToCreate = EntityMapper.bomDTO_bom(dto, bomLineRepository);
         final BOMEntity savedBOM = bomRepository.save(bomToCreate);
         final BOMData<BOMEntity> bomData = new BOMData<>(savedBOM, calculateCost(savedBOM));
         return new BackResponse<>(bomData, HttpStatus.CREATED);
+    }
+
+    private void evaluateLines(BOMRequest dto) {
+        if (dto.getBomLines() == null && dto.getBomLines().size() == 0) {
+            dto.setBomLines(new HashSet<>());
+            return;
+        }
+
+        for (BOMLineEntity b : dto.getBomLines()) {
+            if (b.getId() == 0){
+                BOMLineEntity savedLine = bomLineRepository.save(b);
+                b = savedLine;
+            }
+        }
     }
 
     public BackListResponse<BOMData<BOMEntity>> getAllBOM() {

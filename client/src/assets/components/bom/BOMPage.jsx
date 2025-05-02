@@ -73,6 +73,7 @@ const BOMPage = () => {
   return (
     <PageContainer>
       <StandardButton handleClick={handleCreateBOM} label="add" />
+
       <DataModal show={showAddBOMModal} handleClose={handleAddBOMModalClose}>
         <BOMCreateCard
           uomList={uomList}
@@ -80,6 +81,7 @@ const BOMPage = () => {
           fetchBOM={fetchBOM}
         />
       </DataModal>
+
       <DataModal show={showBOMDataModal} handleClose={handleBOMDataModalClose}>
         <BOMDataCard data={currentBOM} materials={materials} />
       </DataModal>

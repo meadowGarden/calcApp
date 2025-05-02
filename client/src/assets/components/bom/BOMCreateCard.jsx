@@ -4,9 +4,11 @@ import StandardButton from "../buttons/StandardButton";
 import axios from "axios";
 import { useState } from "react";
 import BOMLinesAddElement from "./BOMLinesAddElement";
+import { v4 as uuidv4 } from "uuid";
 
 const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
   const [bomLines, setBOMLines] = useState([]);
+  const uuid = uuidv4();
   const { register, handleSubmit } = useForm({
     defaultValues: {
       name: "",
@@ -22,16 +24,14 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
   ));
 
   const createBOM = async (data) => {
-    const adjustedBomlines = bomLines.map((e) => {
-      return { quantity: e.qty, material: materialList.find(e.id) };
-    });
-
     const bom = {
       name: data.name,
       description: data.description,
       uom: data.uom,
-      bomLines: adjustedBomlines,
+      bomLines: bomLines,
     };
+
+    console.log(bom);
 
     axios
       .post("http://localhost:8080/api/bom", bom)
@@ -42,28 +42,22 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
       .catch((error) => console.log(error));
   };
 
-  const bomLinesToDisplay = bomLines.map((line, i) => {
+  const addMaterial = () => {
+    const line = { uuid: uuid, quantity: 0, material: materialList[0] };
+    setBOMLines((bomLines) => [...bomLines, line]);
+  };
+
+  const bomLinesToDisplay = bomLines.map((line) => {
     return (
       <BOMLinesAddElement
-        key={i}
-        data={line}
+        key={line.uuid}
+        line={line}
+        bomLines={bomLines}
         materialList={materialList}
-        uomList={uomList}
+        setBOMLines={setBOMLines}
       />
     );
   });
-
-  const addMaterial = () => {
-    const line = {
-      id: "",
-      name: "",
-      description: "",
-      qty: "",
-      uom: "",
-      price: 0.0,
-    };
-    setBOMLines((bomLines) => [...bomLines, line]);
-  };
 
   return (
     <>
