@@ -1,0 +1,56 @@
+.width3em {
+  width: 3.5rem;
+}
+
+.width9em {
+  width: 11rem;
+}
+
+.width21em {
+  width: 33.7rem;
+}
+
+.inputText {
+  padding: 0 var(--space-xs) 0 var(--space-xs);
+  font-size: var(--space-lg);
+  text-align: left;
+  height: var(--space-xxl);
+  border: none;
+  width: 100%;
+}
+.inputText:focus {
+  outline: none;
+  background-color: yellow;
+}
+
+.inputNumber {
+  padding: 0 var(--space-md) 0 var(--space-xs);
+  font-size: var(--space-lg);
+  text-align: right;
+  width: 100%;
+}
+
+.listElementText {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-lg) 0 var(--space-xs);
+  font-size: var(--space-lg);
+  height: var(--space-xxl);
+  width: 100%;
+}
+
+.listElementNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 var(--space-lg) 0 var(--space-xs);
+  font-size: var(--space-lg);
+  height: var(--space-xxl);
+  width: 100%;
+}
+
+.listElementButton {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs);
+}

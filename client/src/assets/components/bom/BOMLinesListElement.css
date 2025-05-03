@@ -1,11 +1,13 @@
 .bomLinesListElement {
-  background-color: orange;
+  background-color: #eff6fa;
+  color: #2f3b4c;
   display: grid;
   grid-template-columns: 3fr 9fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  padding: 0.2em 0.4em 0.2em 0.4em;
+  padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+  height: var(--space-xxl);
 }
 .bomLinesListElement:hover {
-  background: red;
+  background-color: #c5e2f2;
 }
 
 .bomLinesField {

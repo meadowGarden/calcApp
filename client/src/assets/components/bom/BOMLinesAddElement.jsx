@@ -1,10 +1,11 @@
 import { useState } from "react";
 import "./BOMPage.css";
+import "../site/CommonStyles.css";
 
-const BOMLinesAddElement = ({ materialList, bomLines, line }) => {
+const BOMLinesAddElement = ({ materialList, bomLines, setBOMLines, line }) => {
   const [material, setMaterial] = useState(materialList[0]);
   const { description, uom, price } = material;
-  
+
   const materialOptions = materialList.map((material) => (
     <option value={material.name} key={material.id}>
       {material.name}
@@ -17,13 +18,18 @@ const BOMLinesAddElement = ({ materialList, bomLines, line }) => {
       (material) => material.name === selectedName
     );
     setMaterial(selectedMaterial);
-    const bomLineToUpdate = bomLines.find((el) => el.uuid === line.uuid);
-    bomLineToUpdate.material = selectedMaterial;
+
+    const updatedLines = bomLines.map((el) =>
+      el.uuid === line.uuid ? { ...el, material: selectedMaterial } : el
+    );
+    setBOMLines(updatedLines);
   };
 
   const handleQuantityChange = (e) => {
-    const bomLineToUpdate = bomLines.find((el) => el.uuid === line.uuid);
-    bomLineToUpdate.quantity = e.target.value;
+    const updatedLines = bomLines.map((el) =>
+      el.uuid === line.uuid ? { ...el, quantity: e.target.value } : el
+    );
+    setBOMLines(updatedLines);
   };
 
   return (

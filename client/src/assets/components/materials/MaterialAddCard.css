@@ -1,0 +1,5 @@
+.materialAddCard {
+  display: grid;
+  grid-template-columns: 3fr 9fr 1fr 1fr 1fr;
+  gap: var(--space-xs);
+}

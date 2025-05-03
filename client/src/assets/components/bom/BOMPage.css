@@ -1,10 +1,10 @@
 .bomPage {
   display: grid;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 
 .bomLineCalc {
   display: grid;
   grid-template-columns: 1fr 5fr 1fr 1fr 1fr 1fr;
-  gap: 0.5em;
+  gap: var(--space-sm);
 }

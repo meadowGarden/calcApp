@@ -4,6 +4,10 @@ export const adjustUOMClient = (s) => {
   switch (s) {
     case "KILOGRAM":
       return "kg";
+    case "CUBIC_M":
+      return "m3";
+    case "SQUARE_M":
+      return "m2";
     case "LITER":
       return "l";
     case "PIECE":
@@ -21,6 +25,10 @@ export const adjustUOMServer = (s) => {
   switch (s) {
     case "kg":
       return "KILOGRAM";
+    case "m2":
+      return "SQUARE_M";
+    case "m3":
+      return "CUBIC_M";
     case "l":
       return "LITER";
     case "pcs":

@@ -3,6 +3,7 @@ import "../../../services/utils.js";
 import { adjustUOMClient } from "../../../services/utils.js";
 import StandardButton from "../buttons/StandardButton.jsx";
 import axios from "axios";
+import "../site/CommonStyles.css";
 
 function BOMListElement({ data, handleClick, fetchBOM }) {
   const { name, description, uom } = data.entity;
@@ -21,14 +22,16 @@ function BOMListElement({ data, handleClick, fetchBOM }) {
 
   return (
     <div onClick={() => handleClick(data)} className="bomListElement">
-      <span>{name}</span>
-      <span>{description}</span>
-      <span>{adjustedUOM}</span>
-      <span>{costs}</span>
-      <StandardButton
-        handleClick={() => handleDelete(data.entity.id)}
-        label="delete"
-      />
+      <span className="listElementText">{name}</span>
+      <span className="listElementText">{description}</span>
+      <span className="listElementText">{adjustedUOM}</span>
+      <span className="listElementNumber">{costs.toFixed(2)}</span>
+      <span className="listElementButton">
+        <StandardButton
+          handleClick={() => handleDelete(data.entity.id)}
+          label="delete"
+        />
+      </span>
     </div>
   );
 }

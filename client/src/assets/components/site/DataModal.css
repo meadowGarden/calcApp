@@ -1,0 +1,14 @@
+.dataModal {
+  background-color: #dee7eb;
+  border: 1px solid #b5c8d4;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.dataModalHeader {
+  background-color: #f6fafc;
+}
+
+.dataModalBody {
+  background-color: #f6fafc;
+}

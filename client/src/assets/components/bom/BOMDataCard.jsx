@@ -6,7 +6,8 @@ const BOMDataCard = ({ data, materials }) => {
   const { name, description, bomLines } = entity;
   const [lines, setLines] = useState(bomLines || []);
 
-  useEffect(() => setLines(lines || []), [data]);
+  useEffect(() => setLines(data?.entity?.bomLines || []), [data]);
+  // useEffect(() => setLines(lines || []), [data]);
 
   const handleDelete = (id) => {
     setLines((prev) => prev.filter((line) => line.id !== id));

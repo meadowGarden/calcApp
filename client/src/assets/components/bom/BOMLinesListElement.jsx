@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { adjustUOMClient, calculateLineCosts } from "../../../services/utils";
 import "./BOMLinesListElement.css";
-import "../site/CommonStyle.css";
+import "../site/CommonStyles.css";
 import StandardButton from "../buttons/StandardButton";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
 
   const handleMaterialChange = (e) => {
     const newMaterial = materials.find((material) => {
-      material.name = e.target.value;
+      material.name === e.target.value;
     });
     setSelectedMaterial(newMaterial);
   };

@@ -1,9 +1,10 @@
 .bomListElement {
-  background-color: yellow;
+  background-color: #eff6fa;
+  color: #2f3b4c;
   display: grid;
-  grid-template-columns: 2fr 5fr 1fr 1fr 1fr;
-  padding: 0.2em 0.4em 0.2em 0.4em;
+  grid-template-columns: 3fr 9fr 1fr 1fr 1fr;
+  gap: var(--space-xxs);
 }
 .bomListElement:hover {
-  background: red;
+  background-color: #e2edf3;
 }

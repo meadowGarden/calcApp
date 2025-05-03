@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { adjustUOMClient } from "../../../services/utils";
 import StandardButton from "../buttons/StandardButton";
+import "./MaterialUpdateCard.css";
 
 const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
   const [uomList, setUOMList] = useState([]);
@@ -56,13 +57,14 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
   };
 
   return (
-    <form>
+    <form className="materialUpdateCard">
       <section>
         <input
           {...register("name", {
             required: "you must enter name",
           })}
           placeholder="name"
+          className="materialField"
         />
         {errors.name && <div>{errors.name.message}</div>}
       </section>
@@ -81,12 +83,17 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
             },
           })}
           placeholder="description"
+          className="materialField"
         />
         {errors.description && <div>{errors.description.message}</div>}
       </section>
 
       <section>
-        <select {...register("uom")} placeholder="uom">
+        <select
+          {...register("uom")}
+          placeholder="uom"
+          className="materialField"
+        >
           {uomToDisplay}
         </select>
       </section>
@@ -95,6 +102,7 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
         <input
           {...register("price", { required: "you must enter price" })}
           placeholder="price"
+          className="materialField"
         />
         {errors.price && <div>{errors.price.message}</div>}
       </section>

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { adjustUOMClient } from "../../../services/utils";
 import StandardButton from "../buttons/StandardButton";
+import "./MaterialAddCard.css";
+import "../site/CommonStyles.css";
 
 const MaterialAddCard = ({ fetchMaterials }) => {
   const [uomList, setUOMList] = useState([]);
@@ -46,13 +48,14 @@ const MaterialAddCard = ({ fetchMaterials }) => {
   };
 
   return (
-    <form>
+    <form className="materialAddCard">
       <section>
         <input
           {...register("name", {
             required: "you must enter name",
           })}
           placeholder="name"
+          className="inputText"
         />
         {errors.name && <div>{errors.name.message}</div>}
       </section>
@@ -71,12 +74,13 @@ const MaterialAddCard = ({ fetchMaterials }) => {
             },
           })}
           placeholder="description"
+          className="inputText"
         />
         {errors.description && <div>{errors.description.message}</div>}
       </section>
 
       <section>
-        <select {...register("uom")}>
+        <select {...register("uom")} className="inputText">
           {uomToDisplay}
         </select>
       </section>
@@ -85,15 +89,17 @@ const MaterialAddCard = ({ fetchMaterials }) => {
         <input
           {...register("price", { required: "you must enter price" })}
           placeholder="price"
+          className="inputText"
         />
         {errors.price && <div>{errors.price.message}</div>}
       </section>
-
-      <StandardButton
-        handleClick={handleSubmit(onSubmit)}
-        type="submit"
-        label="add"
-      />
+      <section className="listElementButton">
+        <StandardButton
+          handleClick={handleSubmit(onSubmit)}
+          type="submit"
+          label="add"
+        />
+      </section>
     </form>
   );
 };

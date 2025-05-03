@@ -1,19 +1,21 @@
 .navbar {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  background: lightblue;
-  margin: 0em;
+  background: #3b6d8c;
+  margin: 0rem;
   padding: 0.5em;
 }
 
 .nbHomeElement {
+  color: #cce6ff;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.5rem;
   text-decoration: none;
 }
 
 .nbStandardElement {
+  color: #ffffff;
   text-align: center;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   text-decoration: none;
 }

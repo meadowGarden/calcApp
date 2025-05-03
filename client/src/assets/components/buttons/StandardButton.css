@@ -1,4 +1,12 @@
-.standardButton{
+.standardButton {
+  display: inline-flex;
+  justify-content: center;
   border: none;
-  padding: 0;
+  background-color: #7fa6ba;
+  color: #ffffff;
+  width: 100%;
+  height: var(--space-xl);
+}
+.standardButton:hover {
+  background-color: #6b8ea2;
 }

@@ -1,12 +1,13 @@
 .addButton {
   border: none;
   margin: 0;
-  padding: 0.5em;
-  font-size: 1.2em;
-  background-color: pink;
-  width: 7em;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  background-color: #6C90A3;
+  color: #ffffff;
+  width: 10rem;
   outline: none;
 }
 .addButton:hover {
-  background-color: lightpink;
+  background-color: #5B7C90;
 }
