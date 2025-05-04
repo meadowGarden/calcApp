@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./BOMPage.css";
 import "../site/CommonStyles.css";
 import { adjustUOMClient } from "../../../services/utils";
 import "./BOMLinesAddElement.css";
 import "../site/CommonStyles.css";
+import StandardButton from "../buttons/StandardButton";
 
-const BOMLinesAddElement = ({ materialList, bomLines, setBOMLines, line }) => {
+const BOMLinesAddElement = ({
+  materialList,
+  bomLines,
+  setBOMLines,
+  line,
+  addMaterial,
+}) => {
   const [material, setMaterial] = useState(materialList[0]);
+  const [isLast, setIsLast] = useState(false);
   const { description, uom, price } = material;
 
   const materialOptions = materialList.map((material) => (
@@ -35,26 +43,38 @@ const BOMLinesAddElement = ({ materialList, bomLines, setBOMLines, line }) => {
     setBOMLines(updatedLines);
   };
 
+  useEffect(() => {
+    setIsLast(line.uuid === bomLines[bomLines.length - 1].uuid);
+  }, [bomLines, line.uuid]);
+
   return (
-    <form className="bomLinesAddElement">
-      <span className="verticalCenter">
-        <select onChange={handleMaterialSelection} className="inputUpdateText">
-          {materialOptions}
-        </select>
-      </span>
-      <span className="listElementText">{description}</span>
-      <span className="listElementText">{adjustUOMClient(uom)}</span>
-      <span className="verticalCenter">
-        <input
-          onChange={handleQuantityChange}
-          name="quantity"
-          type="number"
-          className="inputUpdateText"
-        />
-      </span>
-      <span className="listElementText">{price}</span>
-      {/* <span>{cost}</span> */}
-    </form>
+    <>
+      <div className="bomLinesAddElement">
+        <span className="verticalCenter">
+          <select
+            onChange={handleMaterialSelection}
+            className="inputUpdateText"
+          >
+            {materialOptions}
+          </select>
+        </span>
+        <span className="listElementText">{description}</span>
+        <span className="listElementText">{adjustUOMClient(uom)}</span>
+        <span className="verticalCenter">
+          <input
+            onChange={handleQuantityChange}
+            name="quantity"
+            type="number"
+            className="inputUpdateNumber"
+            required
+          />
+        </span>
+        <span className="listElementText">{price}</span>
+      </div>
+      {isLast && (
+        <StandardButton handleClick={addMaterial} label={"add material"} />
+      )}
+    </>
   );
 };
 

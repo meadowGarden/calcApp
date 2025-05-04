@@ -101,10 +101,34 @@
   border: none;
   width: 100%;
 }
-.inputText:focus {
+.inputUpdateText:focus {
+  outline: none;
+}
+.inputUpdateText::placeholder {
+  color: var(--input-placeholder-color);
+}
+
+.inputUpdateNumber {
+  background-color: var(--input-background-color);
+  color: var(--input-value-color);
+  box-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.2rem;
+  padding: 0 var(--space-md) 0 var(--space-xs);
+  font-size: var(--space-lg);
+  text-align: right;
+  height: calc(var(--space-xxl) - var(--space-xs));
+  border: none;
+  width: 100%;
+}
+.inputUpdateNumber::-webkit-outer-spin-button,
+.inputUpdateNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.inputUpdateNumber:focus {
   outline: none;
   background-color: var(--input-focus-background-color);
 }
-.inputText::placeholder {
+.inputUpdateNumber::placeholder {
   color: var(--input-placeholder-color);
 }

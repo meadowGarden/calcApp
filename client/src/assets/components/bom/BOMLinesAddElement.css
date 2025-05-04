@@ -1,6 +1,6 @@
 .bomLinesAddElement {
   display: grid;
-  grid-template-columns: 2fr 6fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 6fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: var(--space-xs);
   background-color: var(--list-element-background-color);
   height: var(--space-xxl);

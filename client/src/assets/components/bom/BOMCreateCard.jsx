@@ -55,6 +55,7 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
         bomLines={bomLines}
         materialList={materialList}
         setBOMLines={setBOMLines}
+        addMaterial={addMaterial}
       />
     );
   });
@@ -64,7 +65,11 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
       <form className="BOMCreateCardMain">
         <section className="bomCreateInputName">
           <input
-            {...register("name")}
+            {...register("name", {
+              required: "enter product name",
+              minLength: 4,
+              maxLength: 15,
+            })}
             placeholder="product name"
             className="inputText"
           />
@@ -72,7 +77,11 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
 
         <section className="bomCreateInputDescription">
           <input
-            {...register("description")}
+            {...register("description", {
+              required: "enter product description",
+              minLength: 5,
+              maxLength: 50,
+            })}
             placeholder="description"
             className="inputText"
           />
