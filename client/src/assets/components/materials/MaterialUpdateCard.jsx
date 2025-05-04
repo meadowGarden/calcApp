@@ -4,32 +4,31 @@ import { useForm } from "react-hook-form";
 import { adjustUOMClient } from "../../../services/utils";
 import StandardButton from "../buttons/StandardButton";
 import "./MaterialUpdateCard.css";
+import "../site/CommonStyles.css";
 
 const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
   const [uomList, setUOMList] = useState([]);
   const {
     register,
+    reset,
     handleSubmit,
-    setValue,
-    formState: { errors, isSubmitting, setError },
-  } = useForm({
-    defaultValues: {
-      name: currentMaterial.name,
-      description: currentMaterial.description,
-      uom: currentMaterial.uom,
-      price: currentMaterial.price,
-    },
-  });
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/materials/uom")
       .then((response) => {
         setUOMList(response.data);
-        setValue("uom", response.data[0]);
+        reset({
+          name: currentMaterial.name,
+          description: currentMaterial.description,
+          uom: currentMaterial.uom,
+          price: currentMaterial.price,
+        });
       })
       .catch((error) => console.log(error));
-  }, [setValue]);
+  }, [reset, currentMaterial]);
 
   const uomToDisplay = uomList.map((uom) => (
     <option value={uom} key={uom}>
@@ -56,23 +55,24 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
       .catch((error) => console.log(error));
   };
 
+  if (uomList.length === 0) return null;
+
   return (
     <form className="materialUpdateCard">
-      <section>
+      <section className="materialUpdateCardName">
         <input
           {...register("name", {
-            required: "you must enter name",
+            required: "enter name",
           })}
           placeholder="name"
-          className="materialField"
+          className="inputText"
         />
-        {errors.name && <div>{errors.name.message}</div>}
       </section>
 
-      <section>
+      <section className="materialUpdateCardDescription">
         <input
           {...register("description", {
-            required: "you must enter name",
+            required: "enter decription",
             minLength: {
               value: 5,
               message: "description must have at least five characters",
@@ -83,35 +83,44 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
             },
           })}
           placeholder="description"
-          className="materialField"
+          className="inputText"
         />
-        {errors.description && <div>{errors.description.message}</div>}
       </section>
 
-      <section>
-        <select
-          {...register("uom")}
-          placeholder="uom"
-          className="materialField"
-        >
+      <section className="materialUpdateCardUOM">
+        <select {...register("uom")} placeholder="uom" className="inputText">
           {uomToDisplay}
         </select>
       </section>
 
-      <section>
+      <section className="materialAddCardPrice">
         <input
-          {...register("price", { required: "you must enter price" })}
+          {...register("price", { required: "enter price" })}
           placeholder="price"
-          className="materialField"
+          className="inputNumber"
+          type="number"
         />
-        {errors.price && <div>{errors.price.message}</div>}
       </section>
 
-      <StandardButton
-        handleClick={handleSubmit(onSubmit)}
-        type="submit"
-        label="update"
-      />
+      <section className="materialUpdateCardErrors">
+        {errors.name && (
+          <p className="formErrorMessage">{errors.name.message}</p>
+        )}
+        {errors.description && (
+          <p className="formErrorMessage">{errors.description.message}</p>
+        )}
+        {errors.price && (
+          <p className="formErrorMessage">{errors.price.message}</p>
+        )}
+      </section>
+
+      <section className="listElementButton materialUpdateCardButton">
+        <StandardButton
+          handleClick={handleSubmit(onSubmit)}
+          type="submit"
+          label="update"
+        />
+      </section>
     </form>
   );
 };

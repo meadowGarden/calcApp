@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./BOMPage.css";
 import "../site/CommonStyles.css";
+import { adjustUOMClient } from "../../../services/utils";
+import "./BOMLinesAddElement.css";
+import "../site/CommonStyles.css";
 
 const BOMLinesAddElement = ({ materialList, bomLines, setBOMLines, line }) => {
   const [material, setMaterial] = useState(materialList[0]);
@@ -33,12 +36,23 @@ const BOMLinesAddElement = ({ materialList, bomLines, setBOMLines, line }) => {
   };
 
   return (
-    <form className="bomLineCalc">
-      <select onChange={handleMaterialSelection}>{materialOptions}</select>
-      <span>{description}</span>
-      <span>{uom}</span>
-      <input onChange={handleQuantityChange} name="quantity" />
-      <span>{price}</span>
+    <form className="bomLinesAddElement">
+      <span className="verticalCenter">
+        <select onChange={handleMaterialSelection} className="inputUpdateText">
+          {materialOptions}
+        </select>
+      </span>
+      <span className="listElementText">{description}</span>
+      <span className="listElementText">{adjustUOMClient(uom)}</span>
+      <span className="verticalCenter">
+        <input
+          onChange={handleQuantityChange}
+          name="quantity"
+          type="number"
+          className="inputUpdateText"
+        />
+      </span>
+      <span className="listElementText">{price}</span>
       {/* <span>{cost}</span> */}
     </form>
   );

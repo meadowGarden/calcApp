@@ -49,51 +49,62 @@ const MaterialAddCard = ({ fetchMaterials }) => {
 
   return (
     <form className="materialAddCard">
-      <section>
+      <section className="materialAddCardName">
         <input
           {...register("name", {
-            required: "you must enter name",
+            required: "enter name",
           })}
           placeholder="name"
           className="inputText"
         />
-        {errors.name && <div>{errors.name.message}</div>}
       </section>
 
-      <section>
+      <section className="materialAddCardDescription">
         <input
           {...register("description", {
-            required: "you must enter name",
+            required: "enter description",
             minLength: {
               value: 5,
               message: "description must have at least five characters",
             },
             maxLength: {
-              value: 50,
-              message: "description must not be over fifty characters",
+              value: 100,
+              message: "description must not be over hundred characters",
             },
           })}
           placeholder="description"
           className="inputText"
         />
-        {errors.description && <div>{errors.description.message}</div>}
       </section>
 
-      <section>
+      <section className="materialAddCardUOM">
         <select {...register("uom")} className="inputText">
           {uomToDisplay}
         </select>
       </section>
 
-      <section>
+      <section className="materialAddCardPrice">
         <input
-          {...register("price", { required: "you must enter price" })}
+          {...register("price", { required: "enter price" })}
+          type="number"
           placeholder="price"
-          className="inputText"
+          className="inputNumber"
         />
-        {errors.price && <div>{errors.price.message}</div>}
       </section>
-      <section className="listElementButton">
+
+      <section className="materialAddCardErrors">
+        {errors.name && (
+          <p className="formErrorMessage">{errors.name.message}</p>
+        )}
+        {errors.description && (
+          <p className="formErrorMessage">{errors.description.message}</p>
+        )}
+        {errors.price && (
+          <p className="formErrorMessage">{errors.price.message}</p>
+        )}
+      </section>
+
+      <section className="listElementButton materialAddCardButton">
         <StandardButton
           handleClick={handleSubmit(onSubmit)}
           type="submit"

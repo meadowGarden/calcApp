@@ -1,10 +1,11 @@
 .materialListElement {
-  background-color: #eff6fa;
-  color: #2f3b4c;
+  background-color: var(--list-element-background-color);
+  color: var(--list-element-value-color);
   display: grid;
   grid-template-columns: 3fr 9fr 1fr 1fr 1fr;
-  gap: var(--space-xs);
+  grid-gap: var(--space-xs);
+  padding: 0 var(--space-xs);
 }
 .materialListElement:hover {
-  background-color: #e2edf3;
+  background-color: var(--list-element-background-hover-color);
 }

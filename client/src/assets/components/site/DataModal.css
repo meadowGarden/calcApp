@@ -1,14 +1,14 @@
 .dataModal {
-  background-color: #dee7eb;
-  border: 1px solid #b5c8d4;
+  background-color: var(--modal-background-frame-color);
+  border: 1px solid var(--modal-border-color);
   padding: 1rem;
   border-radius: 0.5rem;
 }
 
 .dataModalHeader {
-  background-color: #f6fafc;
+  background-color: var(--modal-background-color);
 }
 
 .dataModalBody {
-  background-color: #f6fafc;
+  background-color: var(--modal-background-color);
 }

@@ -1,9 +1,32 @@
 .materialUpdateCard {
   display: grid;
-  grid-template-columns: 3fr 9fr 1fr 1fr 1fr;
-  gap: var(--space-xs);
+  grid-template-columns: 3fr 9fr 1fr 1fr;
+  grid-template-rows: repeat(3, var(--space-xxl));
+  grid-template-rows: var(--space-xxl) auto var(--space-xxl);
+  grid-gap: var(--space-xs);
 }
-.materialField {
-  width: 100%;
-  height: var(--space-xl);
+
+.materialUpdateCardName {
+  grid-column-start: 1;
+  grid-column-start: 1;
+}
+.materialUpdateCardDescription {
+  grid-column-start: 2;
+  grid-column-start: 2;
+}
+.materialUpdateCardUOM {
+  grid-column-start: 3;
+  grid-column-start: 3;
+}
+.materialUpdateCardPrice {
+  grid-column-start: 4;
+  grid-column-start: 4;
+}
+.materialUpdateCardErrors {
+  grid-column: 1 / span 3;
+}
+.materialUpdateCardButton {
+  width: 30%;
+  grid-column-start: 1;
+  grid-column-start: 1;
 }

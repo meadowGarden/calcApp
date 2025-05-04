@@ -5,6 +5,8 @@ import axios from "axios";
 import { useState } from "react";
 import BOMLinesAddElement from "./BOMLinesAddElement";
 import { v4 as uuidv4 } from "uuid";
+import "./BOMCreateCard.css";
+import "../site/CommonStyles.css";
 
 const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
   const [bomLines, setBOMLines] = useState([]);
@@ -59,21 +61,35 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
 
   return (
     <>
-      <form>
-        <section>
-          <input {...register("name")} placeholder="product name" />
+      <form className="BOMCreateCardMain">
+        <section className="bomCreateInputName">
+          <input
+            {...register("name")}
+            placeholder="product name"
+            className="inputText"
+          />
         </section>
-        <section>
-          <input {...register("description")} placeholder="description" />
-        </section>
-        <select>{uomOptions}</select>
 
-        <StandardButton handleClick={addMaterial} label="add material" />
-        <StandardButton
-          handleClick={handleSubmit(createBOM)}
-          type="submit"
-          label="create"
-        />
+        <section className="bomCreateInputDescription">
+          <input
+            {...register("description")}
+            placeholder="description"
+            className="inputText"
+          />
+        </section>
+
+        <section className="bomCreateInputUOM">
+          <select className="inputText">{uomOptions}</select>
+        </section>
+
+        <section>
+          <StandardButton handleClick={addMaterial} label="add material" />
+          <StandardButton
+            handleClick={handleSubmit(createBOM)}
+            type="submit"
+            label="create"
+          />
+        </section>
       </form>
       {bomLinesToDisplay}
     </>

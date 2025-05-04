@@ -11,6 +11,10 @@
 }
 
 .inputText {
+  background-color: var(--input-background-color);
+  color: var(--input-value-color);
+  box-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.2rem;
   padding: 0 var(--space-xs) 0 var(--space-xs);
   font-size: var(--space-lg);
   text-align: left;
@@ -20,20 +24,41 @@
 }
 .inputText:focus {
   outline: none;
-  background-color: yellow;
+  background-color: var(--input-focus-background-color);
+}
+.inputText::placeholder {
+  color: var(--input-placeholder-color);
 }
 
 .inputNumber {
+  background-color: var(--input-background-color);
+  color: var(--input-value-color);
+  box-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.2rem;
   padding: 0 var(--space-md) 0 var(--space-xs);
   font-size: var(--space-lg);
   text-align: right;
+  height: var(--space-xxl);
+  border: none;
   width: 100%;
+}
+.inputNumber::-webkit-outer-spin-button,
+.inputNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.inputNumber:focus {
+  outline: none;
+  background-color: var(--input-focus-background-color);
+}
+.inputNumber::placeholder {
+  color: var(--input-placeholder-color);
 }
 
 .listElementText {
   display: inline-flex;
   align-items: center;
-  padding: 0 var(--space-lg) 0 var(--space-xs);
+  padding: 0 var(--space-xs) 0 var(--space-xs);
   font-size: var(--space-lg);
   height: var(--space-xxl);
   width: 100%;
@@ -48,9 +73,38 @@
   height: var(--space-xxl);
   width: 100%;
 }
-
 .listElementButton {
   display: inline-flex;
   align-items: center;
   padding: var(--space-xs);
+}
+.formErrorMessage {
+  margin: 0;
+  height: var(--space-lg);
+  color: #ff6b6b;
+}
+
+.verticalCenter {
+  display: inline-flex;
+  align-items: center;
+}
+
+.inputUpdateText {
+  background-color: var(--input-background-color);
+  color: var(--input-value-color);
+  box-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.2rem;
+  padding: 0 var(--space-xs) 0 var(--space-xs);
+  font-size: var(--space-lg);
+  text-align: left;
+  height: calc(var(--space-xxl) - var(--space-xs));
+  border: none;
+  width: 100%;
+}
+.inputText:focus {
+  outline: none;
+  background-color: var(--input-focus-background-color);
+}
+.inputText::placeholder {
+  color: var(--input-placeholder-color);
 }

@@ -1,12 +1,28 @@
 :root {
   background-color: #d0e4f0;
 
+  --standard-background-color: #d0e4f0;
+  
+  --modal-background-color: #f6fafc;
+  --modal-background-frame-color: #dee7eb;
+  --modal-border-color: #dee7eb;
+
+  --input-background-color: #ffffff;
+  --input-value-color: #2f3b4c;
+  --input-placeholder-color: #7a9db1;
+  --input-focus-background-color: #e2edf3;
+
+  --list-element-value-color: #2f3b4c;
+  --list-element-background-color: #eff6fa;
+  --list-element-background-hover-color: #e2edf3;
+
   --space-xxs: 0.125rem;
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 0.75rem;
   --space-lg: 1rem;
   --space-xl: 1.5rem;
+  --space-xlm: 1.8rem;
   --space-xxl: 2rem;
   --space-xxxl: 3rem;
 }

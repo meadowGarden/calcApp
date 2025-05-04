@@ -1,5 +1,5 @@
 .pageContainer {
   margin: 0;
-  padding: 1rem;
-  background-color: #d0e4f0;
+  padding: var(--space-lg) var(--space-xxxl) var(--space-lg) var(--space-xxxl);
+  background-color: var(--standard-background-color);
 }
