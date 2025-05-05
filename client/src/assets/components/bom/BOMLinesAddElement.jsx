@@ -11,10 +11,9 @@ const BOMLinesAddElement = ({
   bomLines,
   setBOMLines,
   line,
-  addMaterial,
+  removeMaterial,
 }) => {
   const [material, setMaterial] = useState(materialList[0]);
-  const [isLast, setIsLast] = useState(false);
   const { description, uom, price } = material;
 
   const materialOptions = materialList.map((material) => (
@@ -43,9 +42,8 @@ const BOMLinesAddElement = ({
     setBOMLines(updatedLines);
   };
 
-  useEffect(() => {
-    setIsLast(line.uuid === bomLines[bomLines.length - 1].uuid);
-  }, [bomLines, line.uuid]);
+  const [cost, setCost] = useState(price * line.quantity);
+  useEffect(() => setCost(price * line.quantity), [line.quantity, price, cost]);
 
   return (
     <>
@@ -58,22 +56,32 @@ const BOMLinesAddElement = ({
             {materialOptions}
           </select>
         </span>
+
         <span className="listElementText">{description}</span>
+
         <span className="listElementText">{adjustUOMClient(uom)}</span>
+
         <span className="verticalCenter">
           <input
             onChange={handleQuantityChange}
             name="quantity"
             type="number"
             className="inputUpdateNumber"
-            required
+            defaultValue={line.quantity}
           />
         </span>
+
         <span className="listElementText">{price}</span>
+
+        <span className="listElementNumber">{cost.toFixed(2)}</span>
+
+        <span className="listElementText">
+          <StandardButton
+            handleClick={() => removeMaterial(line.uuid)}
+            label={"remove"}
+          />
+        </span>
       </div>
-      {isLast && (
-        <StandardButton handleClick={addMaterial} label={"add material"} />
-      )}
     </>
   );
 };

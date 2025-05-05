@@ -1,0 +1,11 @@
+.bomDataCard {
+  display: grid;
+  grid-gap: var(--space-lg);
+}
+
+.bomDataCardMainInfo {
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr;
+  grid-template-rows: var(--space-xxl);
+  grid-gap: var(--space-xs);
+}

@@ -1,6 +1,45 @@
+.BOMCreateCard {
+  display: grid;
+  grid-gap: var(--space-lg);
+}
+
 .BOMCreateCardMain {
   display: grid;
   grid-template-columns: 2fr 3fr 1fr;
+  grid-template-rows: var(--space-xxl) var(--space-xxl);
   grid-gap: var(--space-xs);
 }
 
+.bomCreateButton {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+.bomCreateInputName {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.bomCreateInputDescription {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.bomCreateInputUOM {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+.bomCreateLines {
+  padding: var(--space-xs);
+  display: grid;
+  grid-gap: var(--space-xxs);
+}
+
+.bomCreateLinesButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(var(--space-xxxl) * 2.5);
+  height: var(--space-xxl);
+}

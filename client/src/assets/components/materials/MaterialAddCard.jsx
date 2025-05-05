@@ -65,11 +65,11 @@ const MaterialAddCard = ({ fetchMaterials }) => {
             required: "enter description",
             minLength: {
               value: 5,
-              message: "description must have at least five characters",
+              message: "description must have at least 5 characters",
             },
             maxLength: {
               value: 100,
-              message: "description must not be over hundred characters",
+              message: "description must not be over 100 characters",
             },
           })}
           placeholder="description"

@@ -4,6 +4,7 @@
   grid-gap: var(--space-xs);
   background-color: var(--list-element-background-color);
   height: var(--space-xxl);
+  padding: 0 var(--space-xs) 0 var(--space-xs);
 }
 .bomLinesAddElement:hover {
   background-color: var(--list-element-background-hover-color);
