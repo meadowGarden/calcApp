@@ -17,10 +17,11 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
   }, [data]);
 
   const handleMaterialChange = (e) => {
-    const newMaterial = materials.find((material) => {
-      material.name === e.target.value;
+    const selectedName = e.target.value;
+    const selectedMaterial = materials.find((material) => {
+      material.name === selectedName;
     });
-    setSelectedMaterial(newMaterial);
+    setSelectedMaterial(selectedMaterial);
   };
 
   const handleQuantityChange = (e) => {
@@ -44,54 +45,54 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
   const adjustedUOM = adjustUOMClient(selectedMaterial.uom);
   const lineCosts = calculateLineCosts(quantity, selectedMaterial.price);
 
-  const materialsToDisplay = materials.map((material) => (
+  const materialOptions = materials.map((material) => (
     <option key={material.id}>{material.name}</option>
   ));
 
   return (
     <form onSubmit={handleSubmit} className="bomLinesListElement">
-      <select
-        {...register("name")}
-        value={selectedMaterial.name}
-        onChange={handleMaterialChange}
-        className="bomLinesField width9em"
-      >
-        {materialsToDisplay}
-      </select>
-      <input
-        type="text"
-        value={selectedMaterial.description}
-        className="bomLinesField width21em"
-        readOnly
-      />
-      <input
-        {...register("quantity")}
-        type="text"
-        defaultValue={quantity}
-        className="bomLinesField width3em"
-      />
-      <input
-        {...register("uom")}
-        type="text"
-        defaultValue={adjustedUOM}
-        className="bomLinesField width3em"
-      />
-      <input
-        type="text"
-        value={selectedMaterial.price}
-        className="bomLinesField width3em"
-        readOnly
-      />
-      <input
-        type="text"
-        value={lineCosts}
-        className="bomLinesField width3em"
-        readOnly
-      />
-      <StandardButton
-        handleClick={() => handleDeleteBOMLine(id)}
-        label="delete"
-      />
+      <section className="verticalCenter">
+        <select
+          {...register("name")}
+          onChange={handleMaterialChange}
+          className="inputText"
+        >
+          {materialOptions}
+        </select>
+      </section>
+
+      <section className="listElementText">
+        <span>{selectedMaterial.description}</span>
+      </section>
+
+      <section>
+        <input
+          {...register("quantity")}
+          type="text"
+          defaultValue={quantity}
+          className="inputNumber"
+          onChange={handleQuantityChange}
+        />
+      </section>
+
+      <section className="listElementText">
+        <span>{adjustedUOM}</span>
+      </section>
+
+      <section className="listElementNumber">
+        <span>{selectedMaterial.price.toFixed(3)}</span>
+      </section>
+
+      <section className="listElementNumber">
+        <span>{lineCosts.toFixed(3)}</span>
+      </section>
+
+      <section className="verticalCenter">
+        <StandardButton
+          handleClick={() => handleDeleteBOMLine(id)}
+          label="delete"
+        />
+      </section>
     </form>
   );
 };

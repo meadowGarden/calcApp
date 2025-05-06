@@ -6,6 +6,7 @@ import ErrorPage from "./assets/components/ErrorPage";
 import HomePage from "./assets/components/HomePage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./assets/components/site/Navbar";
+import TestPage from "./assets/components/test/TestPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="materials" element={<MaterialsPage />} />
         <Route path="bom" element={<BOMPage />} />
+        <Route path="test" element={<TestPage />} />
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
     </>

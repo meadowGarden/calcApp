@@ -88,7 +88,11 @@ const BOMPage = () => {
           handleClose={handleBOMDataModalClose}
           title={"product data"}
         >
-          <BOMDataCard data={currentBOM} materials={materials} />
+          <BOMDataCard
+            data={currentBOM}
+            materials={materials}
+            fetchBOM={fetchBOM}
+          />
         </DataModal>
       </div>
     </PageContainer>

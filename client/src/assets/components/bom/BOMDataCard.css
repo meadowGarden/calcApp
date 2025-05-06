@@ -9,3 +9,8 @@
   grid-template-rows: var(--space-xxl);
   grid-gap: var(--space-xs);
 }
+
+.bomDataCardLines {
+  display: grid;
+  grid-gap: var(--space-xs);
+}

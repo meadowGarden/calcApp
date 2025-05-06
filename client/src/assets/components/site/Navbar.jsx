@@ -13,6 +13,10 @@ const Navbar = () => {
       <Link className="nbStandardElement" to="/bom">
         bills of materials
       </Link>
+
+      <Link className="nbStandardElement" to="/test">
+        test
+      </Link>
     </div>
   );
 };

@@ -1,15 +1,3 @@
-.width3em {
-  width: 3.5rem;
-}
-
-.width9em {
-  width: 11rem;
-}
-
-.width21em {
-  width: 33.7rem;
-}
-
 .inputText {
   background-color: var(--input-background-color);
   color: var(--input-value-color);
