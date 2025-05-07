@@ -18,9 +18,9 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
 
   const handleMaterialChange = (e) => {
     const selectedName = e.target.value;
-    const selectedMaterial = materials.find((material) => {
-      material.name === selectedName;
-    });
+    const selectedMaterial = materials.find(
+      (material) => material.name === selectedName
+    );
     setSelectedMaterial(selectedMaterial);
   };
 
@@ -31,9 +31,8 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { name: material.name } });
 
   const handleDeleteBOMLine = (id) => {
     axios
