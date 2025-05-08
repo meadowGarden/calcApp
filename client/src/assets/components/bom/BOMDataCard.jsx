@@ -7,13 +7,13 @@ import "../site/CommonStyles.css";
 import CostsComparator from "./CostsComparator";
 
 const BOMDataCard = ({ bom, materials, fetchBOM }) => {
-  const { costs, entity } = bom;
-  const { name, description, bomLines } = entity;
-  const [lines, setLines] = useState(bomLines || []);
-  useEffect(() => setLines(bom?.entity?.bomLines || []), [bom]);
+  const currentCost = bom.costs;
 
   const [updatedBOM, setUpdatedBOM] = useState(bom);
-  console.log(updatedBOM);
+  const { costs, entity } = updatedBOM;
+  const { name, description, bomLines } = entity;
+  const [lines, setLines] = useState(bomLines || []);
+  useEffect(() => setLines(bom?.entity?.bomLines || []), [bom, updatedBOM]);
 
   const [isUpdated, setIsUpdated] = useState(false);
 
@@ -26,8 +26,8 @@ const BOMDataCard = ({ bom, materials, fetchBOM }) => {
     fetchBOM();
   };
 
-  const updateBOM = (bom) => {
-    console.log(bom, bomLines);
+  const updateBOM = (data) => {
+    console.log(data, updatedBOM);
   };
 
   const bomLinesToDisplay = lines.map((line) => (
@@ -52,8 +52,8 @@ const BOMDataCard = ({ bom, materials, fetchBOM }) => {
 
         <section>
           <CostsComparator
-            current={costs}
-            updated={updatedBOM.costs}
+            current={currentCost}
+            updated={costs}
             isUpdated={isUpdated}
           />
         </section>

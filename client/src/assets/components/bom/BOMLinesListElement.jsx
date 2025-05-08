@@ -3,7 +3,6 @@ import { adjustUOMClient, calculateLineCosts } from "../../../services/utils";
 import "./BOMLinesListElement.css";
 import "../site/CommonStyles.css";
 import StandardButton from "../buttons/StandardButton";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 const BOMLinesListElement = ({ data, onDelete, materials }) => {
@@ -34,12 +33,12 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
     formState: { errors },
   } = useForm({ defaultValues: { name: material.name } });
 
-  const handleDeleteBOMLine = (id) => {
-    axios
-      .delete(`http://localhost:8080/api/bomlines/${id}`)
-      .then(() => onDelete(id))
-      .catch((error) => console.log(error));
-  };
+  // const handleDeleteBOMLine = (id) => {
+  //   axios
+  //     .delete(`http://localhost:8080/api/bomlines/${id}`)
+  //     .then(() => onDelete(id))
+  //     .catch((error) => console.log(error));
+  // };
 
   const adjustedUOM = adjustUOMClient(selectedMaterial.uom);
   const lineCosts = calculateLineCosts(quantity, selectedMaterial.price);
@@ -88,7 +87,7 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
 
       <section className="verticalCenter">
         <StandardButton
-          handleClick={() => handleDeleteBOMLine(id)}
+          handleClick={() => onDelete(id)}
           label="delete"
         />
       </section>

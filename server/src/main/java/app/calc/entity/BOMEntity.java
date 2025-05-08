@@ -23,11 +23,8 @@ public class BOMEntity {
     @Enumerated(EnumType.STRING)
     private UnitOfMeasurement uom;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "bom_lines",
-            joinColumns = @JoinColumn(name = "bom_id"),
-            inverseJoinColumns = @JoinColumn(name = "bom_line_id"))
+    @OneToMany(mappedBy = "bom", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnore
     private Set<BOMLineEntity> bomLines;
 
     public BOMEntity() {

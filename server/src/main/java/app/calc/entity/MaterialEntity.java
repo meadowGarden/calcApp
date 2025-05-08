@@ -27,7 +27,7 @@ public class MaterialEntity {
     @Column(name = "price")
     private double price;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<BOMLineEntity> bomLines;
 

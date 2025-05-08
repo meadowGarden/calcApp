@@ -9,7 +9,6 @@ import app.calc.entity.BOMLineEntity;
 import app.calc.repository.BOMLineRepository;
 import app.calc.repository.BOMRepository;
 import app.calc.utils.AppFormatter;
-import app.calc.utils.EntityMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,40 +17,51 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class BOMService {
     private final BOMRepository bomRepository;
     private final BOMLineRepository bomLineRepository;
+    private final BOMLineService bomLineService;
 
     @Autowired
-    public BOMService(BOMRepository bomRepository, BOMLineRepository bomLineRepository) {
+    public BOMService(BOMRepository bomRepository, BOMLineRepository bomLineRepository, BOMLineService bomLineService) {
         this.bomRepository = bomRepository;
         this.bomLineRepository = bomLineRepository;
+        this.bomLineService = bomLineService;
     }
 
     public BackResponse<BOMData<BOMEntity>> createBOM(BOMRequest dto) {
-        evaluateLines(dto);
+        final BOMEntity bomToCreate = bomRepository.save(new BOMEntity());
+        bomToCreate.setName(dto.getName());
+        bomToCreate.setDescription(dto.getDescription());
+        bomToCreate.setUOM(dto.getUOM());
 
-        final BOMEntity bomToCreate = EntityMapper.bomDTO_bom(dto, bomLineRepository);
-        final BOMEntity savedBOM = bomRepository.save(bomToCreate);
-        final BOMData<BOMEntity> bomData = new BOMData<>(savedBOM, calculateCost(savedBOM));
-        return new BackResponse<>(bomData, HttpStatus.CREATED);
+        evaluateLines(dto, bomToCreate);
+
+        final BOMEntity createdBOM = bomRepository.save(bomToCreate);
+        final BOMData<BOMEntity> bomData = new BOMData<>(createdBOM, calculateCost(createdBOM));
+        return new BackResponse<>(bomData, HttpStatus.OK);
     }
 
-    private void evaluateLines(BOMRequest dto) {
-        if (dto.getBomLines() == null && dto.getBomLines().size() == 0) {
-            dto.setBomLines(new HashSet<>());
+    private void evaluateLines(BOMRequest dto, BOMEntity bom) {
+        final Set<BOMLineEntity> lines = new HashSet<>();
+
+        if (dto.getBomLines() == null || dto.getBomLines().size() == 0) {
+            bom.setBomLines(lines);
             return;
         }
 
         for (BOMLineEntity b : dto.getBomLines()) {
-            if (b.getId() == 0){
-                BOMLineEntity savedLine = bomLineRepository.save(b);
-                b = savedLine;
-            }
+            final BOMLineEntity lineToCreate = bomLineRepository.save(b);
+            lineToCreate.setBom(bom);
+            final BOMLineEntity createdBOMLine = bomLineRepository.save(lineToCreate);
+            lines.add(createdBOMLine);
         }
+
+        bom.setBomLines(lines);
     }
 
     public BackListResponse<BOMData<BOMEntity>> getAllBOM() {
@@ -91,7 +101,9 @@ public class BOMService {
         bomToUpdate.setName(dto.getName());
         bomToUpdate.setDescription(dto.getDescription());
         bomToUpdate.setUOM(dto.getUOM());
-        bomToUpdate.setBomLines(dto.getBomLines());
+
+        final Set<BOMLineEntity> newLines = dto.getBomLines();
+        bomToUpdate.setBomLines(newLines);
 
         final BOMEntity updateBOM = bomRepository.save(bomToUpdate);
         return new BackResponse<>(updateBOM, HttpStatus.OK);
