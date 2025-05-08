@@ -89,7 +89,7 @@ const BOMPage = () => {
           title={"product data"}
         >
           <BOMDataCard
-            data={currentBOM}
+            bom={currentBOM}
             materials={materials}
             fetchBOM={fetchBOM}
           />

@@ -1,0 +1,5 @@
+.costsComparator {
+  display: grid;
+  grid-gap: var(--space-xxs);
+  padding: 0 var(--space-xl) 0 var(--space-xl);
+}

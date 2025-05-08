@@ -1,11 +1,12 @@
 import { Link } from "react-router";
+import PageContainer from "./site/PageContainer";
 
 function ErrorPage() {
   return (
-    <div>
+    <PageContainer>
       <div>error page</div>
       <Link to="/">home page</Link>
-    </div>
+    </PageContainer>
   );
 }
 

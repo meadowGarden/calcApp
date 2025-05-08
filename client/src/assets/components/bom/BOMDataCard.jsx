@@ -4,24 +4,30 @@ import { useForm } from "react-hook-form";
 import "./BOMDataCard.css";
 import StandardButton from "../buttons/StandardButton";
 import "../site/CommonStyles.css";
+import CostsComparator from "./CostsComparator";
 
-const BOMDataCard = ({ data, materials, fetchBOM }) => {
-  const { costs, entity } = data;
+const BOMDataCard = ({ bom, materials, fetchBOM }) => {
+  const { costs, entity } = bom;
   const { name, description, bomLines } = entity;
   const [lines, setLines] = useState(bomLines || []);
+  useEffect(() => setLines(bom?.entity?.bomLines || []), [bom]);
+
+  const [updatedBOM, setUpdatedBOM] = useState(bom);
+  console.log(updatedBOM);
+
+  const [isUpdated, setIsUpdated] = useState(false);
+
   const { register, handleSubmit } = useForm({
     defaultValues: { name: name, description: description, costs: costs },
   });
-
-  useEffect(() => setLines(data?.entity?.bomLines || []), [data]);
 
   const handleDelete = (id) => {
     setLines((prev) => prev.filter((line) => line.id !== id));
     fetchBOM();
   };
 
-  const updateBOM = (data) => {
-    console.log(data, bomLines);
+  const updateBOM = (bom) => {
+    console.log(bom, bomLines);
   };
 
   const bomLinesToDisplay = lines.map((line) => (
@@ -45,7 +51,11 @@ const BOMDataCard = ({ data, materials, fetchBOM }) => {
         </section>
 
         <section>
-          <span className="listElementNumber">{costs}</span>
+          <CostsComparator
+            current={costs}
+            updated={updatedBOM.costs}
+            isUpdated={isUpdated}
+          />
         </section>
 
         <section>
