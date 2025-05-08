@@ -24,13 +24,11 @@ import java.util.stream.Collectors;
 public class BOMService {
     private final BOMRepository bomRepository;
     private final BOMLineRepository bomLineRepository;
-    private final BOMLineService bomLineService;
 
     @Autowired
-    public BOMService(BOMRepository bomRepository, BOMLineRepository bomLineRepository, BOMLineService bomLineService) {
+    public BOMService(BOMRepository bomRepository, BOMLineRepository bomLineRepository) {
         this.bomRepository = bomRepository;
         this.bomLineRepository = bomLineRepository;
-        this.bomLineService = bomLineService;
     }
 
     public BackResponse<BOMData<BOMEntity>> createBOM(BOMRequest dto) {
@@ -102,8 +100,10 @@ public class BOMService {
         bomToUpdate.setDescription(dto.getDescription());
         bomToUpdate.setUOM(dto.getUOM());
 
-        final Set<BOMLineEntity> newLines = dto.getBomLines();
-        bomToUpdate.setBomLines(newLines);
+        final Set<BOMLineEntity> lines = bomToUpdate.getBomLines();
+        lines.clear();
+        lines.addAll(dto.getBomLines());
+        lines.forEach(line -> line.setBom(bomToUpdate));
 
         final BOMEntity updateBOM = bomRepository.save(bomToUpdate);
         return new BackResponse<>(updateBOM, HttpStatus.OK);
