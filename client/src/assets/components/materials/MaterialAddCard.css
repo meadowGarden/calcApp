@@ -1,26 +1,41 @@
 .materialAddCard {
   display: grid;
-  grid-template-columns: 3fr 9fr 1fr 1fr;
-  grid-template-rows: repeat(3, var(--space-xxl));
+  grid-template-columns: 3fr 3fr 3fr 3fr;
   grid-template-rows: var(--space-xxl) auto var(--space-xxl);
   grid-gap: var(--space-xs);
 }
 
 .materialAddCardName {
   grid-column-start: 1;
-  grid-column-start: 1;
+  grid-column-end: 1;
 }
 .materialAddCardDescription {
   grid-column-start: 2;
+  grid-column-end: 5;
+}
+.materialAddCardPurchaseUOM {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.materialAddCardPurchasePrice {
   grid-column-start: 2;
+  grid-column-end: 3;
 }
-.materialAddCardUOM {
-  grid-column-start: 3;
-  grid-column-start: 3;
+.materialAddCardStorageUOM {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-column-start: 1;
+  grid-column-end: 1;
 }
-.materialAddCardPrice {
-  grid-column-start: 4;
-  grid-column-start: 4;
+.materialAddCardStorageRatio {
+  grid-column-start: 2;
+  grid-column-end: 2;
+}
+.materialAddCardSummary {
+  grid-column-start: 1;
+  grid-column-end: 5;
 }
 .materialAddCardErrors {
   grid-column: 1 / span 3;

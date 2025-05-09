@@ -5,16 +5,23 @@ import app.calc.utils.UnitOfMeasurement;
 public class MaterialRequest {
     private String name;
     private String description;
-    private UnitOfMeasurement uom;
+    private UnitOfMeasurement uomFrom;
+    private UnitOfMeasurement uomTo;
     private double price;
 
     public MaterialRequest() {
     }
 
-    public MaterialRequest(String name, String description, UnitOfMeasurement uom, double price) {
+    public MaterialRequest(
+            String name,
+            String description,
+            UnitOfMeasurement purchaseUOM,
+            UnitOfMeasurement storageUOM,
+            double price) {
         this.name = name;
         this.description = description;
-        this.uom = uom;
+        this.uomFrom = uomFrom;
+        this.uomTo = uomTo;
         this.price = price;
     }
 
@@ -26,8 +33,11 @@ public class MaterialRequest {
         return description;
     }
 
-    public UnitOfMeasurement getUOM() {
-        return uom;
+    public UnitOfMeasurement getUOMFrom() {
+        return uomFrom;
+    }
+    public UnitOfMeasurement getUOMTo() {
+        return uomTo;
     }
 
     public double getPrice() {
@@ -42,8 +52,12 @@ public class MaterialRequest {
         this.description = description;
     }
 
-    public void setUOM(UnitOfMeasurement uom) {
-        this.uom = uom;
+    public void setUOMFrom(UnitOfMeasurement uomFrom) {
+        this.uomFrom = uomFrom;
+    }
+
+    public void setUOMFrom(UnitOfMeasurement uomFrom) {
+        this.uomFrom = uomFrom;
     }
 
     public void setPrice(double price) {

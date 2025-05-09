@@ -26,6 +26,7 @@ const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
 
   const handleLineDelete = (id) => {
     setLines((prev) => prev.filter((line) => line.id !== id));
+    setIsUpdated(true);
   };
 
   const handleLineAdd = () => {
@@ -36,6 +37,7 @@ const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
       material: materials[0],
     };
     setLines((prev) => [...prev, newLine]);
+    setIsUpdated(true);
   };
 
   const uomOptions = uomList.map((uom) => (

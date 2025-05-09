@@ -8,6 +8,7 @@ import "../site/CommonStyles.css";
 
 const MaterialAddCard = ({ fetchMaterials }) => {
   const [uomList, setUOMList] = useState([]);
+  const [summary, setSummary] = useState("");
   const {
     register,
     handleSubmit,
@@ -30,6 +31,8 @@ const MaterialAddCard = ({ fetchMaterials }) => {
       {adjustUOMClient(u)}
     </option>
   ));
+
+  const handleInputChange = (e) => {};
 
   const onSubmit = async (data) => {
     const material = {
@@ -77,13 +80,14 @@ const MaterialAddCard = ({ fetchMaterials }) => {
         />
       </section>
 
-      <section className="materialAddCardUOM">
+      <section className="materialAddCardPurchaseUOM">
+        <label className="listElementText">purchase uom</label>
         <select {...register("uom")} className="inputText">
           {uomToDisplay}
         </select>
       </section>
 
-      <section className="materialAddCardPrice">
+      <section className="materialAddCardPurchasePrice">
         <input
           {...register("price", { required: "enter price" })}
           type="number"
@@ -91,6 +95,28 @@ const MaterialAddCard = ({ fetchMaterials }) => {
           className="inputNumber"
         />
       </section>
+
+      <section className="materialAddCardStorageUOM">
+        <label className="listElementText">storage uom</label>
+        <select {...register("uom")} className="inputText">
+          {uomToDisplay}
+        </select>
+      </section>
+
+      <section className="materialAddCardStorageRatio">
+        <input
+          {...register("ratio", { required: "select ratio" })}
+          type="number"
+          placeholder="ratio"
+          className="inputNumber"
+        />
+      </section>
+
+      {summary !== "" && (
+        <section className="materialAddCardSummary">
+          <span>{summary}</span>
+        </section>
+      )}
 
       <section className="materialAddCardErrors">
         {errors.name && (
