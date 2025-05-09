@@ -92,6 +92,7 @@ const BOMPage = () => {
             bom={currentBOM}
             materials={materials}
             fetchBOM={fetchBOM}
+            uomList={uomList}
           />
         </DataModal>
       </div>

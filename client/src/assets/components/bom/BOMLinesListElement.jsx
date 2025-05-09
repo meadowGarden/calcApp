@@ -3,28 +3,38 @@ import { adjustUOMClient, calculateLineCosts } from "../../../services/utils";
 import "./BOMLinesListElement.css";
 import "../site/CommonStyles.css";
 import StandardButton from "../buttons/StandardButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const BOMLinesListElement = ({ data, onDelete, materials }) => {
+const BOMLinesListElement = ({
+  data,
+  onDelete,
+  materials,
+  lines,
+  setLines,
+}) => {
   const { id, material, quantity: initialQuantity } = data;
-  const [selectedMaterial, setSelectedMaterial] = useState(material);
   const [quantity, setQuantity] = useState(initialQuantity);
-
-  useEffect(() => {
-    setSelectedMaterial(material);
-    setQuantity(initialQuantity);
-  }, [data]);
 
   const handleMaterialChange = (e) => {
     const selectedName = e.target.value;
     const selectedMaterial = materials.find(
       (material) => material.name === selectedName
     );
-    setSelectedMaterial(selectedMaterial);
+
+    const newLines = lines.map((line) =>
+      line.id === id ? { ...line, material: selectedMaterial } : line
+    );
+
+    setLines(newLines);
   };
 
   const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
+    const newQuantity = e.target.value;
+    setQuantity(newQuantity);
+    const newLines = lines.map((line) =>
+      line.id === id ? { ...line, quantity: newQuantity } : line
+    );
+    setLines(newLines);
   };
 
   const {
@@ -33,15 +43,8 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
     formState: { errors },
   } = useForm({ defaultValues: { name: material.name } });
 
-  // const handleDeleteBOMLine = (id) => {
-  //   axios
-  //     .delete(`http://localhost:8080/api/bomlines/${id}`)
-  //     .then(() => onDelete(id))
-  //     .catch((error) => console.log(error));
-  // };
-
-  const adjustedUOM = adjustUOMClient(selectedMaterial.uom);
-  const lineCosts = calculateLineCosts(quantity, selectedMaterial.price);
+  const adjustedUOM = adjustUOMClient(material.uom);
+  const lineCosts = calculateLineCosts(quantity, material.price);
 
   const materialOptions = materials.map((material) => (
     <option key={material.id}>{material.name}</option>
@@ -60,7 +63,7 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
       </section>
 
       <section className="listElementText">
-        <span>{selectedMaterial.description}</span>
+        <span>{material.description}</span>
       </section>
 
       <section>
@@ -78,7 +81,7 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
       </section>
 
       <section className="listElementNumber">
-        <span>{selectedMaterial.price.toFixed(3)}</span>
+        <span>{material.price.toFixed(3)}</span>
       </section>
 
       <section className="listElementNumber">
@@ -86,10 +89,7 @@ const BOMLinesListElement = ({ data, onDelete, materials }) => {
       </section>
 
       <section className="verticalCenter">
-        <StandardButton
-          handleClick={() => onDelete(id)}
-          label="delete"
-        />
+        <StandardButton handleClick={() => onDelete(id)} label="delete" />
       </section>
     </form>
   );
