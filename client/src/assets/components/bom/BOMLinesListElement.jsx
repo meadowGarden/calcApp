@@ -43,7 +43,7 @@ const BOMLinesListElement = ({
     formState: { errors },
   } = useForm({ defaultValues: { name: material.name } });
 
-  const adjustedUOM = adjustUOMClient(material.uom);
+  const adjustedUOM = adjustUOMClient(material.storageUOM);
   const lineCosts = calculateLineCosts(quantity, material.price);
 
   const materialOptions = materials.map((material) => (

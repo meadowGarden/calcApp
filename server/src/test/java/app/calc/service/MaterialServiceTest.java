@@ -36,14 +36,44 @@ class MaterialServiceTest {
     @BeforeEach
     void beforeEachSetUp() {
         materialRequest =
-                new MaterialRequest("mat01", "desc01",  UnitOfMeasurement.LITER, 1.0);
+                new MaterialRequest(
+                        "mat01",
+                        "desc01",
+                        UnitOfMeasurement.LITER,
+                        UnitOfMeasurement.LITER,
+                        1.0,
+                        1.0);
 
         materialEntitySaved001 =
-                new MaterialEntity(1, "mat01", "desc01", UnitOfMeasurement.LITER, 1.0);
+                new MaterialEntity(
+                        1,
+                        "mat01",
+                        "desc01",
+                        UnitOfMeasurement.LITER,
+                        UnitOfMeasurement.LITER,
+                        1.0,
+                        1.0,
+                        1.0);
         materialEntitySaved002 =
-                new MaterialEntity(2, "mat02", "desc02", UnitOfMeasurement.SET, 0.5);
+                new MaterialEntity(
+                        2,
+                        "mat02",
+                        "desc02",
+                        UnitOfMeasurement.SET,
+                        UnitOfMeasurement.SET,
+                        0.5,
+                        0.5,
+                        1.0);
         materialEntitySaved003 =
-                new MaterialEntity(3, "mat03", "desc03", UnitOfMeasurement.PIECE, 3.9);
+                new MaterialEntity(
+                        3,
+                        "mat03",
+                        "desc03",
+                        UnitOfMeasurement.PIECE,
+                        UnitOfMeasurement.PIECE,
+                        3.9,
+                        3.9,
+                1.0);
     }
 
     @Test
@@ -54,9 +84,9 @@ class MaterialServiceTest {
                         .thenReturn(materialEntitySaved001);
         final BackResponse<MaterialEntity> response = materialService.addMaterial(materialRequest);
 
-        Assertions.assertEquals(1.0, response.getEntity().getPrice());
-        Assertions.assertEquals("mat01", response.getEntity().getName());
-        Assertions.assertEquals("desc01", response.getEntity().getDescription());
+        Assertions.assertEquals(1.0, response.getObject().getPrice());
+        Assertions.assertEquals("mat01", response.getObject().getName());
+        Assertions.assertEquals("desc01", response.getObject().getDescription());
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatus());
 
         Mockito.verify(materialRepository, Mockito.times(1))
@@ -83,7 +113,7 @@ class MaterialServiceTest {
                 .thenReturn(Optional.of(materialEntitySaved001));
 
         var response = materialService.getMaterialByID(1L);
-        Assertions.assertEquals(1, response.getEntity().getID());
+        Assertions.assertEquals(1, response.getObject().getID());
     }
 
     @Test
@@ -93,7 +123,7 @@ class MaterialServiceTest {
         Mockito.when(materialRepository.findById(-1L))
                 .thenReturn(Optional.empty());
         var response = materialService.getMaterialByID(-1L);
-        Assertions.assertNull(response.getEntity());
+        Assertions.assertNull(response.getObject());
     }
 
     @Test

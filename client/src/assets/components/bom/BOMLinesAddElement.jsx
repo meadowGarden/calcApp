@@ -14,7 +14,7 @@ const BOMLinesAddElement = ({
   removeMaterial,
 }) => {
   const [material, setMaterial] = useState(materialList[0]);
-  const { description, uom, price } = material;
+  const { description, storageUOM, price } = material;
 
   const materialOptions = materialList.map((material) => (
     <option value={material.name} key={material.id}>
@@ -59,7 +59,7 @@ const BOMLinesAddElement = ({
 
         <span className="listElementText">{description}</span>
 
-        <span className="listElementText">{adjustUOMClient(uom)}</span>
+        <span className="listElementText">{adjustUOMClient(storageUOM)}</span>
 
         <span className="verticalCenter">
           <input

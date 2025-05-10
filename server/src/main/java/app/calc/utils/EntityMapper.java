@@ -18,11 +18,26 @@ public class EntityMapper {
 
 
     public static MaterialEntity materialDTO_material(MaterialRequest dto) {
+        if ((int)dto.getConversionRatio() * 10000000 == 0)
+            dto.setConversionRatio(1);
+
+        if (dto.getStorageUOM() == null)
+            dto.setStorageUOM(dto.getPurchaseUOM());
+
+        double price = dto.getPurchasePrice();
+        if (dto.getPurchaseUOM() != dto.getStorageUOM()) {
+            price = AppFormatter.adjustPrice(dto.getPurchasePrice(), dto.getConversionRatio());
+            price = AppFormatter.roundingMaterialPrice(price);
+        }
+
         return new MaterialEntity(
                 dto.getName(),
                 dto.getDescription(),
-                dto.getUOM(),
-                dto.getPrice()
+                dto.getPurchaseUOM(),
+                dto.getStorageUOM(),
+                dto.getPurchasePrice(),
+                price,
+                dto.getConversionRatio()
         );
     }
 

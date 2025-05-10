@@ -13,7 +13,16 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: currentMaterial.name,
+      description: currentMaterial.description,
+      purchaseUOM: currentMaterial.purchaseUOM,
+      storageUOM: currentMaterial.storageUOM,
+      purchasePrice: currentMaterial.purchasePrice,
+      conversionRatio: currentMaterial.ratio,
+    },
+  });
 
   useEffect(() => {
     axios
@@ -23,8 +32,10 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
         reset({
           name: currentMaterial.name,
           description: currentMaterial.description,
-          uom: currentMaterial.uom,
-          price: currentMaterial.price,
+          purchaseUOM: currentMaterial.purchaseUOM,
+          storageUOM: currentMaterial.storageUOM,
+          purchasePrice: currentMaterial.purchasePrice,
+          conversionRatio: currentMaterial.conversionRatio,
         });
       })
       .catch((error) => console.log(error));
@@ -40,8 +51,10 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
     const material = {
       name: data.name,
       description: data.description,
-      uom: data.uom,
-      price: data.price,
+      purchaseUOM: data.purchaseUOM,
+      storageUOM: data.storageUOM,
+      purchasePrice: data.purchasePrice,
+      conversionRatio: data.conversionRatio,
     };
 
     axios
@@ -87,16 +100,33 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
         />
       </section>
 
-      <section className="materialUpdateCardUOM">
-        <select {...register("uom")} placeholder="uom" className="inputText">
+      <section className="materialUpdateCardPurchaseUOM">
+        <label className="listElementText">purchase uom</label>
+        <select {...register("purchaseUOM")} className="inputText">
           {uomToDisplay}
         </select>
       </section>
 
-      <section className="materialAddCardPrice">
+      <section className="materialUpdateCardPurchasePrice">
         <input
-          {...register("price", { required: "enter price" })}
-          placeholder="price"
+          {...register("purchasePrice", { required: "enter price" })}
+          className="inputNumber"
+          type="number"
+        />
+      </section>
+
+      <section className="materialUpdateCardStorageUOM">
+        <label className="listElementText">storage uom</label>
+        <select {...register("storageUOM")} className="inputText">
+          {uomToDisplay}
+        </select>
+      </section>
+
+      <section className="materialUpdateCardRatio">
+        <input
+          {...register("conversionRatio", {
+            required: "add conversion ratio",
+          })}
           className="inputNumber"
           type="number"
         />
@@ -110,7 +140,10 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
           <p className="formErrorMessage">{errors.description.message}</p>
         )}
         {errors.price && (
-          <p className="formErrorMessage">{errors.price.message}</p>
+          <p className="formErrorMessage">{errors.purchasePrice.message}</p>
+        )}
+        {errors.price && (
+          <p className="formErrorMessage">{errors.conversionRatio.message}</p>
         )}
       </section>
 

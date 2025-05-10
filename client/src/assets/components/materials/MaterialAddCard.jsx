@@ -9,6 +9,7 @@ import "../site/CommonStyles.css";
 const MaterialAddCard = ({ fetchMaterials }) => {
   const [uomList, setUOMList] = useState([]);
   const [summary, setSummary] = useState("");
+  const [isUOMDiffer, setIsUOMDiffer] = useState(false);
   const {
     register,
     handleSubmit,
@@ -21,7 +22,7 @@ const MaterialAddCard = ({ fetchMaterials }) => {
       .get("http://localhost:8080/api/materials/uom")
       .then((response) => {
         setUOMList(response.data);
-        setValue("uom", response.data[0]);
+        setValue("purchaseUOM", response.data[0]);
       })
       .catch((error) => console.log(error));
   }, [setValue]);
@@ -32,14 +33,18 @@ const MaterialAddCard = ({ fetchMaterials }) => {
     </option>
   ));
 
-  const handleInputChange = (e) => {};
+  const handleUOMCheck = () => {
+    setIsUOMDiffer(!isUOMDiffer);
+  };
 
   const onSubmit = async (data) => {
     const material = {
       name: data.name,
       description: data.description,
-      uom: data.uom,
-      price: data.price,
+      purchaseUOM: data.purchaseUOM,
+      storageUOM: data.storageUOM,
+      purchasePrice: data.purchasePrice,
+      conversionRatio: data.ratio,
     };
 
     axios
@@ -82,37 +87,53 @@ const MaterialAddCard = ({ fetchMaterials }) => {
 
       <section className="materialAddCardPurchaseUOM">
         <label className="listElementText">purchase uom</label>
-        <select {...register("uom")} className="inputText">
+        <select {...register("purchaseUOM")} className="inputText">
           {uomToDisplay}
         </select>
       </section>
 
       <section className="materialAddCardPurchasePrice">
         <input
-          {...register("price", { required: "enter price" })}
+          {...register("purchasePrice", { required: "enter price" })}
           type="number"
           placeholder="price"
           className="inputNumber"
         />
       </section>
 
-      <section className="materialAddCardStorageUOM">
-        <label className="listElementText">storage uom</label>
-        <select {...register("uom")} className="inputText">
-          {uomToDisplay}
-        </select>
-      </section>
-
-      <section className="materialAddCardStorageRatio">
+      <section className="materialAddCardIsConvertable">
+        <label htmlFor="isConvertable" className="listElementText">
+          purchase/ storage differs
+        </label>
         <input
-          {...register("ratio", { required: "select ratio" })}
-          type="number"
-          placeholder="ratio"
-          className="inputNumber"
+          onChange={handleUOMCheck}
+          type="checkbox"
+          id="isConvertable"
+          className="listElementText"
         />
       </section>
 
-      {summary !== "" && (
+      {isUOMDiffer && (
+        <section className="materialAddCardStorageUOM">
+          <label className="listElementText">storage uom</label>
+          <select {...register("storageUOM")} className="inputText">
+            {uomToDisplay}
+          </select>
+        </section>
+      )}
+
+      {isUOMDiffer && (
+        <section className="materialAddCardStorageRatio">
+          <input
+            {...register("ratio", { required: "add conversion ratio" })}
+            type="number"
+            placeholder="ratio"
+            className="inputNumber"
+          />
+        </section>
+      )}
+
+      {isUOMDiffer && summary !== "" && (
         <section className="materialAddCardSummary">
           <span>{summary}</span>
         </section>
@@ -127,6 +148,9 @@ const MaterialAddCard = ({ fetchMaterials }) => {
         )}
         {errors.price && (
           <p className="formErrorMessage">{errors.price.message}</p>
+        )}
+        {isUOMDiffer && errors.ratio && (
+          <p className="formErrorMessage">{errors.ratio.message}</p>
         )}
       </section>
 

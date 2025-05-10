@@ -5,6 +5,7 @@ import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
 import app.calc.entity.MaterialEntity;
 import app.calc.repository.MaterialRepository;
+import app.calc.utils.AppFormatter;
 import app.calc.utils.EntityMapper;
 import app.calc.utils.UnitOfMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,10 @@ public class MaterialService {
         final MaterialEntity materialToUpdate = materialByID.get();
         materialToUpdate.setName(dto.getName());
         materialToUpdate.setDescription(dto.getDescription());
-        materialToUpdate.setUOM(dto.getUOM());
-        materialToUpdate.setPrice(dto.getPrice());
+        materialToUpdate.setPurchaseUOM(dto.getPurchaseUOM());
+        materialToUpdate.setStorageUOM(dto.getStorageUOM());
+        materialToUpdate.setPurchasePrice(dto.getPurchasePrice());
+        materialToUpdate.setPrice(AppFormatter.adjustPrice(dto.getPurchasePrice(), dto.getConversionRatio()));
 
         final MaterialEntity updateMaterial = materialRepository.save(materialToUpdate);
         return new BackResponse<>(updateMaterial, HttpStatus.OK);

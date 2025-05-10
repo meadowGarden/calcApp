@@ -5,8 +5,10 @@ import app.calc.utils.UnitOfMeasurement;
 public class MaterialRequest {
     private String name;
     private String description;
-    private UnitOfMeasurement uomFrom;
-    private UnitOfMeasurement uomTo;
+    private UnitOfMeasurement purchaseUOM;
+    private UnitOfMeasurement storageUOM;
+    private double conversionRatio;
+    private double purchasePrice;
     private double price;
 
     public MaterialRequest() {
@@ -17,47 +19,67 @@ public class MaterialRequest {
             String description,
             UnitOfMeasurement purchaseUOM,
             UnitOfMeasurement storageUOM,
-            double price) {
+            double conversionRatio,
+            double purchasePrice
+            ) {
         this.name = name;
         this.description = description;
-        this.uomFrom = uomFrom;
-        this.uomTo = uomTo;
-        this.price = price;
+        this.purchaseUOM = purchaseUOM;
+        this.storageUOM = storageUOM;
+        this.conversionRatio = conversionRatio;
+        this.purchasePrice = purchasePrice;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public UnitOfMeasurement getUOMFrom() {
-        return uomFrom;
-    }
-    public UnitOfMeasurement getUOMTo() {
-        return uomTo;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setUOMFrom(UnitOfMeasurement uomFrom) {
-        this.uomFrom = uomFrom;
+    public UnitOfMeasurement getPurchaseUOM() {
+        return purchaseUOM;
     }
 
-    public void setUOMFrom(UnitOfMeasurement uomFrom) {
-        this.uomFrom = uomFrom;
+    public void setPurchaseUOM(UnitOfMeasurement purchaseUOM) {
+        this.purchaseUOM = purchaseUOM;
+    }
+
+    public UnitOfMeasurement getStorageUOM() {
+        return storageUOM;
+    }
+
+    public void setStorageUOM(UnitOfMeasurement storageUOM) {
+        this.storageUOM = storageUOM;
+    }
+
+    public double getConversionRatio() {
+        return conversionRatio;
+    }
+
+    public void setConversionRatio(double conversionRatio) {
+        this.conversionRatio = conversionRatio;
+    }
+
+    public double getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public void setPrice(double price) {

@@ -1,7 +1,6 @@
 .materialAddCard {
   display: grid;
   grid-template-columns: 3fr 3fr 3fr 3fr;
-  grid-template-rows: var(--space-xxl) auto var(--space-xxl);
   grid-gap: var(--space-xs);
 }
 
@@ -22,6 +21,15 @@
 .materialAddCardPurchasePrice {
   grid-column-start: 2;
   grid-column-end: 3;
+}
+.materialAddCardIsConvertable {
+  display: grid;
+  place-items: center;
+  grid-template-columns: 2fr 0.1fr 1.2fr;
+  padding: 0 var(--space-lg) 0 var(--space-lg);
+  grid-gap: var(--space-xs);
+  grid-column-start: 3;
+  grid-column-end: 5;
 }
 .materialAddCardStorageUOM {
   display: grid;

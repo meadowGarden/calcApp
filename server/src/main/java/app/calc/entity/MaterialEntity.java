@@ -20,12 +20,22 @@ public class MaterialEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "uom")
+    @Column(name = "purchase_uom")
     @Enumerated(EnumType.STRING)
-    private UnitOfMeasurement uom;
+    private UnitOfMeasurement purchaseUOM;
+
+    @Column(name = "storage_uom")
+    @Enumerated(EnumType.STRING)
+    private UnitOfMeasurement storageUOM;
+
+    @Column(name = "purchase_price")
+    private double purchasePrice;
 
     @Column(name = "price")
     private double price;
+
+    @Column(name = "conversion_ratio")
+    private double conversionRatio;
 
     @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -34,19 +44,42 @@ public class MaterialEntity {
     public MaterialEntity() {
     }
 
-    public MaterialEntity(String name, String description, UnitOfMeasurement uom, double price) {
+    public MaterialEntity(
+            String name,
+            String description,
+            UnitOfMeasurement purchaseUOM,
+            UnitOfMeasurement storageUOM,
+            double purchasePrice,
+            double price,
+            double conversionRatio
+    ){
         this.name = name;
         this.description = description;
-        this.uom = uom;
+        this.purchaseUOM = purchaseUOM;
+        this.storageUOM = storageUOM;
+        this.purchasePrice = purchasePrice;
         this.price = price;
+        this.conversionRatio = conversionRatio;
     }
 
-    public MaterialEntity(long id, String name, String description, UnitOfMeasurement uom, double price) {
+    public MaterialEntity(
+            long id,
+            String name,
+            String description,
+            UnitOfMeasurement purchaseUOM,
+            UnitOfMeasurement storageUOM,
+            double purchasePrice,
+            double price,
+            double conversionRatio
+    ) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.uom = uom;
+        this.purchaseUOM = purchaseUOM;
+        this.storageUOM = storageUOM;
+        this.purchasePrice = purchasePrice;
         this.price = price;
+        this.conversionRatio = conversionRatio;
     }
 
     public long getID() {
@@ -61,12 +94,24 @@ public class MaterialEntity {
         return description;
     }
 
-    public UnitOfMeasurement getUOM() {
-        return uom;
+    public UnitOfMeasurement getPurchaseUOM() {
+        return purchaseUOM;
+    }
+
+    public UnitOfMeasurement getStorageUOM() {
+        return storageUOM;
+    }
+
+    public double getPurchasePrice() {
+        return purchasePrice;
     }
 
     public double getPrice() {
         return price;
+    }
+
+    public double getConversionRatio() {
+        return conversionRatio;
     }
 
     public Set<BOMLineEntity> getBomLines() {
@@ -81,12 +126,24 @@ public class MaterialEntity {
         this.description = description;
     }
 
-    public void setUOM(UnitOfMeasurement uom) {
-        this.uom = uom;
+    public void setPurchaseUOM(UnitOfMeasurement purchaseUOM) {
+        this.purchaseUOM = purchaseUOM;
+    }
+
+    public void setStorageUOM(UnitOfMeasurement storageUOM) {
+        this.storageUOM = storageUOM;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public void setConversionRatio(double conversionRatio) {
+        this.conversionRatio = conversionRatio;
     }
 
     public void setBomLines(Set<BOMLineEntity> bomLines) {
@@ -95,7 +152,8 @@ public class MaterialEntity {
 
     @Override
     public String toString() {
-        return String.format("materials {id: %d, name: %s, description: %s, uom: %s, price: %.3f}",
-                this.id, this.name, this.description, this.uom, this.price);
+        return String.format(
+                "materials {id: %d, name: %s, description: %s, purchase data: %s, price: %.3f, storage data: %s, price: %.3f}",
+                this.id, this.name, this.description, this.purchaseUOM, this.purchasePrice, this.storageUOM, this.price);
     }
 }
