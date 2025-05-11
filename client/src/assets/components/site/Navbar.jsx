@@ -17,6 +17,12 @@ const Navbar = () => {
       <Link className="nbStandardElement" to="/test">
         test
       </Link>
+      <Link className="nbStandardElement" to="/register">
+        register
+      </Link>
+      <Link className="nbStandardElement" to="/login">
+        login
+      </Link>
     </div>
   );
 };
