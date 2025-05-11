@@ -41,4 +41,12 @@ public class AuthenticationController {
                 .status(HttpStatus.OK)
                 .body(response);
     }
+
+    @PostMapping(path = "/logout")
+    public ResponseEntity<?> logout() {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(null);
+    }
 }
