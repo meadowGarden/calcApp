@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./assets/components/site/Navbar";
 import TestPage from "./assets/components/test/TestPage";
 import Register from "./assets/components/auth/Register.jsx";
-import LogIn from "./assets/components/auth/Login";
+import LogIn from "./assets/components/auth/LogIn";
 
 function App() {
   return (

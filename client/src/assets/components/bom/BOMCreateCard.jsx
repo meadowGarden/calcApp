@@ -7,10 +7,12 @@ import BOMLinesAddElement from "./BOMLinesAddElement";
 import { v4 as uuidv4 } from "uuid";
 import "./BOMCreateCard.css";
 import "../site/CommonStyles.css";
+import useTokenStore from "../../storage/useTokenStore";
 
 const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
   const [bomLines, setBOMLines] = useState([]);
   const uuid = uuidv4();
+  const token = useTokenStore((state) => state.token);
   const {
     register,
     handleSubmit,
@@ -38,7 +40,9 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
     };
 
     axios
-      .post("http://localhost:8080/api/bom", bom)
+      .post("http://localhost:8080/api/bom", bom, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         console.log(res);
         fetchBOM();

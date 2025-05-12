@@ -1,0 +1,16 @@
+.registerFrom {
+  display: grid;
+  grid-gap: var(--space-xs);
+  width: 50%;
+  margin: auto;
+
+}
+
+.registerFormSection {
+  width: 100%;
+  text-align: center;
+}
+
+.registerFormInput {
+  width: 100%;
+}

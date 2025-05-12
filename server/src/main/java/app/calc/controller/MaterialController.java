@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/materials")
-@CrossOrigin("http://localhost:5173/")
 public class MaterialController {
     private final MaterialService materialService;
 

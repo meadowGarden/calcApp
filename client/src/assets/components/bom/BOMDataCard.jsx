@@ -8,9 +8,12 @@ import CostsComparator from "./CostsComparator";
 import { adjustUOMClient } from "../../../services/utils";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import useTokenStore from "../../storage/useTokenStore";
 
 const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
   const currentCost = bom.costs;
+
+  const token = useTokenStore((state) => state.token);
 
   const updatedBOM = { ...bom };
   const { costs, entity } = updatedBOM;
@@ -65,7 +68,9 @@ const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
     };
 
     axios
-      .put(`http://localhost:8080/api/bom/${entity.id}`, newEntity)
+      .put(`http://localhost:8080/api/bom/${entity.id}`, newEntity, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         console.log(res);
         fetchBOM();

@@ -1,0 +1,15 @@
+.logIn {
+  display: grid;
+  grid-gap: var(--space-xs);
+  width: 50%;
+  margin: auto;
+}
+
+.logInFormSection {
+  width: 100%;
+  text-align: center;
+}
+
+.logInFormInput {
+  width: 100%;
+}

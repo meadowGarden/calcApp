@@ -5,9 +5,11 @@ import { adjustUOMClient } from "../../../services/utils";
 import StandardButton from "../buttons/StandardButton";
 import "./MaterialUpdateCard.css";
 import "../site/CommonStyles.css";
+import useTokenStore from "../../storage/useTokenStore";
 
 const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
   const [uomList, setUOMList] = useState([]);
+  const token = useTokenStore((state) => state.token);
   const {
     register,
     reset,
@@ -26,7 +28,9 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/materials/uom")
+      .get("http://localhost:8080/api/materials/uom", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
         setUOMList(response.data);
         reset({
@@ -60,7 +64,10 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
     axios
       .put(
         `http://localhost:8080/api/materials/${currentMaterial.id}`,
-        material
+        material,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       )
       .then(() => {
         fetchMaterials();
