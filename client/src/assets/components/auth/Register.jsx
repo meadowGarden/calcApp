@@ -4,15 +4,24 @@ import "./Register.css";
 import StandardButton from "../buttons/StandardButton.jsx";
 import useTokenStore from "../../storage/useTokenStore.js";
 import axios from "axios";
+import { data, useNavigate } from "react-router";
+import AppToast from "../site/AppToast.jsx";
+import { useState } from "react";
 
 const Register = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
 
+  const [showRegistrationFailedToast, setShowRegistrationFailedToast] =
+    useState(false);
+  const toggleFailedRegistrationToast = () =>
+    setShowRegistrationFailedToast(!showRegistrationFailedToast);
   const addToken = useTokenStore((state) => state.addToken);
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     const user = {
@@ -25,9 +34,18 @@ const Register = () => {
     axios
       .post("http://localhost:8080/api/auth/register", user)
       .then((res) => {
-        if (res.status === 201) addToken(res.data.token);
+        if (res.status === 201) {
+          addToken(res.data.token);
+          navigate("/");
+        }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        switch (error.status) {
+          case 409:
+            toggleFailedRegistrationToast();
+            break;
+        }
+      });
   };
 
   return (
@@ -35,52 +53,120 @@ const Register = () => {
       <form className="registerFrom" onSubmit={handleSubmit(onSubmit)}>
         <section className="registerFormSection">
           <input
-            {...register("firstName")}
+            {...register("firstName", {
+              required: "enter first name",
+              minLength: {
+                value: 1,
+                message: "first name should be at least one character",
+              },
+              maxLength: {
+                value: 100,
+                message: "first name should be at least one character",
+              },
+            })}
             placeholder="first name"
-            className="registerFormInput"
+            className="inputText"
           />
+          {errors.firstName && (
+            <p className="formErrorMessage">{errors.firstName.message}</p>
+          )}
         </section>
 
         <section className="registerFormSection">
           <input
-            {...register("lastName")}
+            {...register("lastName", {
+              required: "enter last name",
+              minLength: {
+                value: 1,
+                message: "last name should be at least one character",
+              },
+              maxLength: {
+                value: 100,
+                message: "last name should be at least one character",
+              },
+            })}
             placeholder="last name"
-            className="registerFormInput"
+            className="inputText"
           />
+          {errors.lastName && (
+            <p className="formErrorMessage">{errors.lastName.message}</p>
+          )}
         </section>
 
         <section className="registerFormSection">
           <input
-            {...register("email")}
+            {...register("email", {
+              required: { value: true, message: "enter your email" },
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "your email is not valid",
+              },
+            })}
             placeholder="email"
-            className="registerFormInput"
+            className="inputText"
           />
+          {errors.email && (
+            <p className="formErrorMessage">{errors.email.message}</p>
+          )}
         </section>
 
         <section className="registerFormSection">
           <input
-            {...register("password")}
+            {...register("password", {
+              required: "you must enter your password",
+              minLength: {
+                value: 2,
+                message: "your password should be at lest two characters long",
+              },
+              maxLength: {
+                value: 15,
+                message: "your password should not exceed 15 characters",
+              },
+            })}
             placeholder="password"
-            className="registerFormInput"
+            className="inputText"
+            type="password"
           />
+          {errors.password && (
+            <p className="formErrorMessage">{errors.password.message}</p>
+          )}
         </section>
 
         <section className="registerFormSection">
           <input
-            {...register("repeatPassword")}
+            {...register("repeatPassword", {
+              required: "repeat password",
+              validate: (value) => {
+                if (watch("password") != value) {
+                  return "password does not match";
+                }
+              },
+            })}
             placeholder="repeat password"
-            className="registerFormInput"
+            className="inputText"
+            type="password"
           />
+          {errors.repeatPassword && (
+            <p className="formErrorMessage">{errors.repeatPassword.message}</p>
+          )}
         </section>
 
         <section className="registerFormSection">
           <StandardButton
             handleClick={handleSubmit(onSubmit)}
             label={"submit"}
-            className="registerFormInput"
           />
         </section>
       </form>
+
+      <AppToast
+        title={"registration failed"}
+        message={"provided email already in use"}
+        status={"fail"}
+        show={showRegistrationFailedToast}
+        onClose={toggleFailedRegistrationToast}
+        delay={5000}
+      />
     </PageContainer>
   );
 };

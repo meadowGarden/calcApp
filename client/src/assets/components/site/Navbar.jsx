@@ -46,7 +46,7 @@ const Navbar = () => {
         register
       </Link>
 
-      <section>
+      <section className="nbStandardElement">
         {token === null ? (
           <Link className="nbStandardElement" to="/login">
             login

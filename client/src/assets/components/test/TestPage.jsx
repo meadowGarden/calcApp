@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import PageContainer from "../site/PageContainer";
+import AppToast from "../site/AppToast";
 
 const TestPage = () => {
   const {
@@ -31,6 +32,9 @@ const TestPage = () => {
         <input {...register("email")} placeholder="email" />
         <button>submit</button>
       </form>
+
+      <AppToast title={"test"} message={"test message"}
+      status={"fail"} />
     </PageContainer>
   );
 };

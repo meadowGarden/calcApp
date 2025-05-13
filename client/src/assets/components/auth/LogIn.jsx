@@ -4,6 +4,10 @@ import StandardButton from "../buttons/StandardButton.jsx";
 import axios from "axios";
 import useTokenStore from "../../storage/useTokenStore.js";
 import "./LogIn.css";
+import { useNavigate } from "react-router";
+import "../site/CommonStyles.css";
+import AppToast from "../site/AppToast.jsx";
+import { useState } from "react";
 
 const LogIn = () => {
   const {
@@ -13,6 +17,10 @@ const LogIn = () => {
   } = useForm();
 
   const addToken = useTokenStore((state) => state.addToken);
+  const navigate = useNavigate();
+  const [showFailToast, setShowFailToast] = useState(false);
+
+  const toggleFailToast = () => setShowFailToast(!showFailToast);
 
   const onSubmit = (data) => {
     const user = {
@@ -23,10 +31,22 @@ const LogIn = () => {
     axios
       .post("http://localhost:8080/api/auth/authenticate", user)
       .then((res) => {
-        console.log(res);
-        if (res.status === 200) addToken(res.data.token);
+        if (res.status === 200) {
+        }
+
+        switch (res.status) {
+          case 200:
+            {
+              addToken(res.data.token);
+              navigate("/");
+            }
+            break;
+          case 403: {
+            toggleFailToast();
+          }
+        }
       })
-      .catch((err) => console.log(err));
+      .catch(() => toggleFailToast());
   };
 
   return (
@@ -34,18 +54,37 @@ const LogIn = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="logIn">
         <section className="logInFormSection">
           <input
-            {...register("email")}
+            {...register("email", {
+              required: {
+                value: true,
+                message: "enter email",
+              },
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "your email is not valid",
+              },
+            })}
+            type="text"
             placeholder="email"
             className="logInFormInput"
           />
+          {errors.email && (
+            <p className="formErrorMessage">{errors.email.message}</p>
+          )}
         </section>
 
         <section className="logInFormSection">
           <input
-            {...register("password")}
+            {...register("password", {
+              required: "enter password",
+            })}
+            type="password"
             placeholder="password"
             className="logInFormInput"
           />
+          {errors.password && (
+            <p className="formErrorMessage">{errors.password.message}</p>
+          )}
         </section>
 
         <section>
@@ -56,6 +95,14 @@ const LogIn = () => {
           />
         </section>
       </form>
+
+      <AppToast
+        title={"log in failed"}
+        message={"email and/ or password incorrect"}
+        onClose={toggleFailToast}
+        show={showFailToast}
+        delay={5000}
+      />
     </PageContainer>
   );
 };

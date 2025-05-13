@@ -18,7 +18,7 @@ public class EntityMapper {
 
 
     public static MaterialEntity materialDTO_material(MaterialRequest dto) {
-        if (Double.compare(dto.getConversionRatio(), 0) != 0)
+        if (Double.compare(dto.getConversionRatio(), 0) == 0)
             dto.setConversionRatio(1);
 
         if (dto.getStorageUOM() == null)

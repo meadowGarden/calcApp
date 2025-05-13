@@ -9,6 +9,7 @@ import "./MaterialPage.css";
 import AddButton from "../buttons/AddButton.jsx";
 import "./MaterialPage.css";
 import useTokenStore from "../../storage/useTokenStore.js";
+import AppToast from "../site/AppToast.jsx";
 
 const MaterialsPage = () => {
   const [materials, setMaterials] = useState([]);
@@ -16,6 +17,7 @@ const MaterialsPage = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const token = useTokenStore((state) => state.token);
+  const [showAddMaterialToast, setShowAddMaterialToast] = useState(false);
 
   const fetchMaterials = () => {
     axios
@@ -56,6 +58,9 @@ const MaterialsPage = () => {
       .catch((error) => console.log(error));
   };
 
+  const toggleShowAddMaterialToast = () =>
+    setShowAddMaterialToast(!showAddMaterialToast);
+
   const materialsToDisplay = materials.map((material) => (
     <MaterialListElement
       key={material.id}
@@ -78,7 +83,11 @@ const MaterialsPage = () => {
           handleClose={handleAddModalClose}
           title={"add new material"}
         >
-          <MaterialAddCard fetchMaterials={fetchMaterials} />
+          <MaterialAddCard
+            fetchMaterials={fetchMaterials}
+            closeCard={handleAddModalClose}
+            showAddToast={toggleShowAddMaterialToast}
+          />
         </DataModal>
 
         <DataModal
@@ -92,6 +101,15 @@ const MaterialsPage = () => {
           />
         </DataModal>
       </div>
+
+      <AppToast
+        title={"success"}
+        message={"material added successfully"}
+        status={"success"}
+        onClose={toggleShowAddMaterialToast}
+        show={showAddMaterialToast}
+        delay={3000}
+      />
     </PageContainer>
   );
 };

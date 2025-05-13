@@ -4,6 +4,7 @@ import app.calc.dto.request.AuthenticateRequest;
 import app.calc.dto.request.RegisterRequest;
 import app.calc.dto.response.AuthenticationResponse;
 import app.calc.entity.Token;
+import app.calc.exceptions.EntityDuplicationException;
 import app.calc.repository.TokenRepository;
 import app.calc.repository.UserRepository;
 import app.calc.user.Role;
@@ -46,7 +47,7 @@ public class AuthenticationService {
         final String email = request.getEmail();
         final Optional<User> possibleUser = userRepository.findByEmail(email);
         if (possibleUser.isPresent())
-            throw new UnsupportedOperationException("user already exists");
+            throw new EntityDuplicationException("user already exists");
 
         final String firstName = request.getFirstName();
         final String lastName = request.getLastName();

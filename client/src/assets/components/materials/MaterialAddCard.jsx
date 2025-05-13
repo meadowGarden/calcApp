@@ -7,7 +7,7 @@ import "./MaterialAddCard.css";
 import "../site/CommonStyles.css";
 import useTokenStore from "../../storage/useTokenStore";
 
-const MaterialAddCard = ({ fetchMaterials }) => {
+const MaterialAddCard = ({ fetchMaterials, closeCard, showAddToast }) => {
   const [uomList, setUOMList] = useState([]);
   const [summary, setSummary] = useState("");
   const [isUOMDiffer, setIsUOMDiffer] = useState(false);
@@ -16,7 +16,7 @@ const MaterialAddCard = ({ fetchMaterials }) => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isSubmitting, setError },
+    formState: { errors },
   } = useForm();
 
   useEffect(() => {
@@ -57,6 +57,8 @@ const MaterialAddCard = ({ fetchMaterials }) => {
       })
       .then(() => {
         fetchMaterials();
+        closeCard();
+        showAddToast();
       })
       .catch((error) => console.log(error));
   };
@@ -162,8 +164,8 @@ const MaterialAddCard = ({ fetchMaterials }) => {
 
       <section className="listElementButton materialAddCardButton">
         <StandardButton
-          handleClick={handleSubmit(onSubmit)}
           type="submit"
+          handleClick={handleSubmit(onSubmit)}
           label="add"
         />
       </section>

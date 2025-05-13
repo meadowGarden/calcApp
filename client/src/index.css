@@ -2,10 +2,15 @@
   background-color: #d0e4f0;
 
   --standard-background-color: #d0e4f0;
-  
+
   --modal-background-color: #f6fafc;
   --modal-background-frame-color: #dee7eb;
   --modal-border-color: #dee7eb;
+
+  --toast-success-background-color: #d1f2d6;
+  --toast-success-text-color: #276738;
+  --toast-fail-background-color: #f8d7da;
+  --toast-fail-text-color: #842029;
 
   --input-background-color: #ffffff;
   --input-value-color: #2f3b4c;

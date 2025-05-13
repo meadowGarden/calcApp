@@ -1,0 +1,26 @@
+.appToast {
+  border: none !important;
+  border-radius: var(--space-xs) !important;
+  box-shadow: var(--space-xs) var(--space-xxs) rgba(0, 0, 0, 0.08) !important;
+  overflow: hidden !important;
+}
+
+.appToastHeaderSuccess {
+  background-color: var(--toast-success-background-color) !important;
+  color: var(--toast-success-text-color) !important;
+  border-bottom: none !important;
+}
+.appToastBodySuccess {
+  background-color: var(--toast-success-background-color);
+  color: var(--toast-success-text-color);
+}
+
+.appToastHeaderFail {
+  background-color: var(--toast-fail-background-color) !important;
+  color: var(--toast-fail-text-color) !important;
+  border-bottom: none !important;
+}
+.appToastBodyFail {
+  background-color: var(--toast-fail-background-color);
+  color: var(--toast-fail-text-color);
+}
