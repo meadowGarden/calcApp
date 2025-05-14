@@ -77,7 +77,7 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwtToken);
     }
 
-    private void revokeAllUserTokens(final User user) {
+    public void revokeAllUserTokens(final User user) {
         final List<Token> validTokens = tokenRepository.findAllValidTokensByUser(user.getId());
         if (validTokens.isEmpty())
             return;
@@ -90,7 +90,7 @@ public class AuthenticationService {
         tokenRepository.saveAll(validTokens);
     }
 
-    private void saveUserToken(User user, String token) {
+    public void saveUserToken(User user, String token) {
         final Token tokenToSave = new Token(token, TokenType.BEARER, false, false, user);
         tokenRepository.save(tokenToSave);
     }

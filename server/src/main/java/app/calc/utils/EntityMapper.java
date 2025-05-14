@@ -3,10 +3,12 @@ package app.calc.utils;
 import app.calc.dto.request.BOMLineRequest;
 import app.calc.dto.request.BOMRequest;
 import app.calc.dto.request.MaterialRequest;
+import app.calc.dto.request.UserRequest;
 import app.calc.entity.BOMEntity;
 import app.calc.entity.BOMLineEntity;
 import app.calc.entity.MaterialEntity;
 import app.calc.repository.BOMLineRepository;
+import app.calc.user.User;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.HashSet;
@@ -15,7 +17,15 @@ import java.util.stream.Collectors;
 
 public class EntityMapper {
 
-
+    public static User userDTO_user(UserRequest dto) {
+        return new User(
+                dto.getFirstName(),
+                dto.getLastName(),
+                dto.getEmail(),
+                dto.getPassword(),
+                dto.getRole()
+        );
+    }
 
     public static MaterialEntity materialDTO_material(MaterialRequest dto) {
         if (Double.compare(dto.getConversionRatio(), 0) == 0)
