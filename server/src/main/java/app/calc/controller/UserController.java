@@ -3,6 +3,7 @@ package app.calc.controller;
 import app.calc.dto.request.UserRequest;
 import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
+import app.calc.dto.response.UserResponse;
 import app.calc.service.UserService;
 import app.calc.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody final UserRequest userRequest) {
-        final BackResponse<User> response = userService.createUser(userRequest);
+        final BackResponse<UserResponse> response = userService.createUser(userRequest);
         return ResponseEntity
                 .status(response.getStatus())
                 .body(response.getObject());

@@ -7,7 +7,7 @@ import BOMDataCard from "./BOMDataCard";
 import BOMCreateCard from "./BOMCreateCard";
 import AddButton from "../buttons/AddButton";
 import "./BOMPage.css";
-import useTokenStore from "../../storage/useTokenStore.js";
+import useUserStore from "../../storage/useUserStore";
 
 const BOMPage = () => {
   const [bom, setBOM] = useState([]);
@@ -16,12 +16,12 @@ const BOMPage = () => {
   const [showBOMDataModal, setShowBOMDataModal] = useState(false);
   const [materials, setMaterials] = useState([]);
   const [uomList, setUOMList] = useState([]);
-  const token = useTokenStore((state) => state.token);
+  const user = useUserStore((state) => state.user);
 
   const fetchBOM = () => {
     axios
       .get("http://localhost:8080/api/bom", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((response) => {
         setBOM(response.data);
@@ -33,7 +33,7 @@ const BOMPage = () => {
   const fetchMaterials = () => {
     axios
       .get("http://localhost:8080/api/materials", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((response) => {
         setMaterials(response.data);
@@ -45,7 +45,7 @@ const BOMPage = () => {
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/materials/uom", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setUOMList(res.data))
       .catch((error) => console.log(error));

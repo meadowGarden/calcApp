@@ -8,6 +8,7 @@ import app.calc.service.MaterialService;
 import app.calc.utils.UnitOfMeasurement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +56,7 @@ public class MaterialController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteMaterialByID(@PathVariable long id) {
         final BackResponse<MaterialEntity> response = materialService.deleteMaterialByID(id);
         return ResponseEntity

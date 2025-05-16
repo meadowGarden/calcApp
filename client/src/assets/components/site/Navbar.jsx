@@ -1,21 +1,21 @@
 import { Link, useNavigate } from "react-router";
 import "./Navbar.css";
-import useTokenStore from "../../storage/useTokenStore";
 import axios from "axios";
+import useUserStore from "../../storage/useUserStore";
 
 const Navbar = () => {
-  const token = useTokenStore((state) => state.token);
-  const isLoggedIn = token !== null;
-  const removeToken = useTokenStore((state) => state.removeToken);
+  const user = useUserStore((state) => state.user);
+  const isLoggedIn = user !== null;
+  const logOut = useUserStore((state) => state.removeUser);
   const navigate = useNavigate();
 
   const onLogOut = () => {
     axios
       .post("http://localhost:8080/api/auth/logout", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then(() => {
-        removeToken();
+        logOut();
         navigate("/");
       })
       .catch();
@@ -47,7 +47,8 @@ const Navbar = () => {
       </Link>
 
       <section className="nbStandardElement">
-        {token === null ? (
+        {/* {user === null || user?.token === null ? ( */}
+        {user === null ? (
           <Link className="nbStandardElement" to="/login">
             login
           </Link>
@@ -56,6 +57,12 @@ const Navbar = () => {
             logout
           </div>
         )}
+      </section>
+
+      <section className="nbStandardElement">
+        <span className="nbStandardElement">
+          {user?.user.firstName} {user?.user.lastName}
+        </span>
       </section>
     </div>
   );

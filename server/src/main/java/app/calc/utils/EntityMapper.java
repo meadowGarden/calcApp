@@ -4,6 +4,7 @@ import app.calc.dto.request.BOMLineRequest;
 import app.calc.dto.request.BOMRequest;
 import app.calc.dto.request.MaterialRequest;
 import app.calc.dto.request.UserRequest;
+import app.calc.dto.response.UserResponse;
 import app.calc.entity.BOMEntity;
 import app.calc.entity.BOMLineEntity;
 import app.calc.entity.MaterialEntity;
@@ -16,6 +17,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EntityMapper {
+
+
+
+
+    public static UserResponse user_userDTO(final User user) {
+        return new UserResponse(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getRole(),
+                user.isEnabled()
+        );
+    }
 
     public static User userDTO_user(UserRequest dto) {
         return new User(

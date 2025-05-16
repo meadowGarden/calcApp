@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form";
 import PageContainer from "../site/PageContainer.jsx";
 import "./Register.css";
 import StandardButton from "../buttons/StandardButton.jsx";
-import useTokenStore from "../../storage/useTokenStore.js";
 import axios from "axios";
-import { data, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import AppToast from "../site/AppToast.jsx";
 import { useState } from "react";
+import useUserStore from "../../storage/useUserStore.js";
 
 const Register = () => {
   const {
@@ -20,7 +20,7 @@ const Register = () => {
     useState(false);
   const toggleFailedRegistrationToast = () =>
     setShowRegistrationFailedToast(!showRegistrationFailedToast);
-  const addToken = useTokenStore((state) => state.addToken);
+  const addUser = useUserStore((state) => state.addUser);
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -35,7 +35,7 @@ const Register = () => {
       .post("http://localhost:8080/api/auth/register", user)
       .then((res) => {
         if (res.status === 201) {
-          addToken(res.data.token);
+          addUser(res.data);
           navigate("/");
         }
       })

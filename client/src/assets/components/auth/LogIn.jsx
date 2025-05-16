@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import PageContainer from "../site/PageContainer.jsx";
 import StandardButton from "../buttons/StandardButton.jsx";
 import axios from "axios";
-import useTokenStore from "../../storage/useTokenStore.js";
 import "./LogIn.css";
 import { useNavigate } from "react-router";
 import "../site/CommonStyles.css";
 import AppToast from "../site/AppToast.jsx";
 import { useState } from "react";
+import useUserStore from "../../storage/useUserStore.js";
 
 const LogIn = () => {
   const {
@@ -16,7 +16,7 @@ const LogIn = () => {
     formState: { errors },
   } = useForm();
 
-  const addToken = useTokenStore((state) => state.addToken);
+  const addUser = useUserStore((state) => state.addUser);
   const navigate = useNavigate();
   const [showFailToast, setShowFailToast] = useState(false);
 
@@ -31,13 +31,10 @@ const LogIn = () => {
     axios
       .post("http://localhost:8080/api/auth/authenticate", user)
       .then((res) => {
-        if (res.status === 200) {
-        }
-
         switch (res.status) {
           case 200:
             {
-              addToken(res.data.token);
+              addUser(res.data);
               navigate("/");
             }
             break;

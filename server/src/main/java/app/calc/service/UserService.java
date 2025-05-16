@@ -3,6 +3,7 @@ package app.calc.service;
 import app.calc.dto.request.UserRequest;
 import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
+import app.calc.dto.response.UserResponse;
 import app.calc.exceptions.EntityDuplicationException;
 import app.calc.repository.UserRepository;
 import app.calc.user.User;
@@ -35,7 +36,7 @@ public class UserService {
         this.jwtService = jwtService;
     }
 
-    public BackResponse<User> createUser(final UserRequest request) {
+    public BackResponse<UserResponse> createUser(final UserRequest request) {
         final String email = request.getEmail();
         final Optional<User> possibleUser = userRepository.findByEmail(email);
         if (possibleUser.isPresent())
@@ -52,7 +53,7 @@ public class UserService {
         authenticationService.revokeAllUserTokens(savedUser);
         authenticationService.saveUserToken(savedUser, jwtToken);
 
-        return new BackResponse<>(savedUser, HttpStatus.CREATED);
+        return new BackResponse<>(EntityMapper.user_userDTO(savedUser), HttpStatus.CREATED);
     }
 
     public BackListResponse<User> getAllUsers() {

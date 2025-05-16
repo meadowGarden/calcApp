@@ -8,21 +8,21 @@ import PageContainer from "../site/PageContainer.jsx";
 import "./MaterialPage.css";
 import AddButton from "../buttons/AddButton.jsx";
 import "./MaterialPage.css";
-import useTokenStore from "../../storage/useTokenStore.js";
 import AppToast from "../site/AppToast.jsx";
+import useUserStore from "../../storage/useUserStore.js";
 
 const MaterialsPage = () => {
   const [materials, setMaterials] = useState([]);
   const [currentMaterial, setCurrentMaterial] = useState({});
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const token = useTokenStore((state) => state.token);
+  const user = useUserStore((state) => state.user);
   const [showAddMaterialToast, setShowAddMaterialToast] = useState(false);
 
   const fetchMaterials = () => {
     axios
       .get("http://localhost:8080/api/materials", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((response) => {
         setMaterials(response.data);
@@ -52,7 +52,7 @@ const MaterialsPage = () => {
   const handleLineDelete = (id) => {
     axios
       .delete(`http://localhost:8080/api/materials/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then(() => fetchMaterials())
       .catch((error) => console.log(error));

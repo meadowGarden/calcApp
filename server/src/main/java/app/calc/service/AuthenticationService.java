@@ -9,6 +9,7 @@ import app.calc.repository.TokenRepository;
 import app.calc.repository.UserRepository;
 import app.calc.user.Role;
 import app.calc.user.User;
+import app.calc.utils.EntityMapper;
 import app.calc.utils.TokenType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -60,7 +61,7 @@ public class AuthenticationService {
 
         revokeAllUserTokens(savedUser);
         saveUserToken(savedUser, jwtToken);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthenticationResponse(jwtToken, EntityMapper.user_userDTO(savedUser));
     }
 
     public AuthenticationResponse authenticate(AuthenticateRequest request) {
@@ -74,7 +75,7 @@ public class AuthenticationService {
 
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthenticationResponse(jwtToken, EntityMapper.user_userDTO(user));
     }
 
     public void revokeAllUserTokens(final User user) {
