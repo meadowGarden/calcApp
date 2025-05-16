@@ -98,7 +98,7 @@ const LogIn = () => {
 
       <AppToast
         title={"log in failed"}
-        message={"email and/ or password incorrect"}
+        message={"log in failed"}
         onClose={toggleFailToast}
         show={showFailToast}
         delay={5000}
