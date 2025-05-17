@@ -1,45 +1,18 @@
 const LINE_ROUNDING = 1000;
 
-export const adjustUOMClient = (s) => {
-  switch (s) {
-    case "KILOGRAM":
-      return "kg";
-    case "CUBIC_M":
-      return "m3";
-    case "SQUARE_M":
-      return "m2";
-    case "LITER":
-      return "l";
-    case "PIECE":
-      return "pcs";
-    case "METER":
-      return "m";
-    case "SET":
-      return "set";
-    default:
-      return "n/a";
-  }
+export const uomDictServerClient = {
+  KILOGRAM: "kg",
+  CUBIC_M: "m3",
+  SQUARE_M: "m2",
+  LITER: "l",
+  PIECE: "pcs",
+  METER: "m",
+  SET: "set",
 };
 
-export const adjustUOMServer = (s) => {
-  switch (s) {
-    case "kg":
-      return "KILOGRAM";
-    case "m2":
-      return "SQUARE_M";
-    case "m3":
-      return "CUBIC_M";
-    case "l":
-      return "LITER";
-    case "pcs":
-      return "PIECE";
-    case "m":
-      return "METER";
-    case "set":
-      return "SET";
-    default:
-      return "n/a";
-  }
+export const roleDictServerClient = {
+  ADMIN: "admin",
+  USER: "user",
 };
 
 export const calculateLineCosts = (quantity, price) => {

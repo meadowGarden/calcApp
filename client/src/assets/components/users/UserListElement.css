@@ -1,0 +1,12 @@
+.userListElement {
+  background-color: var(--list-element-background-color);
+  color: var(--list-element-value-color);
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 1fr;
+  grid-gap: var(--space-xs);
+  padding: 0 var(--space-xs);
+}
+.userListElement:hover {
+  background-color: var(--list-element-background-hover-color);
+  cursor: pointer;
+}

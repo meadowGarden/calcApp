@@ -5,7 +5,6 @@ import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
 import app.calc.dto.response.UserResponse;
 import app.calc.service.UserService;
-import app.calc.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +21,7 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> createUser(@RequestBody final UserRequest userRequest) {
         final BackResponse<UserResponse> response = userService.createUser(userRequest);
         return ResponseEntity
@@ -30,9 +30,9 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAllUsers() {
-        final BackListResponse<User> response = userService.getAllUsers();
+        final BackListResponse<UserResponse> response = userService.getAllUsers();
         return ResponseEntity
                 .status(response.getStatus())
                 .body(response.getEntities());
@@ -40,7 +40,7 @@ public class UserController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> getUserByID(@PathVariable long id) {
-        final BackResponse<User> response = userService.getUserByID(id);
+        final BackResponse<UserResponse> response = userService.getUserByID(id);
         return ResponseEntity
                 .status(response.getStatus())
                 .body(response.getObject());
@@ -48,7 +48,7 @@ public class UserController {
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody UserRequest request) {
-        final BackResponse<User> response = userService.updateUserByID(id, request);
+        final BackResponse<UserResponse> response = userService.updateUserByID(id, request);
         return ResponseEntity
                 .status(response.getStatus())
                 .body(response.getObject());
@@ -56,7 +56,7 @@ public class UserController {
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable long id) {
-        final BackResponse<User> response = userService.deleteUserByID(id);
+        final BackResponse<UserResponse> response = userService.deleteUserByID(id);
         return ResponseEntity
                 .status(response.getStatus())
                 .body(response.getObject());

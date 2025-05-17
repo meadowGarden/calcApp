@@ -56,19 +56,21 @@ public class UserService {
         return new BackResponse<>(EntityMapper.user_userDTO(savedUser), HttpStatus.CREATED);
     }
 
-    public BackListResponse<User> getAllUsers() {
-        final List<User> list = userRepository.findAll();
+    public BackListResponse<UserResponse> getAllUsers() {
+        final List<UserResponse> list = userRepository.findAll().stream()
+                .map(EntityMapper::user_userDTO)
+                .toList();
         return new BackListResponse<>(list, HttpStatus.OK);
     }
 
-    public BackResponse<User> getUserByID(long id) {
+    public BackResponse<UserResponse> getUserByID(long id) {
         final Optional<User> userByID = userRepository.findById(id);
         return userByID
-                .map(user -> new BackResponse<>(user, HttpStatus.OK))
+                .map(user -> new BackResponse<>(EntityMapper.user_userDTO(userByID.get()), HttpStatus.OK))
                 .orElseGet(() -> new BackResponse<>(null, HttpStatus.NOT_FOUND));
     }
 
-    public BackResponse<User> updateUserByID(long id, UserRequest dto) {
+    public BackResponse<UserResponse> updateUserByID(long id, UserRequest dto) {
         final Optional<User> userByID = userRepository.findById(id);
         if (userByID.isEmpty())
             return new BackResponse<>(null, HttpStatus.NOT_FOUND);
@@ -81,10 +83,10 @@ public class UserService {
         userToUpdate.setRole(dto.getRole());
 
         final User updatedUser = userRepository.save(userToUpdate);
-        return new BackResponse<>(updatedUser, HttpStatus.OK);
+        return new BackResponse<>(EntityMapper.user_userDTO(updatedUser), HttpStatus.OK);
     }
 
-    public BackResponse<User> deleteUserByID(long id) {
+    public BackResponse<UserResponse> deleteUserByID(long id) {
         final Optional<User> userByID = userRepository.findById(id);
         if (userByID.isEmpty())
             return new BackResponse<>(null, HttpStatus.NOT_FOUND);

@@ -1,5 +1,8 @@
 import { useForm } from "react-hook-form";
-import { adjustUOMClient, calculateLineCosts } from "../../../services/utils";
+import {
+  calculateLineCosts,
+  uomDictServerClient,
+} from "../../../services/utils.js";
 import "./BOMLinesListElement.css";
 import "../site/CommonStyles.css";
 import StandardButton from "../buttons/StandardButton";
@@ -43,7 +46,7 @@ const BOMLinesListElement = ({
     formState: { errors },
   } = useForm({ defaultValues: { name: material.name } });
 
-  const adjustedUOM = adjustUOMClient(material.storageUOM);
+  const adjustedUOM = uomDictServerClient[material.storageUOM];
   const lineCosts = calculateLineCosts(quantity, material.price);
 
   const materialOptions = materials.map((material) => (

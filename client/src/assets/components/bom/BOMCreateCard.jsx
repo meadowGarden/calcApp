@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { adjustUOMClient } from "../../../services/utils";
+import { uomDictServerClient } from "../../../services/utils";
 import StandardButton from "../buttons/StandardButton";
 import axios from "axios";
 import { useState } from "react";
@@ -27,7 +27,7 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
 
   const uomOptions = uomList.map((uom) => (
     <option value={uom} key={uom}>
-      {adjustUOMClient(uom)}
+      {uomDictServerClient[uom]}
     </option>
   ));
 

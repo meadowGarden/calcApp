@@ -18,7 +18,6 @@ const MaterialsPage = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const user = useUserStore((state) => state.user);
   const [showAddMaterialToast, setShowAddMaterialToast] = useState(false);
-
   const fetchMaterials = () => {
     axios
       .get("http://localhost:8080/api/materials", {

@@ -5,7 +5,7 @@ import "./BOMDataCard.css";
 import StandardButton from "../buttons/StandardButton";
 import "../site/CommonStyles.css";
 import CostsComparator from "./CostsComparator";
-import { adjustUOMClient } from "../../../services/utils";
+import { uomDictServerClient } from "../../../services/utils";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import useUserStore from "../../storage/useUserStore";
@@ -45,7 +45,7 @@ const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
 
   const uomOptions = uomList.map((uom) => (
     <option key={uom} value={uom}>
-      {adjustUOMClient(uom)}
+      {uomDictServerClient[uom]}
     </option>
   ));
 

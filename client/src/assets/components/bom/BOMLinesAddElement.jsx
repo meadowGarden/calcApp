@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./BOMPage.css";
 import "../site/CommonStyles.css";
-import { adjustUOMClient } from "../../../services/utils";
+import { uomDictServerClient } from "../../../services/utils";
 import "./BOMLinesAddElement.css";
 import "../site/CommonStyles.css";
 import StandardButton from "../buttons/StandardButton";
@@ -59,7 +59,9 @@ const BOMLinesAddElement = ({
 
         <span className="listElementText">{description}</span>
 
-        <span className="listElementText">{adjustUOMClient(storageUOM)}</span>
+        <span className="listElementText">
+          {uomDictServerClient[storageUOM]}
+        </span>
 
         <span className="verticalCenter">
           <input

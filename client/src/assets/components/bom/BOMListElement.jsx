@@ -1,6 +1,6 @@
 import "./BOMListElement.css";
 import "../../../services/utils.js";
-import { adjustUOMClient } from "../../../services/utils.js";
+import { uomDictServerClient } from "../../../services/utils.js";
 import StandardButton from "../buttons/StandardButton.jsx";
 import axios from "axios";
 import "../site/CommonStyles.css";
@@ -8,7 +8,7 @@ import useUserStore from "../../storage/useUserStore.js";
 
 function BOMListElement({ data, handleClick, fetchBOM }) {
   const { name, description, uom } = data.entity;
-  const adjustedUOM = adjustUOMClient(uom);
+  const adjustedUOM = uomDictServerClient[uom];
   const costs = data.costs;
   const user = useUserStore((state) => state.user);
 

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api/bom")
-@CrossOrigin("http://localhost:5173/")
 public class BOMController {
     private final BOMService bomService;
 

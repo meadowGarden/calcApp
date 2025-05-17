@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { adjustUOMClient } from "../../../services/utils";
+import { uomDictServerClient } from "../../../services/utils";
 import StandardButton from "../buttons/StandardButton";
 import "./MaterialAddCard.css";
 import "../site/CommonStyles.css";
@@ -31,9 +31,9 @@ const MaterialAddCard = ({ fetchMaterials, closeCard, showAddToast }) => {
       .catch((error) => console.log(error));
   }, [setValue]);
 
-  const uomToDisplay = uomList.map((u) => (
-    <option value={u} key={u}>
-      {adjustUOMClient(u)}
+  const uomToDisplay = uomList.map((uom) => (
+    <option value={uom} key={uom}>
+      {uomDictServerClient[uom]}
     </option>
   ));
 

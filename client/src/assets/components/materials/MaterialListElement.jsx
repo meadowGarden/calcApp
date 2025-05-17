@@ -1,11 +1,11 @@
 import StandardButton from "../buttons/StandardButton";
 import "./materialListElement.css";
-import { adjustUOMClient } from "../../../services/utils.js";
+import { uomDictServerClient } from "../../../services/utils.js";
 import "../site/CommonStyles.css";
 
 const MaterialListElement = ({ data, handleClick, handleLineDelete }) => {
   const { id, name, description, storageUOM, price } = data;
-  const adjustedUOM = adjustUOMClient(storageUOM);
+  const adjustedUOM = uomDictServerClient[storageUOM];
 
   return (
     <div onClick={() => handleClick(data)} className="materialListElement">
