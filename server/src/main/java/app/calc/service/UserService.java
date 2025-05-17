@@ -1,7 +1,6 @@
 package app.calc.service;
 
 import app.calc.dto.request.UserRequest;
-import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
 import app.calc.dto.response.UserResponse;
 import app.calc.exceptions.EntityDuplicationException;
@@ -9,6 +8,9 @@ import app.calc.repository.UserRepository;
 import app.calc.user.User;
 import app.calc.utils.EntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,11 +58,21 @@ public class UserService {
         return new BackResponse<>(EntityMapper.user_userDTO(savedUser), HttpStatus.CREATED);
     }
 
-    public BackListResponse<UserResponse> getAllUsers() {
-        final List<UserResponse> list = userRepository.findAll().stream()
+    public BackResponse<Page<UserResponse>> getAllUsers(
+            PageRequest pageRequest,
+            String firstNameContains,
+            String lastNameContains
+    ) {
+        final Page<User> pageRaw =
+                userRepository.findByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(
+                        pageRequest, firstNameContains, lastNameContains);
+
+        final List<UserResponse> userList = pageRaw.get()
                 .map(EntityMapper::user_userDTO)
                 .toList();
-        return new BackListResponse<>(list, HttpStatus.OK);
+
+        Page<UserResponse> adjustedPage = new PageImpl<>(userList, pageRequest, pageRequest.getPageSize());
+        return new BackResponse<>(adjustedPage, HttpStatus.OK);
     }
 
     public BackResponse<UserResponse> getUserByID(long id) {

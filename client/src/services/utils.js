@@ -1,4 +1,4 @@
-const LINE_ROUNDING = 1000;
+import { LINE_ROUNDING } from "./constants";
 
 export const uomDictServerClient = {
   KILOGRAM: "kg",

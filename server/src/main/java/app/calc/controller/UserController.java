@@ -1,11 +1,13 @@
 package app.calc.controller;
 
 import app.calc.dto.request.UserRequest;
-import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
 import app.calc.dto.response.UserResponse;
 import app.calc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +33,26 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> getAllUsers() {
-        final BackListResponse<UserResponse> response = userService.getAllUsers();
+    public ResponseEntity<?> getAllUsers(
+            @RequestParam(defaultValue = "0") Integer pageNumber,
+            @RequestParam(defaultValue = "20") Integer numberOfItems,
+            @RequestParam(defaultValue = "lastName") String sortBy,
+            @RequestParam(defaultValue = "true") boolean sortAsc,
+            @RequestParam(required = false) String firstNameContains,
+            @RequestParam(required = false) String lastNameContains
+    ) {
+        final Sort.Direction direction = sortAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        final Sort sort = Sort.by(direction, sortBy);
+        final PageRequest pageRequest = PageRequest.of(pageNumber, numberOfItems, sort);
+        final BackResponse<Page<UserResponse>> response = userService.getAllUsers(
+                pageRequest,
+                firstNameContains,
+                lastNameContains
+        );
+
         return ResponseEntity
                 .status(response.getStatus())
-                .body(response.getEntities());
+                .body(response.getObject());
     }
 
     @GetMapping(path = "/{id}")
