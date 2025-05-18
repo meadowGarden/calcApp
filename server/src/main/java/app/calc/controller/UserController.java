@@ -34,16 +34,16 @@ public class UserController {
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAllUsers(
-            @RequestParam(defaultValue = "0") Integer pageNumber,
+            @RequestParam(required = false) String firstNameContains,
+            @RequestParam(required = false) String lastNameContains,
+            @RequestParam(defaultValue = "1") Integer pageNumber,
             @RequestParam(defaultValue = "20") Integer numberOfItems,
             @RequestParam(defaultValue = "lastName") String sortBy,
-            @RequestParam(defaultValue = "true") boolean sortAsc,
-            @RequestParam(required = false) String firstNameContains,
-            @RequestParam(required = false) String lastNameContains
+            @RequestParam(defaultValue = "true") boolean sortAsc
     ) {
         final Sort.Direction direction = sortAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         final Sort sort = Sort.by(direction, sortBy);
-        final PageRequest pageRequest = PageRequest.of(pageNumber, numberOfItems, sort);
+        final PageRequest pageRequest = PageRequest.of(--pageNumber, numberOfItems, sort);
         final BackResponse<Page<UserResponse>> response = userService.getAllUsers(
                 pageRequest,
                 firstNameContains,
