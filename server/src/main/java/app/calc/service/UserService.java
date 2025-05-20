@@ -1,10 +1,12 @@
 package app.calc.service;
 
 import app.calc.dto.request.UserRequest;
+import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
 import app.calc.dto.response.UserResponse;
 import app.calc.exceptions.EntityDuplicationException;
 import app.calc.repository.UserRepository;
+import app.calc.user.Role;
 import app.calc.user.User;
 import app.calc.utils.EntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,5 +109,10 @@ public class UserService {
 
         userRepository.deleteById(id);
         return new BackResponse<>(null, HttpStatus.NO_CONTENT);
+    }
+
+    public BackListResponse<Role> getAllRoles() {
+        final List<Role> roles = new ArrayList<>(Arrays.asList(Role.values()));
+        return new BackListResponse<>(roles, HttpStatus.OK);
     }
 }

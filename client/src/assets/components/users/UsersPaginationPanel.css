@@ -1,4 +1,13 @@
 .usersPaginationPanel {
   background-color: var(--list-element-background-color);
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: var(--space-sm);
 }
+
+
+
+
+
+
+

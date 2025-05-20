@@ -27,6 +27,7 @@ const UsersPage = () => {
   const [paginationSettings, setPaginationSettings] = useState(
     defaultPaginatioSettings
   );
+  const [roles, setRoles] = useState([]);
 
   const fetchUsers = () => {
     axios
@@ -38,6 +39,16 @@ const UsersPage = () => {
       .catch((error) => console.log(error));
   };
   useEffect(() => fetchUsers(), [paginationSettings]);
+
+  const fetchRoles = () => {
+    axios
+      .get("http://localhost:8080/api/users/roles", {
+        headers: { Authorization: `Bearer ${loggedUser.token}` },
+      })
+      .then((res) => setRoles(res.data))
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => fetchRoles(), []);
 
   const handleShowAddModal = () => {
     setShowAddModal(true);
@@ -65,6 +76,23 @@ const UsersPage = () => {
     </div>
   ));
 
+  const createUser = (data) => {
+    const newUser = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      role: data.role,
+    };
+
+    axios
+      .post("http://localhost:8080/api/users", newUser, {
+        headers: { Authorization: `Bearer ${loggedUser.token}` },
+      })
+      .then((res) => fetchUsers())
+      .catch((error) => console.log(error));
+  };
+
   return (
     <PageContainer>
       <div className="usersPage">
@@ -80,7 +108,11 @@ const UsersPage = () => {
         handleClose={handleCloseAddModal}
         title={"add user"}
       >
-        <UserCard />
+        <UserCard
+          onSuccessTitle="create"
+          onSubmit={createUser}
+          rolesList={roles}
+        />
       </DataModal>
 
       <DataModal
@@ -88,7 +120,12 @@ const UsersPage = () => {
         handleClose={handleCloseUpdateModal}
         title={"update user"}
       >
-        <UserCard user={currentUser} />
+        <UserCard
+          user={currentUser}
+          onSuccessTitle="update"
+          onSubmit={() => console.log("update")}
+          rolesList={roles}
+        />
       </DataModal>
     </PageContainer>
   );

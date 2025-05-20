@@ -1,9 +1,11 @@
 package app.calc.controller;
 
 import app.calc.dto.request.UserRequest;
+import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
 import app.calc.dto.response.UserResponse;
 import app.calc.service.UserService;
+import app.calc.user.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -77,5 +79,14 @@ public class UserController {
         return ResponseEntity
                 .status(response.getStatus())
                 .body(response.getObject());
+    }
+
+    @GetMapping(path = "/roles")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> getAllRoles() {
+        final BackListResponse<Role> response = userService.getAllRoles();
+        return ResponseEntity
+                .status(response.getStatus())
+                .body(response.getEntities());
     }
 }
