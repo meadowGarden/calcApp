@@ -1,14 +1,14 @@
 import { useForm } from "react-hook-form";
 import "./UsersPaginationPanel.css";
 import { itemsCount } from "../../../services/constants";
-import { displayToValue, sortByDictDisplay } from "../../../services/utils";
+import {
+  displayToValue,
+  generatePagesArray,
+  sortByDictDisplay,
+} from "../../../services/utils";
 
-const UsersPaginationPanel = ({ setPaginationSettings }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+const UsersPaginationPanel = ({ setPaginationSettings, totalPages }) => {
+  const { register, handleSubmit } = useForm();
 
   const usersToDisplay = itemsCount.map((item) => (
     <option key={item} value={item}>
@@ -34,6 +34,13 @@ const UsersPaginationPanel = ({ setPaginationSettings }) => {
     </option>
   ));
 
+  const pages = generatePagesArray(totalPages);
+  const pagesOptions = pages.map((page) => (
+    <option key={page} value={page}>
+      {page}
+    </option>
+  ));
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="usersPaginationPanel">
       <section>
@@ -46,21 +53,27 @@ const UsersPaginationPanel = ({ setPaginationSettings }) => {
 
       <section>
         <label>page</label>
-        <select {...register("pageNumber")}>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-        </select>
+        <select {...register("pageNumber")}>{pagesOptions}</select>
       </section>
 
       <section>
         <label>users to display</label>
-        <select {...register("numberOfItems")}>{usersToDisplay}</select>
+        <select
+          {...register("numberOfItems")}
+          defaultValue={itemsCount[itemsCount.length - 1]}
+        >
+          {usersToDisplay}
+        </select>
       </section>
 
       <section>
         <label>sort by</label>{" "}
-        <select {...register("sortBy")}>{sortByOptions}</select>
+        <select
+          {...register("sortBy")}
+          defaultValue={displayToValue.get(sortByDictDisplay.get("users")[2])}
+        >
+          {sortByOptions}
+        </select>
       </section>
 
       <section>

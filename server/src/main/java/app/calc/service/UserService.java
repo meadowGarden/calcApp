@@ -75,7 +75,7 @@ public class UserService {
                 .map(EntityMapper::user_userDTO)
                 .toList();
 
-        Page<UserResponse> adjustedPage = new PageImpl<>(userList, pageRequest, pageRequest.getPageSize());
+        Page<UserResponse> adjustedPage = new PageImpl<>(userList, pageRequest, pageRaw.getTotalElements());
         return new BackResponse<>(adjustedPage, HttpStatus.OK);
     }
 
@@ -95,7 +95,10 @@ public class UserService {
         userToUpdate.setFirstName(dto.getFirstName());
         userToUpdate.setLastName(dto.getLastName());
         userToUpdate.setEmail(dto.getEmail());
-        userToUpdate.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        if (dto.getPassword() != null)
+            userToUpdate.setPassword(passwordEncoder.encode(dto.getPassword()));
+
         userToUpdate.setRole(dto.getRole());
 
         final User updatedUser = userRepository.save(userToUpdate);

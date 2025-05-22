@@ -57,11 +57,7 @@ const UserCard = ({ user, onSuccessTitle, onSubmit, rolesList }) => {
       <section>
         <input
           {...register("lastName", {
-            required: "enter last name",
-            minLength: {
-              value: 1,
-              message: "last name should be at least one character",
-            },
+            required: false,
             maxLength: {
               value: 100,
               message: "last name should not be more that hundred characters",

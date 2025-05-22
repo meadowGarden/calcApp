@@ -8,13 +8,14 @@ import "./UsersPage.css";
 import UsersPaginationPanel from "./UsersPaginationPanel";
 import DataModal from "../site/DataModal.jsx";
 import UserCard from "./UserCard.jsx";
+import DeletionZone from "../site/DeletionZone.jsx";
 
 const defaultPaginatioSettings = {
   firstNameContains: "",
   lastNameContains: "",
   pageNumber: 1,
   numberOfItems: 20,
-  sortBy: "lastName",
+  sortBy: "email",
   sortAsc: true,
 };
 
@@ -24,6 +25,7 @@ const UsersPage = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [users, setUsers] = useState([]);
+  const [totalPages, setTotalPages] = useState();
   const [paginationSettings, setPaginationSettings] = useState(
     defaultPaginatioSettings
   );
@@ -35,7 +37,10 @@ const UsersPage = () => {
         params: paginationSettings,
         headers: { Authorization: `Bearer ${loggedUser?.token}` },
       })
-      .then((res) => setUsers(res.data.content))
+      .then((res) => {
+        setUsers(res.data.content);
+        setTotalPages(res.data.totalPages);
+      })
       .catch((error) => console.log(error));
   };
   useEffect(() => fetchUsers(), [paginationSettings]);
@@ -93,12 +98,49 @@ const UsersPage = () => {
       .catch((error) => console.log(error));
   };
 
+  const updateUser = (data) => {
+    const updatedUser = {
+      ...currentUser,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      role: data.role,
+    };
+
+    axios
+      .put(`http://localhost:8080/api/users/${currentUser.id}`, updatedUser, {
+        headers: { Authorization: `Bearer ${loggedUser.token}` },
+      })
+      .then((res) => {
+        console.log(res);
+        fetchUsers();
+        setShowUpdateModal(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const deleteUser = () => {
+    axios
+      .delete(`http://localhost:8080/api/users/${currentUser.id}`, {
+        headers: { Authorization: `Bearer ${loggedUser.token}` },
+      })
+      .then((res) => {
+        console.log(res);
+        fetchUsers();
+        setShowUpdateModal(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <PageContainer>
       <div className="usersPage">
         <AddButton onClick={() => handleShowAddModal()} label={"add user"} />
 
-        <UsersPaginationPanel setPaginationSettings={setPaginationSettings} />
+        <UsersPaginationPanel
+          setPaginationSettings={setPaginationSettings}
+          totalPages={totalPages}
+        />
 
         <div>{usersToDisplay}</div>
       </div>
@@ -123,9 +165,10 @@ const UsersPage = () => {
         <UserCard
           user={currentUser}
           onSuccessTitle="update"
-          onSubmit={() => console.log("update")}
+          onSubmit={updateUser}
           rolesList={roles}
         />
+        <DeletionZone title={"user"} onClick={deleteUser} />
       </DataModal>
     </PageContainer>
   );

@@ -12,6 +12,13 @@ public class UserRequest {
     public UserRequest() {
     }
 
+    public UserRequest(String firstName, String lastName, String email, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+    }
+
     public UserRequest(String firstName, String lastName, String email, String password, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;

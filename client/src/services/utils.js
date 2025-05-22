@@ -29,3 +29,7 @@ export const roleDictServerClient = {
 export const calculateLineCosts = (quantity, price) => {
   return Math.round(quantity * price * LINE_ROUNDING) / LINE_ROUNDING;
 };
+
+export const generatePagesArray = (length) => {
+  return Array.from({ length: length }, (_, i) => i + 1);
+};
