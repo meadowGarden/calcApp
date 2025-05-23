@@ -11,6 +11,8 @@ import Register from "./assets/components/auth/Register.jsx";
 import LogIn from "./assets/components/auth/LogIn";
 import UsersPage from "./assets/components/users/UsersPage.jsx";
 import useUserStore from "./assets/storage/useUserStore.js";
+import PersonalPage from "./assets/components/users/PersonalPage.jsx";
+import { inspectPath } from "./services/utils.js";
 
 function App() {
   const user = useUserStore((state) => state.user);
@@ -22,10 +24,14 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/materials" element={<MaterialsPage />} />
         <Route path="/bom" element={<BOMPage />} />
-        <Route path="/users" element={<UsersPage />} />
+        <Route
+          path={inspectPath(user?.user.role, ["ADMIN"], "/users")}
+          element={<UsersPage />}
+        />
         <Route path="/test" element={<TestPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LogIn />} />
+        <Route path="/users/:id" element={<PersonalPage user={user} />} />
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
     </>

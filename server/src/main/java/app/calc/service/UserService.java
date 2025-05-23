@@ -1,10 +1,13 @@
 package app.calc.service;
 
+import app.calc.dto.request.ChangePasswordRequest;
 import app.calc.dto.request.UserRequest;
 import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
 import app.calc.dto.response.UserResponse;
 import app.calc.exceptions.EntityDuplicationException;
+import app.calc.exceptions.PasswordRepetitionException;
+import app.calc.exceptions.WrongCurrentPasswordException;
 import app.calc.repository.UserRepository;
 import app.calc.user.Role;
 import app.calc.user.User;
@@ -95,14 +98,28 @@ public class UserService {
         userToUpdate.setFirstName(dto.getFirstName());
         userToUpdate.setLastName(dto.getLastName());
         userToUpdate.setEmail(dto.getEmail());
-
-        if (dto.getPassword() != null)
-            userToUpdate.setPassword(passwordEncoder.encode(dto.getPassword()));
-
         userToUpdate.setRole(dto.getRole());
 
         final User updatedUser = userRepository.save(userToUpdate);
         return new BackResponse<>(EntityMapper.user_userDTO(updatedUser), HttpStatus.OK);
+    }
+
+    public BackResponse<String> updateUsersPassword(long id, ChangePasswordRequest dto) {
+        final Optional<User> userByID = userRepository.findById(id);
+        if (userByID.isEmpty())
+            return new BackResponse<>(null, HttpStatus.NOT_FOUND);
+
+        final User userToUpdate = userByID.get();
+        if (passwordEncoder.matches(dto.getNewPassword(), userToUpdate.getPassword()))
+            throw new PasswordRepetitionException("new password is the same as new password");
+
+        if (!passwordEncoder.matches(dto.getOldPassword(), userToUpdate.getPassword()))
+            throw new WrongCurrentPasswordException("old password is wrong");
+
+        userToUpdate.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+
+        final User updatedUser = userRepository.save(userToUpdate);
+        return new BackResponse<>("password has been changed", HttpStatus.OK);
     }
 
     public BackResponse<UserResponse> deleteUserByID(long id) {

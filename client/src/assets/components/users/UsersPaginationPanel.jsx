@@ -6,9 +6,10 @@ import {
   generatePagesArray,
   sortByDictDisplay,
 } from "../../../services/utils";
+import "../site/CommonStyles.css";
 
 const UsersPaginationPanel = ({ setPaginationSettings, totalPages }) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm();
 
   const usersToDisplay = itemsCount.map((item) => (
     <option key={item} value={item}>
@@ -44,41 +45,53 @@ const UsersPaginationPanel = ({ setPaginationSettings, totalPages }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="usersPaginationPanel">
       <section>
-        <input {...register("firstName")} placeholder="first name" />
+        <input
+          {...register("firstName")}
+          placeholder="first name"
+          className="inputText"
+        />
       </section>
 
       <section>
-        <input {...register("lastName")} placeholder="last name" />
+        <input
+          {...register("lastName")}
+          placeholder="last name"
+          className="inputText"
+        />
       </section>
 
-      <section>
-        <label>page</label>
-        <select {...register("pageNumber")}>{pagesOptions}</select>
+      <section className="usersPaginationPanelSection">
+        <label className="listElementText">page</label>
+        <select {...register("pageNumber")} className="inputText">
+          {pagesOptions}
+        </select>
       </section>
 
-      <section>
-        <label>users to display</label>
+      <section className="usersPaginationPanelSection">
+        <label className="listElementText">users to display</label>
         <select
           {...register("numberOfItems")}
           defaultValue={itemsCount[itemsCount.length - 1]}
+          className="inputText"
         >
           {usersToDisplay}
         </select>
       </section>
 
-      <section>
-        <label>sort by</label>{" "}
+      <section className="usersPaginationPanelSection">
+        <label className="listElementText">sort by</label>{" "}
         <select
           {...register("sortBy")}
           defaultValue={displayToValue.get(sortByDictDisplay.get("users")[2])}
+          className="inputText"
         >
           {sortByOptions}
         </select>
       </section>
 
-      <section>
-        <label>sort</label>
-        <select {...register("sortAsc")}>
+      <section className="usersPaginationPanelSection">
+        <label className="listElementText">sort</label>
+        <select className="inputText" {...register("sortAsc")}>
           <option value={true}>ascending</option>
           <option value={false}>descending</option>
         </select>

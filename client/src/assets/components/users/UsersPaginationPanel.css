@@ -1,13 +1,22 @@
 .usersPaginationPanel {
   background-color: var(--list-element-background-color);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-gap: var(--space-sm);
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: var(--space-sm);
 }
 
+.usersPaginationPanelSection {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+.usersPaginationPanelSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
-
-
-
-
-
+@media (with < 920px) {
+  usersPaginationPanel {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

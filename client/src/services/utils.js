@@ -33,3 +33,7 @@ export const calculateLineCosts = (quantity, price) => {
 export const generatePagesArray = (length) => {
   return Array.from({ length: length }, (_, i) => i + 1);
 };
+
+export const inspectPath = (role, rolesList, path) => {
+  if (rolesList.includes(role)) return path;
+};

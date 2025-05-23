@@ -140,6 +140,7 @@ const UsersPage = () => {
         <UsersPaginationPanel
           setPaginationSettings={setPaginationSettings}
           totalPages={totalPages}
+          fetchUsers={fetchUsers}
         />
 
         <div>{usersToDisplay}</div>

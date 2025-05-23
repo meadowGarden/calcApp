@@ -1,5 +1,6 @@
 package app.calc.controller;
 
+import app.calc.dto.request.ChangePasswordRequest;
 import app.calc.dto.request.UserRequest;
 import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
@@ -68,6 +69,15 @@ public class UserController {
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody UserRequest request) {
         final BackResponse<UserResponse> response = userService.updateUserByID(id, request);
+        return ResponseEntity
+                .status(response.getStatus())
+                .body(response.getObject());
+    }
+
+    @PatchMapping(path = "/{id}")
+    public ResponseEntity<?> changePassword(@PathVariable long id, @RequestBody ChangePasswordRequest request) {
+        final BackResponse<String> response = userService.updateUsersPassword(id, request);
+
         return ResponseEntity
                 .status(response.getStatus())
                 .body(response.getObject());

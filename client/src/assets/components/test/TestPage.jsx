@@ -33,8 +33,8 @@ const TestPage = () => {
         <button>submit</button>
       </form>
 
-      <AppToast title={"test"} message={"test message"}
-      status={"fail"} />
+      <AppToast title={"test"} message={"test message"} status={"fail"} />
+
     </PageContainer>
   );
 };

@@ -109,7 +109,9 @@ const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
         </section>
 
         <section>
-          <select onChange={handleUOMChange}>{uomOptions}</select>
+          <select onChange={handleUOMChange} className="inputText">
+            {uomOptions}
+          </select>
         </section>
 
         <section className="bomDataCardButtons">

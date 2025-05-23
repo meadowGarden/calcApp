@@ -21,6 +21,8 @@ const Navbar = () => {
       .catch();
   };
 
+  const currentUserFullName = `${user?.user.firstName} ${user?.user.lastName}`;
+
   return (
     <div className="navbar">
       <Link className="nbHomeElement" to="/">
@@ -48,12 +50,13 @@ const Navbar = () => {
         test
       </Link>
 
-      <Link className="nbStandardElement" to="/register">
-        register
-      </Link>
+      {user === null && (
+        <Link className="nbStandardElement" to="/register">
+          register
+        </Link>
+      )}
 
       <section className="nbStandardElement">
-        {/* {user === null || user?.token === null ? ( */}
         {user === null ? (
           <Link className="nbStandardElement" to="/login">
             login
@@ -65,11 +68,11 @@ const Navbar = () => {
         )}
       </section>
 
-      <section className="nbStandardElement">
-        <span className="nbStandardElement">
-          {user?.user.firstName} {user?.user.lastName}
-        </span>
-      </section>
+      {user !== null && (
+        <Link className="nbStandardElement" to={`/users/${user?.user.id}`}>
+          {currentUserFullName}
+        </Link>
+      )}
     </div>
   );
 };
