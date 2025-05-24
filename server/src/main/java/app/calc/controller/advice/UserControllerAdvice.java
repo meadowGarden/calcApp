@@ -21,14 +21,14 @@ public class UserControllerAdvice {
     @ExceptionHandler(WrongCurrentPasswordException.class)
     public ResponseEntity<?> wrongCurrentPasswordExceptionHandler() {
         return ResponseEntity
-                .status(HttpStatus.CONFLICT)
+                .status(HttpStatus.NOT_ACCEPTABLE)
                 .body("provided current password is wrong");
     }
 
     @ExceptionHandler(PasswordRepetitionException.class)
     public ResponseEntity<?> repeatingNewPasswordExceptionHandler() {
         return ResponseEntity
-                .status(HttpStatus.CONFLICT)
+                .status(HttpStatus.EXPECTATION_FAILED)
                 .body("provided new password is the same as current one");
     }
 }

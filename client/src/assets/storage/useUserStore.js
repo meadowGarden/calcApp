@@ -7,6 +7,19 @@ const useUserStore = create(
     addUser: (serverResponse) => {
       set(() => ({ user: serverResponse }));
     },
+
+    updateUser: (updatedUserData) => {
+      set((state) => ({
+        user: {
+          ...state.user,
+          user: {
+            ...state.user.user,
+            ...updatedUserData,
+          },
+        },
+      }));
+    },
+
     removeUser: () => {
       set(() => ({ user: null }));
     },

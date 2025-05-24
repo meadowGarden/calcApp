@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router";
 import "./Navbar.css";
 import axios from "axios";
 import useUserStore from "../../storage/useUserStore";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const user = useUserStore((state) => state.user);

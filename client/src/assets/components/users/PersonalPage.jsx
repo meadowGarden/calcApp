@@ -4,31 +4,48 @@ import "../site/CommonStyles.css";
 import axios from "axios";
 import AppToast from "../site/AppToast";
 import { useState } from "react";
+import useUserStore from "../../storage/useUserStore";
 
-const PersonalPage = ({ user }) => {
+const PersonalPage = () => {
   const [toastTitle, setToastTitle] = useState();
   const [toastMessage, setToastMessage] = useState();
   const [toastStatus, setToastStatus] = useState();
   const [showToast, setShowToast] = useState(false);
+  const user = useUserStore((state) => state.user);
 
   const toggleShowToast = () => setShowToast(!showToast);
 
   return (
     <PageContainer>
       <div>
-        <section>{user.firstName}</section>
-        <section>{user.lastName}</section>
-        <section>{user.email}</section>
+        <section>{user?.user.firstName}</section>
+        <section>{user?.user.lastName}</section>
+        <section>{user?.user.email}</section>
       </div>
-      <GeneralUserData user={user} />
-      <ChangePassword user={user} />
+
+      <GeneralUserData
+        user={user}
+        setToastTitle={setToastTitle}
+        setToastMessage={setToastMessage}
+        setToastStatus={setToastStatus}
+        showToast={toggleShowToast}
+      />
+
+      <ChangePassword
+        user={user}
+        setToastTitle={setToastTitle}
+        setToastMessage={setToastMessage}
+        setToastStatus={setToastStatus}
+        showToast={toggleShowToast}
+      />
+
       <AppToast
         title={toastTitle}
         message={toastMessage}
         status={toastStatus}
         onClose={toggleShowToast}
-        delay={5000}
         show={showToast}
+        delay={3000}
       />
     </PageContainer>
   );
@@ -36,13 +53,124 @@ const PersonalPage = ({ user }) => {
 
 export default PersonalPage;
 
-const GeneralUserData = ({ user }) => {};
+const GeneralUserData = ({
+  user,
+  setToastTitle,
+  setToastMessage,
+  setToastStatus,
+  showToast,
+}) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      firstName: user?.user.firstName,
+      lastName: user?.user.lastName,
+      email: user?.user.email,
+    },
+  });
+
+  const updateUser = useUserStore((state) => state.updateUser);
+
+  const onSubmit = (data) => {
+    const updatedUser = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+    };
+
+    axios
+      .put(`http://localhost:8080/api/users/${user?.user.id}`, updatedUser, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setToastTitle("success");
+          setToastMessage("personal data updated");
+          setToastStatus("success");
+          updateUser(res.data);
+          showToast();
+        }
+      })
+      .catch(() => {
+        setToastTitle("update failed");
+        setToastMessage("could not update personla data");
+        setToastStatus("failure");
+        showToast();
+      });
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <section>
+        <input
+          {...register("firstName", {
+            required: "enter first name",
+            minLength: {
+              value: 1,
+              message: "first name should be at least one character",
+            },
+            maxLength: {
+              value: 100,
+              message: "first name should be at least one character",
+            },
+          })}
+          placeholder="first name"
+          className="inputText"
+        />
+        {errors.firstName && (
+          <p className="formErrorMessage">{errors.firstName.message}</p>
+        )}
+      </section>
+
+      <section className="registerFormSection">
+        <input
+          {...register("lastName", {
+            maxLength: {
+              value: 100,
+              message: "last name should be at least one character",
+            },
+          })}
+          placeholder="last name"
+          className="inputText"
+        />
+        {errors.lastName && (
+          <p className="formErrorMessage">{errors.lastName.message}</p>
+        )}
+      </section>
+
+      <section className="registerFormSection">
+        <input
+          {...register("email", {
+            required: { value: true, message: "enter your email" },
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "your email is not valid",
+            },
+          })}
+          placeholder="email"
+          className="inputText"
+        />
+        {errors.email && (
+          <p className="formErrorMessage">{errors.email.message}</p>
+        )}
+      </section>
+
+      <section>
+        <input type="submit" value={"update"} />
+      </section>
+    </form>
+  );
+};
 
 const ChangePassword = ({
   user,
   setToastTitle,
   setToastMessage,
   setToastStatus,
+  showToast,
 }) => {
   const {
     register,
@@ -58,17 +186,41 @@ const ChangePassword = ({
     };
 
     axios
-      .patch(`http://localhost:8080/api/users/${user.user.id}`, passwords, {
+      .patch(`http://localhost:8080/api/users/${user?.user.id}`, passwords, {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
-        if (res.status === 200) {
-          setToastTitle("success");
-          setToastMessage("password was changed");
-          setToastStatus("success");
+        switch (res.status) {
+          case 200:
+            {
+              setToastTitle("success");
+              setToastMessage("password was changed");
+              setToastStatus("success");
+              showToast();
+            }
+            break;
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        switch (error.status) {
+          case 406:
+            {
+              setToastTitle("failure");
+              setToastMessage("current password is wrong");
+              setToastStatus("failed");
+              showToast();
+            }
+            break;
+          case 417:
+            {
+              setToastTitle("failure");
+              setToastMessage("your new password is the same as old one");
+              setToastStatus("failed");
+              showToast();
+            }
+            break;
+        }
+      });
   };
 
   return (

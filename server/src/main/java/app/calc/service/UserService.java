@@ -98,7 +98,9 @@ public class UserService {
         userToUpdate.setFirstName(dto.getFirstName());
         userToUpdate.setLastName(dto.getLastName());
         userToUpdate.setEmail(dto.getEmail());
-        userToUpdate.setRole(dto.getRole());
+
+        if (dto.getRole() != null)
+            userToUpdate.setRole(dto.getRole());
 
         final User updatedUser = userRepository.save(userToUpdate);
         return new BackResponse<>(EntityMapper.user_userDTO(updatedUser), HttpStatus.OK);
@@ -110,11 +112,11 @@ public class UserService {
             return new BackResponse<>(null, HttpStatus.NOT_FOUND);
 
         final User userToUpdate = userByID.get();
-        if (passwordEncoder.matches(dto.getNewPassword(), userToUpdate.getPassword()))
-            throw new PasswordRepetitionException("new password is the same as new password");
-
         if (!passwordEncoder.matches(dto.getOldPassword(), userToUpdate.getPassword()))
             throw new WrongCurrentPasswordException("old password is wrong");
+
+        if (passwordEncoder.matches(dto.getNewPassword(), userToUpdate.getPassword()))
+            throw new PasswordRepetitionException("new password is the same as new password");
 
         userToUpdate.setPassword(passwordEncoder.encode(dto.getNewPassword()));
 
