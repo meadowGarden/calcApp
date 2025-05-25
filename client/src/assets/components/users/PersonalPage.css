@@ -1,0 +1,59 @@
+.personalPage {
+  min-width: 350px;
+  width: 40%;
+  margin: auto;
+  display: grid;
+  grid-gap: var(--space-xl);
+}
+.personalData {
+  display: grid;
+  grid-gap: var(--space-xs);
+}
+.passwordFields {
+  display: grid;
+  grid-gap: var(--space-xs);
+}
+
+.changePersonalDataButtonSection {
+  text-align: center;
+}
+
+.changePersonalDataButton {
+  border: none;
+  background-color: var(--std-button-background-color);
+  color: var(--std-button-text-color);
+  height: var(--space-xxl);
+}
+.changePersonalDataButton:hover {
+  background-color: var(--std-button-background-color-hover);
+}
+
+.showPasswordSectionButton {
+  border: none;
+  color: var(--danger-button-text-color);
+  background-color: var(--danger-button-background-color);
+  width: 10rem;
+  height: var(--space-xxxl);
+  margin: auto;
+}
+
+.showPasswordSection {
+  min-width: 330px;
+  max-width: 100%;
+  display: grid;
+  grid-gap: var(--space-lg);
+}
+
+.changePasswordButtonSection {
+  text-align: center;
+}
+
+.changePasswordButton {
+  border: none;
+  background-color: var(--std-button-background-color);
+  color: var(--std-button-text-color);
+  height: var(--space-xxl);
+}
+.changePasswordButton:hover {
+  background-color: var(--std-button-background-color-hover);
+}

@@ -5,48 +5,66 @@ import axios from "axios";
 import AppToast from "../site/AppToast";
 import { useState } from "react";
 import useUserStore from "../../storage/useUserStore";
+import "./PersonalPage.css";
 
 const PersonalPage = () => {
   const [toastTitle, setToastTitle] = useState();
   const [toastMessage, setToastMessage] = useState();
   const [toastStatus, setToastStatus] = useState();
   const [showToast, setShowToast] = useState(false);
+  const [showPasswordChange, setShowPasswordChange] = useState(false);
   const user = useUserStore((state) => state.user);
 
   const toggleShowToast = () => setShowToast(!showToast);
+  const toggleShowPassword = () => setShowPasswordChange(!showPasswordChange);
 
   return (
     <PageContainer>
-      <div>
-        <section>{user?.user.firstName}</section>
-        <section>{user?.user.lastName}</section>
-        <section>{user?.user.email}</section>
+      <div className="personalPage">
+        <section>
+          <strong>
+            {user?.user.firstName} {user?.user.lastName}
+          </strong>
+        </section>
+
+        <section>
+          <GeneralUserData
+            user={user}
+            setToastTitle={setToastTitle}
+            setToastMessage={setToastMessage}
+            setToastStatus={setToastStatus}
+            showToast={toggleShowToast}
+          />
+        </section>
+
+        <section className="showPasswordSection">
+          <button
+            onClick={() => toggleShowPassword()}
+            className="showPasswordSectionButton"
+          >
+            password password
+          </button>
+
+          {showPasswordChange && (
+            <ChangePassword
+              user={user}
+              setToastTitle={setToastTitle}
+              setToastMessage={setToastMessage}
+              setToastStatus={setToastStatus}
+              showToast={toggleShowToast}
+            />
+          )}
+        </section>
+
+        <AppToast
+          title={toastTitle}
+          message={toastMessage}
+          status={toastStatus}
+          onClose={toggleShowToast}
+          show={showToast}
+          delay={3000}
+        />
       </div>
-
-      <GeneralUserData
-        user={user}
-        setToastTitle={setToastTitle}
-        setToastMessage={setToastMessage}
-        setToastStatus={setToastStatus}
-        showToast={toggleShowToast}
-      />
-
-      <ChangePassword
-        user={user}
-        setToastTitle={setToastTitle}
-        setToastMessage={setToastMessage}
-        setToastStatus={setToastStatus}
-        showToast={toggleShowToast}
-      />
-
-      <AppToast
-        title={toastTitle}
-        message={toastMessage}
-        status={toastStatus}
-        onClose={toggleShowToast}
-        show={showToast}
-        delay={3000}
-      />
     </PageContainer>
   );
 };
@@ -103,7 +121,7 @@ const GeneralUserData = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="personalData">
       <section>
         <input
           {...register("firstName", {
@@ -158,8 +176,12 @@ const GeneralUserData = ({
         )}
       </section>
 
-      <section>
-        <input type="submit" value={"update"} />
+      <section className="changePersonalDataButtonSection">
+        <input
+          type="submit"
+          value={"update"}
+          className="changePersonalDataButton"
+        />
       </section>
     </form>
   );
@@ -224,7 +246,10 @@ const ChangePassword = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(handlePasswordChange)}>
+    <form
+      onSubmit={handleSubmit(handlePasswordChange)}
+      className="passwordFields"
+    >
       <section>
         <input
           {...register("oldPassword", {
@@ -288,8 +313,12 @@ const ChangePassword = ({
         )}
       </section>
 
-      <section>
-        <input type="submit" value={"change password"} />
+      <section className="changePasswordButtonSection">
+        <input
+          type="submit"
+          value={"change"}
+          className="changePasswordButton"
+        />
       </section>
     </form>
   );

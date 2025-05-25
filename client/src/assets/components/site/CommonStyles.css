@@ -68,7 +68,7 @@
 }
 .formErrorMessage {
   margin: 0;
-  height: var(--space-lg);
+  height: var(--space-xl);
   color: #ff6b6b;
 }
 

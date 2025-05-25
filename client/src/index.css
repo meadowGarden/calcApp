@@ -17,6 +17,12 @@
   --input-placeholder-color: #7a9db1;
   --input-focus-background-color: #e2edf3;
 
+  --std-button-background-color: #7fa6ba;
+  --std-button-background-color-hover: #6b8ea2;
+  --std-button-text-color: #ffffff;
+  --danger-button-background-color: #f8d7da;
+  --danger-button-text-color: #842029;
+
   --list-element-value-color: #2f3b4c;
   --list-element-background-color: #eff6fa;
   --list-element-background-hover-color: #e2edf3;
