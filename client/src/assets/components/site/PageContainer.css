@@ -1,5 +1,13 @@
 .pageContainer {
   margin: 0;
   padding: var(--space-lg) var(--space-xxxxl) var(--space-lg) var(--space-xxxxl);
+  min-width: 100px;
   background-color: var(--standard-background-color);
+  box-sizing: border-box;
+}
+@media (max-width: 600px) {
+  .pageContainer {
+    width: 100%;
+    padding: var(--space-lg) 10%;
+  }
 }

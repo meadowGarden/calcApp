@@ -63,7 +63,7 @@ const LogIn = () => {
             })}
             type="text"
             placeholder="email"
-            className="logInFormInput"
+            className="inputText"
           />
           {errors.email && (
             <p className="formErrorMessage">{errors.email.message}</p>
@@ -77,7 +77,7 @@ const LogIn = () => {
             })}
             type="password"
             placeholder="password"
-            className="logInFormInput"
+            className="inputText"
           />
           {errors.password && (
             <p className="formErrorMessage">{errors.password.message}</p>

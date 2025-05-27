@@ -7,7 +7,12 @@ import "./MaterialAddCard.css";
 import "../site/CommonStyles.css";
 import useUserStore from "../../storage/useUserStore.js";
 
-const MaterialAddCard = ({ fetchMaterials, closeCard, showAddToast }) => {
+const MaterialAddCard = ({
+  fetchMaterials,
+  closeCard,
+  showToast,
+  setToastInfo,
+}) => {
   const [uomList, setUOMList] = useState([]);
   const [summary, setSummary] = useState("");
   const [isUOMDiffer, setIsUOMDiffer] = useState(false);
@@ -58,9 +63,28 @@ const MaterialAddCard = ({ fetchMaterials, closeCard, showAddToast }) => {
       .then(() => {
         fetchMaterials();
         closeCard();
-        showAddToast();
+        showToast();
+        setToastInfo({
+          title: "success",
+          message: "material added successfully",
+          status: "success",
+          delay: 3000,
+        });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        switch (error.status) {
+          case 409: {
+            showToast();
+            setToastInfo({
+              title: "failure",
+              message: error.response.data,
+              status: "failure",
+              delay: 3000,
+            });
+            break;
+          }
+        }
+      });
   };
 
   return (

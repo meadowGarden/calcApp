@@ -21,7 +21,7 @@ const PersonalPage = () => {
   return (
     <PageContainer>
       <div className="personalPage">
-        <section>
+        <section className="userTitle">
           <strong>
             {user?.user.firstName} {user?.user.lastName}
           </strong>
@@ -42,7 +42,7 @@ const PersonalPage = () => {
             onClick={() => toggleShowPassword()}
             className="showPasswordSectionButton"
           >
-            password password
+            change password
           </button>
 
           {showPasswordChange && (

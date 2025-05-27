@@ -17,7 +17,15 @@ const MaterialsPage = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const user = useUserStore((state) => state.user);
-  const [showAddMaterialToast, setShowAddMaterialToast] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastInfo, setToastInfo] = useState({
+    title: "",
+    message: "",
+    status: "",
+    onClose: "",
+    delay: 3000,
+  });
+
   const fetchMaterials = () => {
     axios
       .get("http://localhost:8080/api/materials", {
@@ -57,8 +65,7 @@ const MaterialsPage = () => {
       .catch((error) => console.log(error));
   };
 
-  const toggleShowAddMaterialToast = () =>
-    setShowAddMaterialToast(!showAddMaterialToast);
+  const toggleShowToast = () => setShowToast(!showToast);
 
   const materialsToDisplay = materials.map((material) => (
     <MaterialListElement
@@ -85,7 +92,8 @@ const MaterialsPage = () => {
           <MaterialAddCard
             fetchMaterials={fetchMaterials}
             closeCard={handleAddModalClose}
-            showAddToast={toggleShowAddMaterialToast}
+            showToast={toggleShowToast}
+            setToastInfo={setToastInfo}
           />
         </DataModal>
 
@@ -97,17 +105,20 @@ const MaterialsPage = () => {
           <MaterialUpdateCard
             currentMaterial={currentMaterial}
             fetchMaterials={fetchMaterials}
+            closeCard={handleEditModalClose}
+            showToast={toggleShowToast}
+            setToastInfo={setToastInfo}
           />
         </DataModal>
       </div>
 
       <AppToast
-        title={"success"}
-        message={"material added successfully"}
-        status={"success"}
-        onClose={toggleShowAddMaterialToast}
-        show={showAddMaterialToast}
-        delay={3000}
+        title={toastInfo.title}
+        message={toastInfo.message}
+        status={toastInfo.status}
+        delay={toastInfo.delay}
+        onClose={toggleShowToast}
+        show={showToast}
       />
     </PageContainer>
   );

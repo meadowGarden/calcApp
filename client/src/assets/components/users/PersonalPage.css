@@ -1,13 +1,21 @@
 .personalPage {
-  min-width: 350px;
-  width: 40%;
+  width: 100%;
+  max-width: 500px;
   margin: auto;
   display: grid;
   grid-gap: var(--space-xl);
+  box-sizing: border-box;
 }
+
+.userTitle {
+  text-align: center;
+}
+
 .personalData {
   display: grid;
   grid-gap: var(--space-xs);
+  width: 100%;
+  margin: auto;
 }
 .passwordFields {
   display: grid;
@@ -38,10 +46,10 @@
 }
 
 .showPasswordSection {
-  min-width: 330px;
-  max-width: 100%;
+  width: 100%;
   display: grid;
   grid-gap: var(--space-lg);
+  margin: auto;
 }
 
 .changePasswordButtonSection {
@@ -56,4 +64,11 @@
 }
 .changePasswordButton:hover {
   background-color: var(--std-button-background-color-hover);
+}
+
+@media (max-width: 500px) {
+  .personalPage,
+  .personalData {
+    width: 100%;
+  }
 }

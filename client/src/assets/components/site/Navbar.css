@@ -4,6 +4,8 @@
   background: #3b6d8c;
   margin: 0rem;
   padding: 0.5em;
+  width: 100%;
+  min-width: 400px;
 }
 
 .nbHomeElement {

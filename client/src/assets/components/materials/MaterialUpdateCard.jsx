@@ -7,7 +7,13 @@ import "./MaterialUpdateCard.css";
 import "../site/CommonStyles.css";
 import useUserStore from "../../storage/useUserStore";
 
-const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
+const MaterialUpdateCard = ({
+  currentMaterial,
+  fetchMaterials,
+  closeCard,
+  showToast,
+  setToastInfo,
+}) => {
   const [uomList, setUOMList] = useState([]);
   const user = useUserStore((state) => state.user);
   const {
@@ -71,8 +77,24 @@ const MaterialUpdateCard = ({ currentMaterial, fetchMaterials }) => {
       )
       .then(() => {
         fetchMaterials();
+        closeCard();
+        showToast();
+        setToastInfo({
+          title: "success",
+          message: "material updated successfully",
+          status: "success",
+          delay: 3000,
+        });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        showToast();
+        setToastInfo({
+          title: "failure to update",
+          message: `${error.response.data}`,
+          status: "failure",
+          delay: 3000,
+        });
+      });
   };
 
   if (uomList.length === 0) return null;

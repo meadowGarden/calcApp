@@ -28,7 +28,10 @@ function App() {
           path={inspectPath(user?.user.role, ["ADMIN"], "/users")}
           element={<UsersPage />}
         />
-        <Route path="/test" element={<TestPage />} />
+        <Route
+          path={inspectPath(user?.user.role, ["ADMIN"], "/test")}
+          element={<TestPage />}
+        />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/users/:id" element={<PersonalPage />} />

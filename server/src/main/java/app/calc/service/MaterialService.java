@@ -4,6 +4,7 @@ import app.calc.dto.request.MaterialRequest;
 import app.calc.dto.response.BackListResponse;
 import app.calc.dto.response.BackResponse;
 import app.calc.entity.MaterialEntity;
+import app.calc.exceptions.EntityDuplicationException;
 import app.calc.repository.MaterialRepository;
 import app.calc.utils.AppFormatter;
 import app.calc.utils.EntityMapper;
@@ -26,8 +27,13 @@ public class MaterialService {
         this.materialRepository = materialRepository;
     }
 
-    public BackResponse<MaterialEntity> addMaterial(MaterialRequest request) {
-        final MaterialEntity materialToSave = EntityMapper.materialDTO_material(request);
+    public BackResponse<MaterialEntity> addMaterial(MaterialRequest dto) {
+        final String materialName = dto.getName();
+        Optional<MaterialEntity> materialEntity = materialRepository.findByName(materialName);
+        if (materialEntity.isPresent())
+            throw new EntityDuplicationException("material by this name already exists");
+
+        final MaterialEntity materialToSave = EntityMapper.materialDTO_material(dto);
         final MaterialEntity savedMaterial = materialRepository.save(materialToSave);
         return new BackResponse<>(savedMaterial, HttpStatus.CREATED);
     }
@@ -48,11 +54,15 @@ public class MaterialService {
 
     public BackResponse<MaterialEntity> updateMaterialByID(long id, MaterialRequest dto) {
         final Optional<MaterialEntity> materialByID = materialRepository.findById(id);
-
         if (materialByID.isEmpty())
             return new BackResponse<>(null, HttpStatus.NOT_FOUND);
 
         final MaterialEntity materialToUpdate = materialByID.get();
+
+        Optional<MaterialEntity> materialEntity = materialRepository.findByName(dto.getName());
+        if (materialEntity.isPresent() && !materialEntity.get().getName().equals(materialToUpdate.getName()))
+            throw new EntityDuplicationException("material by this name already exists");
+
         materialToUpdate.setName(dto.getName());
         materialToUpdate.setDescription(dto.getDescription());
         materialToUpdate.setPurchaseUOM(dto.getPurchaseUOM());

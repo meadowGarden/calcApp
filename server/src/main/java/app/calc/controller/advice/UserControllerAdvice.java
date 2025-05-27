@@ -1,5 +1,6 @@
 package app.calc.controller.advice;
 
+import app.calc.controller.UserController;
 import app.calc.exceptions.EntityDuplicationException;
 import app.calc.exceptions.PasswordRepetitionException;
 import app.calc.exceptions.WrongCurrentPasswordException;
@@ -8,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice
+@RestControllerAdvice(assignableTypes = UserController.class)
 public class UserControllerAdvice {
 
     @ExceptionHandler(EntityDuplicationException.class)
