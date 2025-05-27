@@ -61,8 +61,27 @@ const MaterialsPage = () => {
       .delete(`http://localhost:8080/api/materials/${id}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
-      .then(() => fetchMaterials())
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log("in the then");
+        fetchMaterials();
+        handleEditModalClose();
+        toggleShowToast();
+        setToastInfo({
+          title: "success",
+          message: "material deleted successfully",
+          status: "success",
+          delay: 3000,
+        });
+      })
+      .catch((error) => {
+        toggleShowToast();
+        setToastInfo({
+          title: "failure to delete",
+          message: "material deleted",
+          status: "failure",
+          delay: 3000,
+        });
+      });
   };
 
   const toggleShowToast = () => setShowToast(!showToast);
@@ -72,7 +91,6 @@ const MaterialsPage = () => {
       key={material.id}
       data={material}
       handleClick={handleMaterialClick}
-      handleLineDelete={handleLineDelete}
     />
   ));
 
@@ -108,6 +126,7 @@ const MaterialsPage = () => {
             closeCard={handleEditModalClose}
             showToast={toggleShowToast}
             setToastInfo={setToastInfo}
+            deleteMaterial={handleLineDelete}
           />
         </DataModal>
       </div>

@@ -98,7 +98,7 @@ const UsersPaginationPanel = ({ setPaginationSettings, totalPages }) => {
       </section>
 
       <section>
-        <input type="submit" value="filter" />
+        <input type="submit" value="filter" className="standardButton" />
       </section>
     </form>
   );

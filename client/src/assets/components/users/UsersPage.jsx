@@ -9,6 +9,7 @@ import UsersPaginationPanel from "./UsersPaginationPanel";
 import DataModal from "../site/DataModal.jsx";
 import UserCard from "./UserCard.jsx";
 import DeletionZone from "../site/DeletionZone.jsx";
+import AppToast from "../site/AppToast.jsx";
 
 const defaultPaginatioSettings = {
   firstNameContains: "",
@@ -30,6 +31,8 @@ const UsersPage = () => {
     defaultPaginatioSettings
   );
   const [roles, setRoles] = useState([]);
+  const [showToast, setShowToast] = useState(false);
+  const [toastInfo, setToastInfo] = useState({});
 
   const fetchUsers = () => {
     axios
@@ -71,6 +74,8 @@ const UsersPage = () => {
     setShowUpdateModal(false);
   };
 
+  const toggleShowToast = () => setShowToast(!showToast);
+
   const usersToDisplay = users.map((user) => (
     <div key={user.id}>
       <UserListElement
@@ -94,8 +99,32 @@ const UsersPage = () => {
       .post("http://localhost:8080/api/users", newUser, {
         headers: { Authorization: `Bearer ${loggedUser.token}` },
       })
-      .then((res) => fetchUsers())
-      .catch((error) => console.log(error));
+      .then((res) => {
+        fetchUsers();
+        setToastInfo({
+          title: "success",
+          message: "user has been created",
+          status: "success",
+          delay: 3000,
+        });
+        toggleShowToast();
+        setShowAddModal(false);
+      })
+      .catch((error) => {
+        switch (error.status) {
+          case 409:
+            {
+              setToastInfo({
+                title: "failure",
+                message: "user already exists",
+                status: "failure",
+                delay: 3000,
+              });
+              toggleShowToast();
+            }
+            break;
+        }
+      });
   };
 
   const updateUser = (data) => {
@@ -111,12 +140,27 @@ const UsersPage = () => {
       .put(`http://localhost:8080/api/users/${currentUser.id}`, updatedUser, {
         headers: { Authorization: `Bearer ${loggedUser.token}` },
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         fetchUsers();
         setShowUpdateModal(false);
+        setToastInfo({
+          title: "success",
+          message: "user has been updated",
+          status: "success",
+          delay: 3000,
+        });
+        toggleShowToast();
+        setShowAddModal(false);
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "unable to update user",
+          status: "failure",
+          delay: 3000,
+        });
+        toggleShowToast();
+      });
   };
 
   const deleteUser = () => {
@@ -124,12 +168,27 @@ const UsersPage = () => {
       .delete(`http://localhost:8080/api/users/${currentUser.id}`, {
         headers: { Authorization: `Bearer ${loggedUser.token}` },
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         fetchUsers();
         setShowUpdateModal(false);
+        setToastInfo({
+          title: "success",
+          message: "user has been deleted",
+          status: "success",
+          delay: 3000,
+        });
+        toggleShowToast();
+        setShowAddModal(false);
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "unable to delete user",
+          status: "failure",
+          delay: 3000,
+        });
+        toggleShowToast();
+      });
   };
 
   return (
@@ -171,6 +230,15 @@ const UsersPage = () => {
         />
         <DeletionZone title={"user"} onClick={deleteUser} />
       </DataModal>
+
+      <AppToast
+        title={toastInfo.title}
+        message={toastInfo.message}
+        status={toastInfo.status}
+        delay={toastInfo.delay}
+        show={showToast}
+        onClose={toggleShowToast}
+      />
     </PageContainer>
   );
 };

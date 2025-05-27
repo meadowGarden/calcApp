@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { uomDictServerClient } from "../../../services/utils";
-import StandardButton from "../buttons/StandardButton";
 import "./MaterialUpdateCard.css";
 import "../site/CommonStyles.css";
 import useUserStore from "../../storage/useUserStore";
@@ -13,6 +12,7 @@ const MaterialUpdateCard = ({
   closeCard,
   showToast,
   setToastInfo,
+  deleteMaterial,
 }) => {
   const [uomList, setUOMList] = useState([]);
   const user = useUserStore((state) => state.user);
@@ -100,90 +100,96 @@ const MaterialUpdateCard = ({
   if (uomList.length === 0) return null;
 
   return (
-    <form className="materialUpdateCard">
-      <section className="materialUpdateCardName">
-        <input
-          {...register("name", {
-            required: "enter name",
-          })}
-          placeholder="name"
-          className="inputText"
-        />
-      </section>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="materialUpdateCard">
+        <section className="materialUpdateCardName">
+          <input
+            {...register("name", {
+              required: "enter name",
+            })}
+            placeholder="name"
+            className="inputText"
+          />
+        </section>
 
-      <section className="materialUpdateCardDescription">
-        <input
-          {...register("description", {
-            required: "enter decription",
-            minLength: {
-              value: 5,
-              message: "description must have at least five characters",
-            },
-            maxLength: {
-              value: 100,
-              message: "description must not be over hundred characters",
-            },
-          })}
-          placeholder="description"
-          className="inputText"
-        />
-      </section>
+        <section className="materialUpdateCardDescription">
+          <input
+            {...register("description", {
+              required: "enter decription",
+              minLength: {
+                value: 5,
+                message: "description must have at least five characters",
+              },
+              maxLength: {
+                value: 100,
+                message: "description must not be over hundred characters",
+              },
+            })}
+            placeholder="description"
+            className="inputText"
+          />
+        </section>
 
-      <section className="materialUpdateCardPurchaseUOM">
-        <label className="listElementText">purchase uom</label>
-        <select {...register("purchaseUOM")} className="inputText">
-          {uomToDisplay}
-        </select>
-      </section>
+        <section className="materialUpdateCardPurchaseUOM">
+          <label className="listElementText">purchase uom</label>
+          <select {...register("purchaseUOM")} className="inputText">
+            {uomToDisplay}
+          </select>
+        </section>
 
-      <section className="materialUpdateCardPurchasePrice">
-        <input
-          {...register("purchasePrice", { required: "enter price" })}
-          className="inputNumber"
-          type="number"
-        />
-      </section>
+        <section className="materialUpdateCardPurchasePrice">
+          <input
+            {...register("purchasePrice", { required: "enter price" })}
+            className="inputNumber"
+            type="number"
+            step={0.01}
+          />
+        </section>
 
-      <section className="materialUpdateCardStorageUOM">
-        <label className="listElementText">storage uom</label>
-        <select {...register("storageUOM")} className="inputText">
-          {uomToDisplay}
-        </select>
-      </section>
+        <section className="materialUpdateCardStorageUOM">
+          <label className="listElementText">storage uom</label>
+          <select {...register("storageUOM")} className="inputText">
+            {uomToDisplay}
+          </select>
+        </section>
 
-      <section className="materialUpdateCardRatio">
-        <input
-          {...register("conversionRatio", {
-            required: "add conversion ratio",
-          })}
-          className="inputNumber"
-          type="number"
-        />
-      </section>
+        <section className="materialUpdateCardRatio">
+          <input
+            {...register("conversionRatio", {
+              required: "add conversion ratio",
+            })}
+            className="inputNumber"
+            step={0.01}
+            type="number"
+          />
+        </section>
 
-      <section className="materialUpdateCardErrors">
-        {errors.name && (
-          <p className="formErrorMessage">{errors.name.message}</p>
-        )}
-        {errors.description && (
-          <p className="formErrorMessage">{errors.description.message}</p>
-        )}
-        {errors.price && (
-          <p className="formErrorMessage">{errors.purchasePrice.message}</p>
-        )}
-        {errors.price && (
-          <p className="formErrorMessage">{errors.conversionRatio.message}</p>
-        )}
-      </section>
+        <section className="materialUpdateCardErrors">
+          {errors.name && (
+            <p className="formErrorMessage">{errors.name.message}</p>
+          )}
+          {errors.description && (
+            <p className="formErrorMessage">{errors.description.message}</p>
+          )}
+          {errors.price && (
+            <p className="formErrorMessage">{errors.purchasePrice.message}</p>
+          )}
+          {errors.price && (
+            <p className="formErrorMessage">{errors.conversionRatio.message}</p>
+          )}
+        </section>
 
-      <section className="listElementButton materialUpdateCardButton">
-        <StandardButton
-          handleClick={handleSubmit(onSubmit)}
-          type="submit"
-          label="update"
-        />
-      </section>
-    </form>
+        <section className="listElementButton materialUpdateCardButton">
+          <input type="submit" value={"update"} className="standardButton" />
+        </section>
+      </form>
+      <button
+        onClick={() => deleteMaterial(currentMaterial.id)}
+        className="elementDeleteButton"
+      >
+        delete
+      </button>
+    </>
   );
 };
 

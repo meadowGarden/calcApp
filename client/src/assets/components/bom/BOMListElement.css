@@ -8,5 +8,6 @@
 }
 .bomListElement:hover {
   background-color: var(--list-element-background-hover-color);
+  cursor: pointer;
 }
 

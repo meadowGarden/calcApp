@@ -4,7 +4,6 @@ import "../site/CommonStyles.css";
 import { uomDictServerClient } from "../../../services/utils";
 import "./BOMLinesAddElement.css";
 import "../site/CommonStyles.css";
-import StandardButton from "../buttons/StandardButton";
 
 const BOMLinesAddElement = ({
   materialList,
@@ -78,10 +77,12 @@ const BOMLinesAddElement = ({
         <span className="listElementNumber">{cost.toFixed(2)}</span>
 
         <span className="listElementText">
-          <StandardButton
-            handleClick={() => removeMaterial(line.uuid)}
-            label={"remove"}
-          />
+          <button
+            onClick={() => removeMaterial(line.uuid)}
+            className="standardButton"
+          >
+            remove
+          </button>
         </span>
       </div>
     </>

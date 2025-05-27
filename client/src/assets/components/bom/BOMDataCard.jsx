@@ -2,7 +2,6 @@ import { useState } from "react";
 import BOMLinesListElement from "./BOMLinesListElement";
 import { useForm } from "react-hook-form";
 import "./BOMDataCard.css";
-import StandardButton from "../buttons/StandardButton";
 import "../site/CommonStyles.css";
 import CostsComparator from "./CostsComparator";
 import { uomDictServerClient } from "../../../services/utils";
@@ -10,7 +9,16 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import useUserStore from "../../storage/useUserStore";
 
-const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
+const BOMDataCard = ({
+  bom,
+  materials,
+  fetchBOM,
+  uomList,
+  closeCard,
+  setToastInfo,
+  showToast,
+  deleteBOM,
+}) => {
   const currentCost = bom.costs;
 
   const user = useUserStore((state) => state.user);
@@ -71,9 +79,16 @@ const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
       .put(`http://localhost:8080/api/bom/${entity.id}`, newEntity, {
         headers: { Authorization: `Bearer ${user.token}` },
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         fetchBOM();
+        setToastInfo({
+          title: "success",
+          message: "product has been updated",
+          status: "success",
+          delay: 3000,
+        });
+        showToast();
+        closeCard();
       })
       .catch((error) => console.log(error));
   };
@@ -91,7 +106,7 @@ const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
 
   return (
     <div className="bomDataCard">
-      <form className="bomDataCardMainInfo">
+      <form onSubmit={handleSubmit(updateBOM)} className="bomDataCardMainInfo">
         <section>
           <input {...register("name")} className="inputText" />
         </section>
@@ -115,21 +130,35 @@ const BOMDataCard = ({ bom, materials, fetchBOM, uomList }) => {
         </section>
 
         <section className="bomDataCardButtons">
-          <StandardButton
-            handleClick={() => {
-              console.log("cancel");
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleLineAdd();
             }}
-            label="cancel"
-          />
-          <StandardButton
-            handleClick={handleSubmit(updateBOM)}
-            label="update"
-          />
-          <StandardButton handleClick={handleLineAdd} label="add line" />
+            className="standardButton"
+          >
+            add line
+          </button>
+
+          <input type="submit" className="standardButton" value={"update"} />
+
+          <button onClick={() => closeCard()} className="standardButton">
+            cancel
+          </button>
         </section>
       </form>
 
       <section className="bomDataCardLines">{bomLinesToDisplay}</section>
+
+      <section>
+        <button
+          onClick={() => deleteBOM(entity.id)}
+          type="submit"
+          className="elementDeleteButton"
+        >
+          delete product
+        </button>
+      </section>
     </div>
   );
 };

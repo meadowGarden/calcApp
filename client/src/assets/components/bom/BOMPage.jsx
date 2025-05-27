@@ -8,6 +8,7 @@ import BOMCreateCard from "./BOMCreateCard";
 import AddButton from "../buttons/AddButton";
 import "./BOMPage.css";
 import useUserStore from "../../storage/useUserStore";
+import AppToast from "../site/AppToast.jsx";
 
 const BOMPage = () => {
   const [bom, setBOM] = useState([]);
@@ -16,7 +17,9 @@ const BOMPage = () => {
   const [showBOMDataModal, setShowBOMDataModal] = useState(false);
   const [materials, setMaterials] = useState([]);
   const [uomList, setUOMList] = useState([]);
+  const [showToast, setShowToast] = useState(false);
   const user = useUserStore((state) => state.user);
+  const [toastInfo, setToastInfo] = useState({});
 
   const fetchBOM = () => {
     axios
@@ -68,6 +71,34 @@ const BOMPage = () => {
     setShowBOMDataModal(false);
   };
 
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:8080/api/bom/${id}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => {
+        fetchBOM();
+        setShowBOMDataModal(false);
+        setToastInfo({
+          title: "success",
+          message: "product has been deleted",
+          status: "success",
+          delay: 3000,
+        });
+        toggleShowToast();
+      })
+      .catch((error) => {
+        setToastInfo({
+          title: "failure",
+          message: "product has not been deleted",
+          status: "failure",
+          delay: 3000,
+        });
+      });
+  };
+
+  const toggleShowToast = () => setShowToast(!showToast);
+
   const bomToDisplay = bom.map((element) => (
     <BOMListElement
       key={element.entity.id}
@@ -88,6 +119,9 @@ const BOMPage = () => {
             uomList={uomList}
             materialList={materials}
             fetchBOM={fetchBOM}
+            closeCard={setShowAddBOMModal}
+            showToast={toggleShowToast}
+            setToastInfo={setToastInfo}
           />
         </DataModal>
 
@@ -101,9 +135,22 @@ const BOMPage = () => {
             materials={materials}
             fetchBOM={fetchBOM}
             uomList={uomList}
+            closeCard={setShowBOMDataModal}
+            showToast={toggleShowToast}
+            setToastInfo={setToastInfo}
+            deleteBOM={handleDelete}
           />
         </DataModal>
       </div>
+
+      <AppToast
+        title={toastInfo.title}
+        message={toastInfo.message}
+        status={toastInfo.status}
+        delay={toastInfo.delay}
+        show={showToast}
+        onClose={toggleShowToast}
+      />
     </PageContainer>
   );
 };

@@ -49,7 +49,6 @@
   grid-column: 1 / span 3;
 }
 .materialAddCardButton {
-  width: 30%;
   grid-column-start: 1;
   grid-column-start: 1;
 }

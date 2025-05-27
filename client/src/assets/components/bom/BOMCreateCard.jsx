@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { uomDictServerClient } from "../../../services/utils";
-import StandardButton from "../buttons/StandardButton";
 import axios from "axios";
 import { useState } from "react";
 import BOMLinesAddElement from "./BOMLinesAddElement";
@@ -9,7 +8,14 @@ import "./BOMCreateCard.css";
 import "../site/CommonStyles.css";
 import useUserStore from "../../storage/useUserStore";
 
-const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
+const BOMCreateCard = ({
+  uomList,
+  materialList,
+  fetchBOM,
+  closeCard,
+  showToast,
+  setToastInfo,
+}) => {
   const [bomLines, setBOMLines] = useState([]);
   const uuid = uuidv4();
   const user = useUserStore((state) => state.user);
@@ -44,10 +50,24 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
-        console.log(res);
         fetchBOM();
+        setToastInfo({
+          title: "success",
+          message: "product has bee created created",
+          status: "success",
+          duration: 3000,
+        });
+        showToast();
+        closeCard();
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "product was not created",
+          status: "failure",
+          duration: 3000,
+        });
+      });
   };
 
   const addMaterial = () => {
@@ -76,13 +96,9 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
 
   return (
     <div className="BOMCreateCard">
-      <form className="BOMCreateCardMain">
+      <form onSubmit={handleSubmit(createBOM)} className="BOMCreateCardMain">
         <section className="bomCreateButton">
-          <StandardButton
-            handleClick={handleSubmit(createBOM)}
-            type="submit"
-            label="create"
-          />
+          <input type="submit" value={"create"} className="standardButton" />
         </section>
 
         <section className="bomCreateInputName">
@@ -137,7 +153,9 @@ const BOMCreateCard = ({ uomList, materialList, fetchBOM }) => {
 
       <section className="bomCreateLines">
         <section className="bomCreateLinesButton">
-          <StandardButton handleClick={addMaterial} label="add material" />
+          <button onClick={addMaterial} className="standardButton">
+            add material
+          </button>
         </section>
         {bomLinesToDisplay}
       </section>

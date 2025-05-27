@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { uomDictServerClient } from "../../../services/utils";
-import StandardButton from "../buttons/StandardButton";
 import "./MaterialAddCard.css";
 import "../site/CommonStyles.css";
 import useUserStore from "../../storage/useUserStore.js";
@@ -88,7 +87,7 @@ const MaterialAddCard = ({
   };
 
   return (
-    <form className="materialAddCard">
+    <form onSubmit={handleSubmit(onSubmit)} className="materialAddCard">
       <section className="materialAddCardName">
         <input
           {...register("name", {
@@ -129,6 +128,7 @@ const MaterialAddCard = ({
           {...register("purchasePrice", { required: "enter price" })}
           type="number"
           placeholder="price"
+          step={0.01}
           className="inputNumber"
         />
       </section>
@@ -160,6 +160,7 @@ const MaterialAddCard = ({
             {...register("ratio", { required: "add conversion ratio" })}
             type="number"
             placeholder="ratio"
+            step={0.01}
             className="inputNumber"
           />
         </section>
@@ -178,8 +179,8 @@ const MaterialAddCard = ({
         {errors.description && (
           <p className="formErrorMessage">{errors.description.message}</p>
         )}
-        {errors.price && (
-          <p className="formErrorMessage">{errors.price.message}</p>
+        {errors.purchasePrice && (
+          <p className="formErrorMessage">{errors.purchasePrice.message}</p>
         )}
         {isUOMDiffer && errors.ratio && (
           <p className="formErrorMessage">{errors.ratio.message}</p>
@@ -187,11 +188,7 @@ const MaterialAddCard = ({
       </section>
 
       <section className="listElementButton materialAddCardButton">
-        <StandardButton
-          type="submit"
-          handleClick={handleSubmit(onSubmit)}
-          label="add"
-        />
+        <input type="submit" className="standardButton" value={"add"} />
       </section>
     </form>
   );

@@ -120,3 +120,31 @@
 .inputUpdateNumber::placeholder {
   color: var(--input-placeholder-color);
 }
+
+.elementDeleteButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #f8d7da;
+  color: #842029;
+  height: var(--space-xxl);
+  box-sizing: border-box;
+}
+.elementDeleteButton:hover {
+  background-color: #f7cace;
+}
+
+.standardButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #7fa6ba;
+  color: #ffffff;
+  height: var(--space-xxl);
+  box-sizing: border-box;
+}
+.standardButton:hover {
+  background-color: #6b8ea2;
+}

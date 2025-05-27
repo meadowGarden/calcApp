@@ -5,7 +5,6 @@ import {
 } from "../../../services/utils.js";
 import "./BOMLinesListElement.css";
 import "../site/CommonStyles.css";
-import StandardButton from "../buttons/StandardButton";
 import { useState } from "react";
 
 const BOMLinesListElement = ({
@@ -92,7 +91,9 @@ const BOMLinesListElement = ({
       </section>
 
       <section className="verticalCenter">
-        <StandardButton handleClick={() => onDelete(id)} label="delete" />
+        <button onClick={() => onDelete(id)} className="standardButton">
+          delete
+        </button>
       </section>
     </form>
   );

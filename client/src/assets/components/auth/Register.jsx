@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import PageContainer from "../site/PageContainer.jsx";
 import "./Register.css";
-import StandardButton from "../buttons/StandardButton.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import AppToast from "../site/AppToast.jsx";
@@ -152,10 +151,10 @@ const Register = () => {
         </section>
 
         <section className="registerFormSection">
-          <StandardButton
-            handleClick={handleSubmit(onSubmit)}
-            label={"submit"}
-          />
+          <button
+            onSubmit={handleSubmit(onSubmit)}
+            className="standardButton"
+          ></button>
         </section>
       </form>
 

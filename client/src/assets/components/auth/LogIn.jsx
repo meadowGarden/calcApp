@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import PageContainer from "../site/PageContainer.jsx";
-import StandardButton from "../buttons/StandardButton.jsx";
 import axios from "axios";
 import "./LogIn.css";
 import { useNavigate } from "react-router";
@@ -85,11 +84,9 @@ const LogIn = () => {
         </section>
 
         <section>
-          <StandardButton
-            handleClick={handleSubmit(onSubmit)}
-            type="submit"
-            label={"log in"}
-          />
+          <button onSubmit={handleSubmit(onSubmit)} className="standardButton">
+            log in
+          </button>
         </section>
       </form>
 
