@@ -60,13 +60,29 @@ const BOMCreateCard = ({
         showToast();
         closeCard();
       })
-      .catch(() => {
-        setToastInfo({
-          title: "failure",
-          message: "product was not created",
-          status: "failure",
-          duration: 3000,
-        });
+      .catch((error) => {
+        switch (error.status) {
+          case 409:
+            {
+              setToastInfo({
+                title: "failure",
+                message: `${error.response.data}`,
+                status: "failure",
+                duration: 3000,
+              });
+              showToast();
+            }
+            break;
+          default: {
+            setToastInfo({
+              title: "failure",
+              message: "product has not been created",
+              status: "failure",
+              duration: 3000,
+            });
+            showToast();
+          }
+        }
       });
   };
 

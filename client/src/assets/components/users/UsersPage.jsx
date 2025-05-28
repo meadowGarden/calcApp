@@ -168,14 +168,29 @@ const UsersPage = () => {
         toggleShowToast();
         setShowAddModal(false);
       })
-      .catch(() => {
-        setToastInfo({
-          title: "failure",
-          message: "unable to update user",
-          status: "failure",
-          delay: 3000,
-        });
-        toggleShowToast();
+      .catch((error) => {
+        switch (error.status) {
+          case 409:
+            {
+              setToastInfo({
+                title: "failure",
+                message: `${error.response.data}`,
+                status: "failure",
+                duration: 3000,
+              });
+              toggleShowToast();
+            }
+            break;
+          default: {
+            setToastInfo({
+              title: "failure",
+              message: "unable to update user",
+              status: "failure",
+              duration: 3000,
+            });
+            toggleShowToast();
+          }
+        }
       });
   };
 

@@ -142,7 +142,7 @@
   height: var(--space-xxl);
   box-sizing: border-box;
   font-family: var(--text-style-family);
-  font-size: var(--space-xl);
+  font-size: calc(var(--space-xxs) + var(--space-lg));
   font-weight: var(--text-style-family-weight);
 }
 .elementDeleteButton:hover {
@@ -159,7 +159,7 @@
   height: var(--space-xxl);
   box-sizing: border-box;
   font-family: var(--text-style-family);
-  font-size: var(--space-xl);
+  font-size: calc(var(--space-xxs) + var(--space-lg));
   font-weight: var(--text-style-family-weight);
 }
 .standardButton:hover {

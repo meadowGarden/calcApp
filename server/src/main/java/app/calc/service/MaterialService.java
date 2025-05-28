@@ -60,7 +60,7 @@ public class MaterialService {
         final MaterialEntity materialToUpdate = materialByID.get();
 
         Optional<MaterialEntity> materialEntity = materialRepository.findByName(dto.getName());
-        if (materialEntity.isPresent() && !materialEntity.get().getName().equals(materialToUpdate.getName()))
+        if (materialEntity.isPresent() && materialEntity.get().getID() != materialToUpdate.getID())
             throw new EntityDuplicationException("material by this name already exists");
 
         materialToUpdate.setName(dto.getName());

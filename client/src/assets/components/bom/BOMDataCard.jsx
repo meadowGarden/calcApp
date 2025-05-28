@@ -89,14 +89,29 @@ const BOMDataCard = ({
         });
         showToast();
       })
-      .catch(() => {
-        setToastInfo({
-          title: "failure",
-          message: "product has not been updated",
-          status: "failure",
-          delay: 3000,
-        });
-        showToast();
+      .catch((error) => {
+        switch (error.status) {
+          case 409:
+            {
+              setToastInfo({
+                title: "failure",
+                message: `${error.response.data}`,
+                status: "failure",
+                duration: 3000,
+              });
+              showToast();
+            }
+            break;
+          default: {
+            setToastInfo({
+              title: "failure",
+              message: "product has not been updated",
+              status: "failure",
+              duration: 3000,
+            });
+            showToast();
+          }
+        }
       });
   };
 

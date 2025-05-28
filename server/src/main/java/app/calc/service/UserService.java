@@ -95,6 +95,11 @@ public class UserService {
             return new BackResponse<>(null, HttpStatus.NOT_FOUND);
 
         final User userToUpdate = userByID.get();
+
+        final Optional<User> possibleUser = userRepository.findByEmail(dto.getEmail());
+        if (possibleUser.isPresent() && possibleUser.get().getId() != userToUpdate.getId())
+            throw new EntityDuplicationException("user already exists");
+
         userToUpdate.setFirstName(dto.getFirstName());
         userToUpdate.setLastName(dto.getLastName());
         userToUpdate.setEmail(dto.getEmail());

@@ -6,6 +6,7 @@ import app.calc.dto.response.BackResponse;
 import app.calc.dto.response.pricedEntities.BOMData;
 import app.calc.entity.BOMEntity;
 import app.calc.entity.BOMLineEntity;
+import app.calc.exceptions.EntityDuplicationException;
 import app.calc.repository.BOMLineRepository;
 import app.calc.repository.BOMRepository;
 import app.calc.utils.AppFormatter;
@@ -32,6 +33,10 @@ public class BOMService {
     }
 
     public BackResponse<BOMData<BOMEntity>> createBOM(BOMRequest dto) {
+        final Optional<BOMEntity> possibleBOM = bomRepository.findByName(dto.getName());
+        if (possibleBOM.isPresent())
+            throw new EntityDuplicationException("bom by this name already exists");
+
         final BOMEntity bomToCreate = bomRepository.save(new BOMEntity());
         bomToCreate.setName(dto.getName());
         bomToCreate.setDescription(dto.getDescription());
@@ -96,6 +101,11 @@ public class BOMService {
             return new BackResponse<>(null, HttpStatus.NOT_FOUND);
 
         final BOMEntity bomToUpdate = bomByID.get();
+
+        final Optional<BOMEntity> possibleBOM = bomRepository.findByName(dto.getName());
+        if (possibleBOM.isPresent() && possibleBOM.get().getId() != bomToUpdate.getId())
+            throw new EntityDuplicationException("bom by this name already exists");
+
         bomToUpdate.setName(dto.getName());
         bomToUpdate.setDescription(dto.getDescription());
         bomToUpdate.setUOM(dto.getUOM());

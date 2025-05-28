@@ -40,6 +40,5 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: calc(var(--space-xxxl) * 2.5);
   height: var(--space-xxl);
 }
