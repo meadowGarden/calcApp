@@ -1,7 +1,11 @@
+import "../site/CommonStyles.css";
+
 const DeletionZone = ({ title, onClick }) => {
   return (
     <div>
-      <button onClick={onClick}>delete {title}</button>
+      <button onClick={onClick} className={"elementDeleteButton"}>
+        delete {title}
+      </button>
     </div>
   );
 };

@@ -83,10 +83,13 @@ const LogIn = () => {
           )}
         </section>
 
-        <section>
-          <button onSubmit={handleSubmit(onSubmit)} className="standardButton">
-            log in
-          </button>
+        <section className="logInFormSection">
+          <input
+            type="submit"
+            onSubmit={handleSubmit(onSubmit)}
+            value={"log in"}
+            className="standardButton"
+          />
         </section>
       </form>
 

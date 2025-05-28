@@ -27,6 +27,15 @@
   --list-element-background-color: #eff6fa;
   --list-element-background-hover-color: #e2edf3;
 
+  --title-style-family: "Tinos";
+  --title-style-family-weight: 500;
+
+  --text-style-family: "Yrsa";
+  --text-style-family-weight: 400;
+
+  --text-numeric-style-family: "Roboto";
+  --text-numeric-style-family-weight: 500;
+
   --space-xxs: 0.125rem;
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;

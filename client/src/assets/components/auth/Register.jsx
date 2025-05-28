@@ -151,10 +151,12 @@ const Register = () => {
         </section>
 
         <section className="registerFormSection">
-          <button
+          <input
+            type="submit"
             onSubmit={handleSubmit(onSubmit)}
+            value={"register"}
             className="standardButton"
-          ></button>
+          />
         </section>
       </form>
 

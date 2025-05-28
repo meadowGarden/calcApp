@@ -34,7 +34,15 @@ const MaterialsPage = () => {
       .then((response) => {
         setMaterials(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "could not fetch data",
+          status: "failure",
+          delay: 3000,
+        });
+        showToast();
+      });
   };
 
   useEffect(() => fetchMaterials(), []);
@@ -61,8 +69,7 @@ const MaterialsPage = () => {
       .delete(`http://localhost:8080/api/materials/${id}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
-      .then((res) => {
-        console.log("in the then");
+      .then(() => {
         fetchMaterials();
         handleEditModalClose();
         toggleShowToast();

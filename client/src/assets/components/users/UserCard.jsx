@@ -95,10 +95,10 @@ const UserCard = ({ user, onSuccessTitle, onSubmit, rolesList }) => {
       </section>
 
       {user === undefined && (
-        <section className="registerFormSection">
+        <section>
           <input
             {...register("password", {
-              required: "you must enter your password",
+              required: "enter password",
               minLength: {
                 value: 2,
                 message: "your password should be at lest two characters long",
@@ -119,7 +119,7 @@ const UserCard = ({ user, onSuccessTitle, onSubmit, rolesList }) => {
       )}
 
       {user === undefined && (
-        <section className="registerFormSection">
+        <section>
           <input
             {...register("repeatPassword", {
               required: "repeat password",
@@ -140,7 +140,12 @@ const UserCard = ({ user, onSuccessTitle, onSubmit, rolesList }) => {
       )}
 
       <section>
-        <input type="submit" value={onSuccessTitle} />
+        <input
+          type="submit"
+          readOnly={true}
+          value={onSuccessTitle}
+          className="standardButton"
+        />
       </section>
     </form>
   );

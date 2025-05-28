@@ -6,7 +6,6 @@ import ErrorPage from "./assets/components/ErrorPage";
 import HomePage from "./assets/components/HomePage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./assets/components/site/Navbar";
-import TestPage from "./assets/components/test/TestPage";
 import Register from "./assets/components/auth/Register.jsx";
 import LogIn from "./assets/components/auth/LogIn";
 import UsersPage from "./assets/components/users/UsersPage.jsx";
@@ -27,10 +26,6 @@ function App() {
         <Route
           path={inspectPath(user?.user.role, ["ADMIN"], "/users")}
           element={<UsersPage />}
-        />
-        <Route
-          path={inspectPath(user?.user.role, ["ADMIN"], "/test")}
-          element={<TestPage />}
         />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LogIn />} />

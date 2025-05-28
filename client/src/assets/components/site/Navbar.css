@@ -13,6 +13,8 @@
   text-align: center;
   font-size: 1.5rem;
   text-decoration: none;
+  font-family: var(--title-style-family);
+  font-weight: var(--title-style-family-weight);
 }
 
 .nbStandardElement {
@@ -20,6 +22,8 @@
   text-align: center;
   font-size: 1.2rem;
   text-decoration: none;
+  font-family: var(--title-style-family);
+  font-weight: var(--title-style-family-weight);
 }
 
 .nbStandardElement:hover {

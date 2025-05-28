@@ -32,7 +32,15 @@ const MaterialAddCard = ({
         setUOMList(response.data);
         setValue("purchaseUOM", response.data[0]);
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "could not fetch data",
+          status: "failure",
+          delay: 3000,
+        });
+        showToast();
+      });
   }, [setValue]);
 
   const uomToDisplay = uomList.map((uom) => (

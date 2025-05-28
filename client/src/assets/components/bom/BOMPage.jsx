@@ -29,7 +29,15 @@ const BOMPage = () => {
       .then((response) => {
         setBOM(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "could not fetch data",
+          status: "failure",
+          delay: 3000,
+        });
+        showToast();
+      });
   };
   useEffect(() => fetchBOM(), []);
 
@@ -41,7 +49,15 @@ const BOMPage = () => {
       .then((response) => {
         setMaterials(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "could not fetch materials data",
+          status: "failure",
+          delay: 3000,
+        });
+        showToast();
+      });
   };
   useEffect(() => fetchMaterials(), []);
 
@@ -51,7 +67,15 @@ const BOMPage = () => {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setUOMList(res.data))
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "could not fetch data",
+          status: "failure",
+          delay: 3000,
+        });
+        showToast();
+      });
   }, []);
 
   const handleCreateBOM = () => {

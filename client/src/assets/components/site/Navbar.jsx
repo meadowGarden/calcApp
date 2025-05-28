@@ -47,12 +47,6 @@ const Navbar = () => {
         </Link>
       )}
 
-      {user?.user.role === "ADMIN" && (
-        <Link className="nbStandardElement" to="/test">
-          test
-        </Link>
-      )}
-
       {user === null && (
         <Link className="nbStandardElement" to="/register">
           register

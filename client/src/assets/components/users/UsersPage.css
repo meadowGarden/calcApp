@@ -1,4 +1,8 @@
 .usersPage {
   display: grid;
-  gap: 0.5rem;
+  gap: var( --space-sm);
+}
+
+.deleteUserButtonSection {
+  text-align: right;
 }

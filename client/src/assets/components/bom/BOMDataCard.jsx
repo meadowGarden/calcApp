@@ -88,9 +88,16 @@ const BOMDataCard = ({
           delay: 3000,
         });
         showToast();
-        closeCard();
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "product has not been updated",
+          status: "failure",
+          delay: 3000,
+        });
+        showToast();
+      });
   };
 
   const bomLinesToDisplay = lines.map((line) => (

@@ -44,7 +44,15 @@ const UsersPage = () => {
         setUsers(res.data.content);
         setTotalPages(res.data.totalPages);
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "could not fetch users",
+          status: "failure",
+          delay: 3000,
+        });
+        showToast();
+      });
   };
   useEffect(() => fetchUsers(), [paginationSettings]);
 
@@ -54,7 +62,15 @@ const UsersPage = () => {
         headers: { Authorization: `Bearer ${loggedUser.token}` },
       })
       .then((res) => setRoles(res.data))
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "could not fetch roles",
+          status: "failure",
+          delay: 3000,
+        });
+        showToast();
+      });
   };
   useEffect(() => fetchRoles(), []);
 
@@ -228,7 +244,9 @@ const UsersPage = () => {
           onSubmit={updateUser}
           rolesList={roles}
         />
-        <DeletionZone title={"user"} onClick={deleteUser} />
+        <section className="deleteUserButtonSection">
+          <DeletionZone title={"user"} onClick={deleteUser} />
+        </section>
       </DataModal>
 
       <AppToast

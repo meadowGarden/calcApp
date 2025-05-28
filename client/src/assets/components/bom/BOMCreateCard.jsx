@@ -110,8 +110,8 @@ const BOMCreateCard = ({
                 message: "name should be at least 4 characters",
               },
               maxLength: {
-                value: 15,
-                message: "description must not be over 15 characters ",
+                value: 25,
+                message: "description must not be over 25 characters ",
               },
             })}
             placeholder="product name"

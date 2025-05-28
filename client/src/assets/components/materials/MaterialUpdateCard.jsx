@@ -48,7 +48,15 @@ const MaterialUpdateCard = ({
           conversionRatio: currentMaterial.conversionRatio,
         });
       })
-      .catch((error) => console.log(error));
+      .catch(() => {
+        setToastInfo({
+          title: "failure",
+          message: "could not fetch data",
+          status: "failure",
+          delay: 3000,
+        });
+        showToast();
+      });
   }, [reset, currentMaterial]);
 
   const uomToDisplay = uomList.map((uom) => (

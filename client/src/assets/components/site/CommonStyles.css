@@ -9,6 +9,8 @@
   height: var(--space-xxl);
   border: none;
   width: 100%;
+  font-family: var(--text-style-family);
+  font-weight: var(--text-style-family-weight);
 }
 .inputText:focus {
   outline: none;
@@ -29,6 +31,8 @@
   height: var(--space-xxl);
   border: none;
   width: 100%;
+  font-family: var(--text-numeric-style-family);
+  font-weight: var(--text-numeric-style-family-weight);
 }
 .inputNumber::-webkit-outer-spin-button,
 .inputNumber::-webkit-inner-spin-button {
@@ -50,6 +54,8 @@
   font-size: var(--space-lg);
   height: var(--space-xxl);
   width: 100%;
+  font-family: var(--text-style-family);
+  font-weight: var(--text-style-family-weight);
 }
 
 .listElementNumber {
@@ -57,9 +63,10 @@
   align-items: center;
   justify-content: flex-end;
   padding: 0 var(--space-lg) 0 var(--space-xs);
-  font-size: var(--space-lg);
   height: var(--space-xxl);
   width: 100%;
+  font-family: var(--text-numeric-style-family);
+  font-weight: var(--text-numeric-style-family-weight);
 }
 .listElementButton {
   display: inline-flex;
@@ -88,6 +95,8 @@
   height: calc(var(--space-xxl) - var(--space-xs));
   border: none;
   width: 100%;
+  font-family: var(--text-style-family);
+  font-weight: var(--text-style-family-weight);
 }
 .inputUpdateText:focus {
   outline: none;
@@ -107,6 +116,8 @@
   height: calc(var(--space-xxl) - var(--space-xs));
   border: none;
   width: 100%;
+  font-family: var(--text-style-family);
+  font-weight: var(--text-style-family-weight);
 }
 .inputUpdateNumber::-webkit-outer-spin-button,
 .inputUpdateNumber::-webkit-inner-spin-button {
@@ -130,6 +141,9 @@
   color: #842029;
   height: var(--space-xxl);
   box-sizing: border-box;
+  font-family: var(--text-style-family);
+  font-size: var(--space-xl);
+  font-weight: var(--text-style-family-weight);
 }
 .elementDeleteButton:hover {
   background-color: #f7cace;
@@ -144,6 +158,9 @@
   color: #ffffff;
   height: var(--space-xxl);
   box-sizing: border-box;
+  font-family: var(--text-style-family);
+  font-size: var(--space-xl);
+  font-weight: var(--text-style-family-weight);
 }
 .standardButton:hover {
   background-color: #6b8ea2;

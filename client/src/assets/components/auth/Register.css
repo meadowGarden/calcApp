@@ -3,13 +3,9 @@
   grid-gap: var(--space-xs);
   width: 50%;
   margin: auto;
-
 }
 
 .registerFormSection {
   width: 100%;
-}
-
-.registerFormInput {
-  width: 100%;
+  text-align: center;
 }
