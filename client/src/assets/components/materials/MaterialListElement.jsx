@@ -1,4 +1,4 @@
-import "./materialListElement.css";
+import "./MaterialListElement.css";
 import { uomDictServerClient } from "../../../services/utils.js";
 import "../site/CommonStyles.css";
 

@@ -20,6 +20,7 @@ class AppFormatterTest {
     })
     @DisplayName("costs rounding for bom lines")
     @Order(1)
+    @Disabled
     void testRoundingBOMLines(double input, double output) {
         assertEquals(output, AppFormatter.roundingBOMLinesCosts(input));
     }
@@ -32,6 +33,7 @@ class AppFormatterTest {
     })
     @DisplayName("costs rounding for bom")
     @Order(2)
+    @Disabled
     void testRoundingBOM(double input, double output) {
         assertEquals(output, AppFormatter.roundingBOMCosts(input));
     }

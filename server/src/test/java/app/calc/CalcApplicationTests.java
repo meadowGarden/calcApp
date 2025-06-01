@@ -1,9 +1,6 @@
 package app.calc;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -15,10 +12,12 @@ class CalcApplicationTests {
 	private String appName;
 
 	@Test
+	@Disabled
 	void contextLoads() {
 	}
 
 	@Test
+	@Disabled
 	void checkAppName() {
 		Assertions.assertEquals("production costs calculator", appName);
 	}

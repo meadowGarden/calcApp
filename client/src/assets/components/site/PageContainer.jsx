@@ -1,4 +1,4 @@
-import "./pageContainer.css";
+import "./PageContainer.css";
 
 const PageContainer = ({ children }) => {
   return <div className="pageContainer">{children}</div>;
