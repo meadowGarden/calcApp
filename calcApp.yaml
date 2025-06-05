@@ -1,6 +1,6 @@
 services:
   app-client:
-    image: app-client:0.2
+    image: app-client:0.4
     ports:
       - 3000:3000
 
