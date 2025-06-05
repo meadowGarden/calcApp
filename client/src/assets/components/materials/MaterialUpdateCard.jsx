@@ -34,7 +34,7 @@ const MaterialUpdateCard = ({
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/materials/uom", {
+      .get(`${import.meta.env.VITE_BACK_END}/api/materials/uom`, {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((response) => {
@@ -77,7 +77,7 @@ const MaterialUpdateCard = ({
 
     axios
       .put(
-        `http://localhost:8080/api/materials/${currentMaterial.id}`,
+        `${import.meta.env.VITE_BACK_END}/api/materials/${currentMaterial.id}`,
         material,
         {
           headers: { Authorization: `Bearer ${user.token}` },

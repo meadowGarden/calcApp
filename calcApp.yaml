@@ -1,11 +1,11 @@
 services:
   app-client:
-    image: app-client:0.4
+    image: app-client:1.1
     ports:
       - 3000:3000
 
   app-server:
-    image: app-server:0.98
+    image: app-server:1.1
     ports:
       - 8080:8080
     depends_on:

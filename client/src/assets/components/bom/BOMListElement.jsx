@@ -1,11 +1,9 @@
 import "./BOMListElement.css";
 import "../../../services/utils.js";
 import { uomDictServerClient } from "../../../services/utils.js";
-import axios from "axios";
 import "../site/CommonStyles.css";
-import useUserStore from "../../storage/useUserStore.js";
 
-function BOMListElement({ data, handleClick, fetchBOM }) {
+function BOMListElement({ data, handleClick }) {
   const { name, description, uom } = data.entity;
   const adjustedUOM = uomDictServerClient[uom];
   const costs = data.costs;

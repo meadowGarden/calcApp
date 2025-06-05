@@ -46,7 +46,7 @@ const BOMCreateCard = ({
     };
 
     axios
-      .post("http://localhost:8080/api/bom", bom, {
+      .post(`${import.meta.env.VITE_BACK_END}/api/bom`, bom, {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {

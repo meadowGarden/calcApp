@@ -27,8 +27,10 @@ const LogIn = () => {
       password: data.password,
     };
 
+    console.log(`${import.meta.env.VITE_BACK_END}`);
+
     axios
-      .post("http://localhost:8080/api/auth/authenticate", user)
+      .post(`${import.meta.env.VITE_BACK_END}/api/auth/authenticate`, user)
       .then((res) => {
         switch (res.status) {
           case 200:

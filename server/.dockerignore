@@ -3,12 +3,6 @@
 /target
 /out
 
-# Gradle
-.gradle
-**/*.class
-**/*.jar
-**/*.war
-
 # Logs
 *.log
 *.tmp

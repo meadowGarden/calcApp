@@ -23,7 +23,7 @@ const BOMPage = () => {
 
   const fetchBOM = () => {
     axios
-      .get("http://localhost:8080/api/bom", {
+      .get(`${import.meta.env.VITE_BACK_END}/api/bom`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((response) => {
@@ -43,7 +43,7 @@ const BOMPage = () => {
 
   const fetchMaterials = () => {
     axios
-      .get("http://localhost:8080/api/materials", {
+      .get(`${import.meta.env.VITE_BACK_END}/api/materials`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((response) => {
@@ -63,7 +63,7 @@ const BOMPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/materials/uom", {
+      .get(`${import.meta.env.VITE_BACK_END}/api/materials/uom`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setUOMList(res.data))
@@ -97,7 +97,7 @@ const BOMPage = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:8080/api/bom/${id}`, {
+      .delete(`${import.meta.env.VITE_BACK_END}/api/bom/${id}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {

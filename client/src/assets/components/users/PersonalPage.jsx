@@ -100,9 +100,13 @@ const GeneralUserData = ({
     };
 
     axios
-      .put(`http://localhost:8080/api/users/${user?.user.id}`, updatedUser, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
+      .put(
+        `${import.meta.env.VITE_BACK_END}/api/users/${user?.user.id}`,
+        updatedUser,
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
       .then((res) => {
         if (res.status === 200) {
           setToastTitle("success");
@@ -208,9 +212,13 @@ const ChangePassword = ({
     };
 
     axios
-      .patch(`http://localhost:8080/api/users/${user?.user.id}`, passwords, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
+      .patch(
+        `${import.meta.env.VITE_BACK_END}/api/users/${user?.user.id}`,
+        passwords,
+        {
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
       .then((res) => {
         switch (res.status) {
           case 200:

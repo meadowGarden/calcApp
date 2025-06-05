@@ -76,7 +76,7 @@ const BOMDataCard = ({
     };
 
     axios
-      .put(`http://localhost:8080/api/bom/${entity.id}`, newEntity, {
+      .put(`${import.meta.env.VITE_BACK_END}/api/bom/${entity.id}`, newEntity, {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then(() => {

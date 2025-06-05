@@ -9,7 +9,7 @@ import {
 import "../site/CommonStyles.css";
 
 const UsersPaginationPanel = ({ setPaginationSettings, totalPages }) => {
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const usersToDisplay = itemsCount.map((item) => (
     <option key={item} value={item}>

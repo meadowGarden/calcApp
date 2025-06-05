@@ -7,13 +7,12 @@ const BOMLinesPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/bomlines")
+      .get(`${import.meta.env.VITE_BACK_END}/api/bomlines`)
       .then((response) => {
         setBOMLines(response.data);
       })
       .catch((error) => console.log(error));
   }, []);
-
 
   const bomLinesToDisplay = bomLines.map((element) => (
     <BOMLinesListElement key={element.entity.id} data={element} />

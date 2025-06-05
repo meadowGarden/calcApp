@@ -112,7 +112,7 @@ const UsersPage = () => {
     };
 
     axios
-      .post("http://localhost:8080/api/users", newUser, {
+      .post(`${import.meta.env.VITE_BACK_END}/api/users`, newUser, {
         headers: { Authorization: `Bearer ${loggedUser.token}` },
       })
       .then((res) => {
@@ -153,9 +153,13 @@ const UsersPage = () => {
     };
 
     axios
-      .put(`http://localhost:8080/api/users/${currentUser.id}`, updatedUser, {
-        headers: { Authorization: `Bearer ${loggedUser.token}` },
-      })
+      .put(
+        `${import.meta.env.VITE_BACK_END}/api/users/${currentUser.id}`,
+        updatedUser,
+        {
+          headers: { Authorization: `Bearer ${loggedUser.token}` },
+        }
+      )
       .then(() => {
         fetchUsers();
         setShowUpdateModal(false);

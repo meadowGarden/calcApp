@@ -28,7 +28,7 @@ const MaterialsPage = () => {
 
   const fetchMaterials = () => {
     axios
-      .get("http://localhost:8080/api/materials", {
+      .get(`${import.meta.env.VITE_BACK_END}/api/materials`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((response) => {
@@ -66,7 +66,7 @@ const MaterialsPage = () => {
 
   const handleLineDelete = (id) => {
     axios
-      .delete(`http://localhost:8080/api/materials/${id}`, {
+      .delete(`${import.meta.env.VITE_BACK_END}/api/materials/${id}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then(() => {
