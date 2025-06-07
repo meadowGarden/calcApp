@@ -12,7 +12,7 @@ const Navbar = () => {
 
   const onLogOut = () => {
     axios
-      .post(`${import.meta.env.VITE_BACK_END}/api/auth/logout`, {
+      .post(`${import.meta.env.VITE_BACK_END}/auth/logout`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then(() => {

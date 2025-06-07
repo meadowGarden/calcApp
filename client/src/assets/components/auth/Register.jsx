@@ -31,7 +31,7 @@ const Register = () => {
     };
 
     axios
-      .post(`${import.meta.env.VITE_BACK_END}/api/auth/register`, user)
+      .post(`${import.meta.env.VITE_BACK_END}/auth/register`, user)
       .then((res) => {
         if (res.status === 201) {
           addUser(res.data);

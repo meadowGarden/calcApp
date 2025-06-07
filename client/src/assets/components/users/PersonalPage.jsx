@@ -101,7 +101,7 @@ const GeneralUserData = ({
 
     axios
       .put(
-        `${import.meta.env.VITE_BACK_END}/api/users/${user?.user.id}`,
+        `${import.meta.env.VITE_BACK_END}/users/${user?.user.id}`,
         updatedUser,
         {
           headers: { Authorization: `Bearer ${user.token}` },
@@ -213,7 +213,7 @@ const ChangePassword = ({
 
     axios
       .patch(
-        `${import.meta.env.VITE_BACK_END}/api/users/${user?.user.id}`,
+        `${import.meta.env.VITE_BACK_END}/users/${user?.user.id}`,
         passwords,
         {
           headers: { Authorization: `Bearer ${user.token}` },

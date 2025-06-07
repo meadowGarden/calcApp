@@ -36,7 +36,7 @@ const UsersPage = () => {
 
   const fetchUsers = () => {
     axios
-      .get("http://localhost:8080/api/users", {
+      .get(`${import.meta.env.VITE_BACK_END}/users`, {
         params: paginationSettings,
         headers: { Authorization: `Bearer ${loggedUser?.token}` },
       })
@@ -58,7 +58,7 @@ const UsersPage = () => {
 
   const fetchRoles = () => {
     axios
-      .get("http://localhost:8080/api/users/roles", {
+      .get(`${import.meta.env.VITE_BACK_END}/users/roles`, {
         headers: { Authorization: `Bearer ${loggedUser.token}` },
       })
       .then((res) => setRoles(res.data))
@@ -112,7 +112,7 @@ const UsersPage = () => {
     };
 
     axios
-      .post(`${import.meta.env.VITE_BACK_END}/api/users`, newUser, {
+      .post(`${import.meta.env.VITE_BACK_END}/users`, newUser, {
         headers: { Authorization: `Bearer ${loggedUser.token}` },
       })
       .then((res) => {
@@ -154,7 +154,7 @@ const UsersPage = () => {
 
     axios
       .put(
-        `${import.meta.env.VITE_BACK_END}/api/users/${currentUser.id}`,
+        `${import.meta.env.VITE_BACK_END}/users/${currentUser.id}`,
         updatedUser,
         {
           headers: { Authorization: `Bearer ${loggedUser.token}` },
@@ -200,7 +200,7 @@ const UsersPage = () => {
 
   const deleteUser = () => {
     axios
-      .delete(`http://localhost:8080/api/users/${currentUser.id}`, {
+      .delete(`${import.meta.env.VITE_BACK_END}/users/${currentUser.id}`, {
         headers: { Authorization: `Bearer ${loggedUser.token}` },
       })
       .then(() => {

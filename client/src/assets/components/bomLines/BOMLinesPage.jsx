@@ -7,7 +7,7 @@ const BOMLinesPage = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACK_END}/api/bomlines`)
+      .get(`${import.meta.env.VITE_BACK_END}/bomlines`)
       .then((response) => {
         setBOMLines(response.data);
       })

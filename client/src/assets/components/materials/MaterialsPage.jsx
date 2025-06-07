@@ -28,7 +28,7 @@ const MaterialsPage = () => {
 
   const fetchMaterials = () => {
     axios
-      .get(`${import.meta.env.VITE_BACK_END}/api/materials`, {
+      .get(`${import.meta.env.VITE_BACK_END}/materials`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((response) => {
@@ -66,7 +66,7 @@ const MaterialsPage = () => {
 
   const handleLineDelete = (id) => {
     axios
-      .delete(`${import.meta.env.VITE_BACK_END}/api/materials/${id}`, {
+      .delete(`${import.meta.env.VITE_BACK_END}/materials/${id}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then(() => {

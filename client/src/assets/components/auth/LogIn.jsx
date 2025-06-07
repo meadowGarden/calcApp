@@ -30,7 +30,7 @@ const LogIn = () => {
     console.log(`${import.meta.env.VITE_BACK_END}`);
 
     axios
-      .post(`${import.meta.env.VITE_BACK_END}/api/auth/authenticate`, user)
+      .post(`${import.meta.env.VITE_BACK_END}/auth/authenticate`, user)
       .then((res) => {
         switch (res.status) {
           case 200:

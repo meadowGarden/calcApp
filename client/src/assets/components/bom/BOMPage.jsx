@@ -23,7 +23,7 @@ const BOMPage = () => {
 
   const fetchBOM = () => {
     axios
-      .get(`${import.meta.env.VITE_BACK_END}/api/bom`, {
+      .get(`${import.meta.env.VITE_BACK_END}/bom`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((response) => {
@@ -43,7 +43,7 @@ const BOMPage = () => {
 
   const fetchMaterials = () => {
     axios
-      .get(`${import.meta.env.VITE_BACK_END}/api/materials`, {
+      .get(`${import.meta.env.VITE_BACK_END}/materials`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((response) => {
@@ -97,7 +97,7 @@ const BOMPage = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`${import.meta.env.VITE_BACK_END}/api/bom/${id}`, {
+      .delete(`${import.meta.env.VITE_BACK_END}/bom/${id}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
