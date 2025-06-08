@@ -10,13 +10,17 @@ services:
       - 8080:8080
     depends_on:
       - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DB_PASS=${DB_PASS}
+      - JWT_SECRET=${JWT_SECRET}
 
   postgres:
     image: postgres
     ports:
       - 5433:5432
     environment:
-      - POSTGRES_PASSWORD=
+      - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_DB=calc_app
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
