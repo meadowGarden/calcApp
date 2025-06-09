@@ -27,6 +27,8 @@ const LogIn = () => {
       password: data.password,
     };
 
+    console.log(`${import.meta.env.VITE_BACK_END}/auth/authenticate`);
+
     axios
       .post(`${import.meta.env.VITE_BACK_END}/auth/authenticate`, user)
       .then((res) => {
