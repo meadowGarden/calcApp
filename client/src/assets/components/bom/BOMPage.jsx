@@ -63,7 +63,7 @@ const BOMPage = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACK_END}/api/materials/uom`, {
+      .get(`${import.meta.env.VITE_BACK_END}/materials/uom`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setUOMList(res.data))
