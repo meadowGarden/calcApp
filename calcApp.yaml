@@ -3,8 +3,6 @@ services:
     image: app-client:1.1
     ports:
       - 3000:3000
-    environment:
-      - VITE_BACK_END=${VITE_BACK_END}
 
   app-server:
     image: app-server:1.1
