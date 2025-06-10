@@ -6,8 +6,8 @@ services:
 
   app-server:
     image: app-server:1.1
-    ports:
-      #- 8080:8080
+    # ports:
+    #   - 8080:8080
     depends_on:
       - postgres
     environment:
@@ -17,8 +17,8 @@ services:
 
   postgres:
     image: postgres
-    ports:
-      #- 5433:5432
+    # ports:
+    #   - 5433:5432
     environment:
       - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_DB=calc_app
