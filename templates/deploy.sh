@@ -14,9 +14,10 @@ if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
   docker container prune -f
 fi
 
-echo "removing old docker images..."
+echo "removing old docker images and volumes..."
 docker rmi -f "$SERVER_TAG" || true
 docker rmi -f "$CLIENT_TAG" || true
+docker system prune -a --volumes -f
 
 echo "navigating to project directory..."
 cd "$APP_DIR"
