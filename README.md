@@ -13,5 +13,8 @@ Steps of application deployment:
 
 It should be noted that docker will expose only port 3000 and map it to port 80. If there is a need to expose other ports in can be easily done by uncommenting them in _calcApp.yaml_ file.
 
+## initial configuration
+Application comes with iniatial material, product and user data.
+
 ## building and runnig a local version
 Development version runs on posgresql that means that you need to have it running. Application will run otherwise.
