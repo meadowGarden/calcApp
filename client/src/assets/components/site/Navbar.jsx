@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router";
 import "./Navbar.css";
 import axios from "axios";
 import useUserStore from "../../storage/useUserStore";
-import { useEffect } from "react";
+import BasicDropDownMenu from "./dropDown/BasicDropDownMenu.jsx";
 
 const Navbar = () => {
   const user = useUserStore((state) => state.user);
@@ -59,9 +59,9 @@ const Navbar = () => {
             login
           </Link>
         ) : (
-          <div onClick={onLogOut} className="nbStandardElement">
+          <span onClick={onLogOut} className="nbStandardElement">
             logout
-          </div>
+          </span>
         )}
       </section>
 
@@ -70,6 +70,14 @@ const Navbar = () => {
           {currentUserFullName}
         </Link>
       )}
+
+      {user !== null && (
+        <span onClick={onLogOut} className="nbStandardElement">
+          logout
+        </span>
+      )}
+
+      {user !== null && <BasicDropDownMenu />}
     </div>
   );
 };
