@@ -29,3 +29,7 @@
 .nbStandardElement:hover {
   cursor: pointer;
 }
+
+.nbUserContainer {
+  position: relative;
+}

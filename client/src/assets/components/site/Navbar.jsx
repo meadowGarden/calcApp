@@ -3,12 +3,14 @@ import "./Navbar.css";
 import axios from "axios";
 import useUserStore from "../../storage/useUserStore";
 import BasicDropDownMenu from "./dropDown/BasicDropDownMenu.jsx";
+import { useState } from "react";
 
 const Navbar = () => {
   const user = useUserStore((state) => state.user);
   const isLoggedIn = user !== null;
   const logOut = useUserStore((state) => state.removeUser);
   const navigate = useNavigate();
+  const [isDropDownMenuVisible, setIsDropDownMenuVisible] = useState(false);
 
   const onLogOut = () => {
     axios
@@ -21,6 +23,9 @@ const Navbar = () => {
       })
       .catch();
   };
+
+  const toggleDropDownMenuVisibility = () =>
+    setIsDropDownMenuVisible(!isDropDownMenuVisible);
 
   const currentUserFullName = `${user?.user.firstName} ${user?.user.lastName}`;
 
@@ -77,7 +82,17 @@ const Navbar = () => {
         </span>
       )}
 
-      {user !== null && <BasicDropDownMenu />}
+      {user !== null && (
+        <div className="nbUserContainer">
+          <button
+            className="nbStandardElement"
+            onClick={toggleDropDownMenuVisibility}
+          >
+            {currentUserFullName}
+          </button>
+          {isDropDownMenuVisible && <BasicDropDownMenu />}
+        </div>
+      )}
     </div>
   );
 };
