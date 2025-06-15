@@ -19,9 +19,14 @@ const Navbar = () => {
       })
       .then(() => {
         logOut();
+        setIsDropDownMenuVisible(false);
         navigate("/");
       })
       .catch();
+  };
+
+  const onMenuClose = (setVisibility) => {
+    setIsDropDownMenuVisible(false);
   };
 
   const toggleDropDownMenuVisibility = () =>
@@ -58,31 +63,7 @@ const Navbar = () => {
         </Link>
       )}
 
-      <section className="nbStandardElement">
-        {user === null ? (
-          <Link className="nbStandardElement" to="/login">
-            login
-          </Link>
-        ) : (
-          <span onClick={onLogOut} className="nbStandardElement">
-            logout
-          </span>
-        )}
-      </section>
-
-      {user !== null && (
-        <Link className="nbStandardElement" to={`/users/${user?.user.id}`}>
-          {currentUserFullName}
-        </Link>
-      )}
-
-      {user !== null && (
-        <span onClick={onLogOut} className="nbStandardElement">
-          logout
-        </span>
-      )}
-
-      {user !== null && (
+      {user !== null ? (
         <div className="nbUserContainer">
           <button
             className="nbStandardElement"
@@ -90,8 +71,14 @@ const Navbar = () => {
           >
             {currentUserFullName}
           </button>
-          {isDropDownMenuVisible && <BasicDropDownMenu />}
+          {isDropDownMenuVisible && (
+            <BasicDropDownMenu onLogOut={onLogOut} onClose={onMenuClose} />
+          )}
         </div>
+      ) : (
+        <Link className="nbStandardElement" to="/login">
+          login
+        </Link>
       )}
     </div>
   );

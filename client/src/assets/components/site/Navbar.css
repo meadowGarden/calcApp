@@ -1,7 +1,7 @@
 .navbar {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  background: #3b6d8c;
+  background: var(--navbar-background);
   margin: 0rem;
   padding: 0.5em;
   width: 100%;
@@ -18,18 +18,21 @@
 }
 
 .nbStandardElement {
+  border: none;
   color: #ffffff;
+  background-color: var(--navbar-background);
   text-align: center;
   font-size: 1.2rem;
   text-decoration: none;
   font-family: var(--title-style-family);
   font-weight: var(--title-style-family-weight);
 }
-
 .nbStandardElement:hover {
   cursor: pointer;
 }
 
 .nbUserContainer {
+  grid-column: 8;
   position: relative;
+  text-align: center;
 }
