@@ -3,7 +3,8 @@ import "./Navbar.css";
 import axios from "axios";
 import useUserStore from "../../storage/useUserStore";
 import BasicDropDownMenu from "./dropDown/BasicDropDownMenu.jsx";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import useOutsideDetector from "../../hooks/useOutsideDetector.jsx";
 
 const Navbar = () => {
   const user = useUserStore((state) => state.user);
@@ -11,6 +12,7 @@ const Navbar = () => {
   const logOut = useUserStore((state) => state.removeUser);
   const navigate = useNavigate();
   const [isDropDownMenuVisible, setIsDropDownMenuVisible] = useState(false);
+  const usersMenu = useRef(null);
 
   const onLogOut = () => {
     axios
@@ -31,6 +33,8 @@ const Navbar = () => {
 
   const toggleDropDownMenuVisibility = () =>
     setIsDropDownMenuVisible(!isDropDownMenuVisible);
+
+  useOutsideDetector(usersMenu, () => setIsDropDownMenuVisible(false));
 
   const currentUserFullName = `${user?.user.firstName} ${user?.user.lastName}`;
 
@@ -72,7 +76,11 @@ const Navbar = () => {
             {currentUserFullName}
           </button>
           {isDropDownMenuVisible && (
-            <BasicDropDownMenu onLogOut={onLogOut} onClose={onMenuClose} />
+            <BasicDropDownMenu
+              ref={usersMenu}
+              onLogOut={onLogOut}
+              onClose={onMenuClose}
+            />
           )}
         </div>
       ) : (

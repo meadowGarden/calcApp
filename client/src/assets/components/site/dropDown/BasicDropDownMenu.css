@@ -5,6 +5,7 @@
   min-width: 12rem;
   margin: 0;
   border-radius: var(--space-xs);
+  background-color: var(--list-element-background-color);
 }
 .basicDropDownMenu:hover {
   box-shadow: 0.03rem 0.07rem 0 0.07rem rgba(0, 0, 0, 0.3);
