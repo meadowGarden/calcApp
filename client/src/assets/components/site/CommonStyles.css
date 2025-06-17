@@ -165,3 +165,25 @@
 .standardButton:hover {
   background-color: #6b8ea2;
 }
+
+.dropMenuButton {
+  background-color: var(--input-background-color);
+  color: var(--input-value-color);
+  box-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.2rem;
+  padding: 0 var(--space-xs) 0 var(--space-xs);
+  font-size: var(--space-lg);
+  text-align: left;
+  height: calc(var(--space-xxl) - var(--space-xs));
+  border: none;
+  width: 100%;
+  font-family: var(--text-style-family);
+  font-weight: var(--text-style-family-weight);
+}
+.dropMenuButton:focus {
+  outline: none;
+}
+.dropMenuButton::placeholder {
+  color: var(--input-placeholder-color);
+}
+

@@ -4,6 +4,7 @@ import "../site/CommonStyles.css";
 import { uomDictServerClient } from "../../../services/utils";
 import "./BOMLinesAddElement.css";
 import "../site/CommonStyles.css";
+import DropDownWithSearch from "../site/dropDown/DropDownWithSearch";
 
 const BOMLinesAddElement = ({
   materialList,
@@ -14,12 +15,8 @@ const BOMLinesAddElement = ({
 }) => {
   const [material, setMaterial] = useState(materialList[0]);
   const { description, storageUOM, price } = material;
-
-  const materialOptions = materialList.map((material) => (
-    <option value={material.name} key={material.id}>
-      {material.name}
-    </option>
-  ));
+  const [isMaterialSelectionVisible, setIsMaterialSelectionVisible] =
+    useState(false);
 
   const handleMaterialSelection = (e) => {
     const selectedName = e.target.value;
@@ -32,6 +29,7 @@ const BOMLinesAddElement = ({
       el.uuid === line.uuid ? { ...el, material: selectedMaterial } : el
     );
     setBOMLines(updatedLines);
+    setIsMaterialSelectionVisible(false);
   };
 
   const handleQuantityChange = (e) => {
@@ -44,48 +42,54 @@ const BOMLinesAddElement = ({
   const [cost, setCost] = useState(price * line.quantity);
   useEffect(() => setCost(price * line.quantity), [line.quantity, price, cost]);
 
+  const toggleMaterialMenuVisibility = () => {
+    setIsMaterialSelectionVisible(!isMaterialSelectionVisible);
+  };
+
   return (
-    <>
-      <div className="bomLinesAddElement">
-        <span className="verticalCenter">
-          <select
-            onChange={handleMaterialSelection}
-            className="inputUpdateText"
-          >
-            {materialOptions}
-          </select>
-        </span>
-
-        <span className="listElementText">{description}</span>
-
-        <span className="listElementText">
-          {uomDictServerClient[storageUOM]}
-        </span>
-
-        <span className="verticalCenter">
-          <input
-            onChange={handleQuantityChange}
-            name="quantity"
-            type="number"
-            className="inputUpdateNumber"
-            defaultValue={line.quantity}
+    <div className="bomLinesAddElement">
+      <section className="bomLineMaterialSelection">
+        <button
+          onClick={toggleMaterialMenuVisibility}
+          className="dropMenuButton"
+        >
+          {material.name}
+        </button>
+        {isMaterialSelectionVisible && (
+          <DropDownWithSearch
+            rawList={materialList}
+            onElementSelect={handleMaterialSelection}
           />
-        </span>
+        )}
+      </section>
 
-        <span className="listElementText">{price}</span>
+      <span className="listElementText">{description}</span>
 
-        <span className="listElementNumber">{cost.toFixed(2)}</span>
+      <span className="listElementText">{uomDictServerClient[storageUOM]}</span>
 
-        <span className="listElementText">
-          <button
-            onClick={() => removeMaterial(line.uuid)}
-            className="standardButton"
-          >
-            remove
-          </button>
-        </span>
-      </div>
-    </>
+      <span className="verticalCenter">
+        <input
+          onChange={handleQuantityChange}
+          name="quantity"
+          type="number"
+          className="inputUpdateNumber"
+          defaultValue={line.quantity}
+        />
+      </span>
+
+      <span className="listElementText">{price}</span>
+
+      <span className="listElementNumber">{cost.toFixed(2)}</span>
+
+      <span className="listElementText">
+        <button
+          onClick={() => removeMaterial(line.uuid)}
+          className="standardButton"
+        >
+          remove
+        </button>
+      </span>
+    </div>
   );
 };
 

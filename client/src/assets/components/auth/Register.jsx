@@ -73,17 +73,7 @@ const Register = () => {
 
         <section className="registerFormSection">
           <input
-            {...register("lastName", {
-              required: "enter last name",
-              minLength: {
-                value: 1,
-                message: "last name should be at least one character",
-              },
-              maxLength: {
-                value: 100,
-                message: "last name should be at least one character",
-              },
-            })}
+            {...register("lastName")}
             placeholder="last name"
             className="inputText"
           />

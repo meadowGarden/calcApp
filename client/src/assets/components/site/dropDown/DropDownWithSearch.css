@@ -1,0 +1,46 @@
+.dropDownMenuWithSearch {
+  box-shadow: 0.03rem 0.07rem 0 0.07rem rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 2.1rem;
+  min-width: 35rem;
+  margin: 0;
+  border-radius: var(--space-xs);
+  background-color: var(--list-element-background-color);
+  z-index: 1;
+}
+.dropDownMenuWithSearch:hover {
+  cursor: pointer;
+}
+
+.menusListElement {
+  font-family: var(--text-style-family);
+  text-align: left;
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+}
+.menusListElement:hover {
+  background-color: var(--list-element-background-hover-color);
+}
+
+.menuSearchField {
+  background-color: var(--input-background-color);
+  color: var(--input-value-color);
+  box-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.2rem;
+  padding: 0 var(--space-xs) 0 var(--space-xs);
+  font-size: var(--space-lg);
+  text-align: left;
+  vertical-align: middle;
+  height: calc(var(--space-xxl) - var(--space-xs));
+  border: none;
+  width: 100%;
+  font-family: var(--text-style-family);
+  font-weight: var(--text-style-family-weight);
+}
+.menuSearchField:focus {
+  outline: none;
+  background-color: var(--input-focus-background-color);
+}
+.menuSearchField::placeholder {
+  color: var(--input-placeholder-color);
+}
