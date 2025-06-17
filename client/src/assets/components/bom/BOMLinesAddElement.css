@@ -10,10 +10,3 @@
 .bomLinesAddElement:hover {
   background-color: var(--list-element-background-hover-color);
 }
-
-.bomLineMaterialSelection {
-  display: grid;
-  align-items: center;
-  text-align: center;
-}
-

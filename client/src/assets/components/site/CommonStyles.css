@@ -187,3 +187,10 @@
   color: var(--input-placeholder-color);
 }
 
+.bomLineMaterialSelection {
+  display: grid;
+  align-items: center;
+  text-align: center;
+}
+
+

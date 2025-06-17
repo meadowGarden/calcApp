@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import "./DropDownWithSearch.css";
 
-const DropDownWithSearch = ({ rawList, onElementSelect }) => {
+const DropDownWithSearch = forwardRef(({ rawList, onElementSelect }, ref) => {
   const [list, setList] = useState(rawList);
 
   const listToDisplay = list.map((el) => (
@@ -11,7 +11,7 @@ const DropDownWithSearch = ({ rawList, onElementSelect }) => {
       onClick={() => onElementSelect({ target: { value: el.name } })}
       className="menusListElement"
     >
-      <span>{el.name}</span>
+      <span className="dropElementName">{el.name}</span>
       <span>{el.description}</span>
     </div>
   ));
@@ -29,16 +29,16 @@ const DropDownWithSearch = ({ rawList, onElementSelect }) => {
   };
 
   return (
-    <div className="dropDownMenuWithSearch">
+    <div ref={ref} className="dropDownMenuWithSearch">
       <input
         onChange={onChange}
         type="text"
-        placeholder=""
+        placeholder="search for a material"
         className="menuSearchField"
       />
       {listToDisplay}
     </div>
   );
-};
+});
 
 export default DropDownWithSearch;

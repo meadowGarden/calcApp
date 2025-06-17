@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./BOMPage.css";
 import "../site/CommonStyles.css";
 import { uomDictServerClient } from "../../../services/utils";
 import "./BOMLinesAddElement.css";
 import "../site/CommonStyles.css";
 import DropDownWithSearch from "../site/dropDown/DropDownWithSearch";
+import useOutsideDetector from "../../hooks/useOutsideDetector";
 
 const BOMLinesAddElement = ({
   materialList,
@@ -17,6 +18,7 @@ const BOMLinesAddElement = ({
   const { description, storageUOM, price } = material;
   const [isMaterialSelectionVisible, setIsMaterialSelectionVisible] =
     useState(false);
+  const materialMenu = useRef(null);
 
   const handleMaterialSelection = (e) => {
     const selectedName = e.target.value;
@@ -46,6 +48,8 @@ const BOMLinesAddElement = ({
     setIsMaterialSelectionVisible(!isMaterialSelectionVisible);
   };
 
+  useOutsideDetector(materialMenu, () => setIsMaterialSelectionVisible(false));
+
   return (
     <div className="bomLinesAddElement">
       <section className="bomLineMaterialSelection">
@@ -59,6 +63,7 @@ const BOMLinesAddElement = ({
           <DropDownWithSearch
             rawList={materialList}
             onElementSelect={handleMaterialSelection}
+            ref={materialMenu}
           />
         )}
       </section>

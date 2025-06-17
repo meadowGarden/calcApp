@@ -5,7 +5,9 @@ import {
 } from "../../../services/utils.js";
 import "./BOMLinesListElement.css";
 import "../site/CommonStyles.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import DropDownWithSearch from "../site/dropDown/DropDownWithSearch.jsx";
+import useOutsideDetector from "../../hooks/useOutsideDetector.jsx";
 
 const BOMLinesListElement = ({
   data,
@@ -16,6 +18,9 @@ const BOMLinesListElement = ({
 }) => {
   const { id, material, quantity: initialQuantity } = data;
   const [quantity, setQuantity] = useState(initialQuantity);
+  const [isMaterialSelectionVisible, setIsMaterialSelectionVisible] =
+    useState(false);
+  const materialMenu = useRef(false);
 
   const handleMaterialChange = (e) => {
     const selectedName = e.target.value;
@@ -48,20 +53,29 @@ const BOMLinesListElement = ({
   const adjustedUOM = uomDictServerClient[material.storageUOM];
   const lineCosts = calculateLineCosts(quantity, material.price);
 
-  const materialOptions = materials.map((material) => (
-    <option key={material.id}>{material.name}</option>
-  ));
+  const toggleMaterialMenuVisibility = () => {
+    setIsMaterialSelectionVisible(!isMaterialSelectionVisible);
+  };
+
+  useOutsideDetector(materialMenu, () => setIsMaterialSelectionVisible(false));
 
   return (
     <form onSubmit={handleSubmit} className="bomLinesListElement">
-      <section className="verticalCenter">
-        <select
-          {...register("name")}
-          onChange={handleMaterialChange}
-          className="inputText"
+      <section className="bomLineMaterialSelection">
+        <button
+          type="button"
+          onClick={toggleMaterialMenuVisibility}
+          className="dropMenuButton"
         >
-          {materialOptions}
-        </select>
+          {material.name}
+        </button>
+        {isMaterialSelectionVisible && (
+          <DropDownWithSearch
+            rawList={materials}
+            onElementSelect={handleMaterialChange}
+            ref={materialMenu}
+          />
+        )}
       </section>
 
       <section className="listElementText">

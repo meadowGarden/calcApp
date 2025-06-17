@@ -27,7 +27,7 @@
   color: var(--input-value-color);
   box-shadow: 0.1rem 0.1rem rgba(0, 0, 0, 0.15);
   border-radius: 0.2rem;
-  padding: 0 var(--space-xs) 0 var(--space-xs);
+  padding: 0 var(--space-sm);
   font-size: var(--space-lg);
   text-align: left;
   vertical-align: middle;
@@ -43,4 +43,12 @@
 }
 .menuSearchField::placeholder {
   color: var(--input-placeholder-color);
+}
+
+.dropElementName {
+  padding: 0 0.5rem;
+}
+
+.dropElementDescription {
+
 }

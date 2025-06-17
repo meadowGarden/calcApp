@@ -1,11 +1,12 @@
 .bomLinesListElement {
   display: grid;
-  grid-template-columns: 2fr 6fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 3fr 7fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: var(--space-xs);
   background-color: var(--list-element-background-color);
   height: var(--space-xxl);
   padding: 0 var(--space-xs) 0 var(--space-xs);
   color: #2f3b4c;
+  position: relative;
 }
 .bomLinesListElement:hover {
   background-color: var(--list-element-background-hover-color);
