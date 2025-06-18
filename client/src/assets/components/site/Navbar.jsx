@@ -68,7 +68,7 @@ const Navbar = () => {
       )}
 
       {user !== null ? (
-        <div className="nbUserContainer">
+        <div className="nbUserContainer" ref={usersMenu}>
           <button
             className="nbStandardElement"
             onClick={toggleDropDownMenuVisibility}
@@ -76,11 +76,7 @@ const Navbar = () => {
             {currentUserFullName}
           </button>
           {isDropDownMenuVisible && (
-            <BasicDropDownMenu
-              ref={usersMenu}
-              onLogOut={onLogOut}
-              onClose={onMenuClose}
-            />
+            <BasicDropDownMenu onLogOut={onLogOut} onClose={onMenuClose} />
           )}
         </div>
       ) : (

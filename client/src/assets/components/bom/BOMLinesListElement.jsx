@@ -61,7 +61,7 @@ const BOMLinesListElement = ({
 
   return (
     <form onSubmit={handleSubmit} className="bomLinesListElement">
-      <section className="bomLineMaterialSelection">
+      <section className="bomLineMaterialSelection" ref={materialMenu}>
         <button
           type="button"
           onClick={toggleMaterialMenuVisibility}
@@ -73,7 +73,6 @@ const BOMLinesListElement = ({
           <DropDownWithSearch
             rawList={materials}
             onElementSelect={handleMaterialChange}
-            ref={materialMenu}
           />
         )}
       </section>

@@ -52,7 +52,7 @@ const BOMLinesAddElement = ({
 
   return (
     <div className="bomLinesAddElement">
-      <section className="bomLineMaterialSelection">
+      <section className="bomLineMaterialSelection" ref={materialMenu}>
         <button
           onClick={toggleMaterialMenuVisibility}
           className="dropMenuButton"
@@ -63,7 +63,6 @@ const BOMLinesAddElement = ({
           <DropDownWithSearch
             rawList={materialList}
             onElementSelect={handleMaterialSelection}
-            ref={materialMenu}
           />
         )}
       </section>
