@@ -38,6 +38,8 @@
   --text-numeric-style-family: "Roboto";
   --text-numeric-style-family-weight: 500;
 
+  --min-element-width: 1100px;
+
   --space-xxs: 0.125rem;
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
